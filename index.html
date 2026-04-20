@@ -259,23 +259,135 @@ input,select,textarea{font-family:inherit}
 
 /* partner dash */
 .p-greet{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
-.p-greet-sub{font-size:15px;color:var(--g3);margin-bottom:32px}
-.p-session-card{background:var(--bg);border-radius:var(--r);margin-bottom:16px;overflow:hidden;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 16px rgba(0,0,0,0.03)}
-.psc-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--liner);background:var(--s1)}
-.psc-time{font-size:15px;font-weight:600;color:var(--white)}
-.psc-date{font-size:12px;color:var(--g3);margin-top:2px}
-.psc-status{font-size:12px;padding:4px 12px;border-radius:100px;font-weight:600}
-.psc-status.draft{background:rgba(255,159,10,.15);color:var(--amber)}
-.psc-status.published{background:rgba(48,209,88,.15);color:var(--green)}
-.psc-body{padding:20px}
-.psc-class-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:6px}
-.psc-class-desc{font-size:14px;color:var(--g3);line-height:1.5}
-.psc-class-empty{font-size:14px;color:var(--g5)}
-.psc-edit-btn{background:var(--s2);border:none;border-radius:100px;padding:10px 20px;font-size:14px;font-weight:600;color:var(--white);transition:background .2s;margin-top:12px}
-.psc-edit-btn:active{background:var(--s3)}
-.edit-form{margin-top:20px;padding-top:20px;border-top:1px solid var(--liner);display:flex;flex-direction:column;gap:12px}
-.ef-save{background:var(--white);color:#FFF;border:none;padding:16px;border-radius:var(--rs);font-size:15px;font-weight:600;margin-top:8px}
+.p-greet-sub{font-size:15px;color:var(--g3);margin-bottom:28px}
 .p-signout{background:var(--s2);border:none;border-radius:100px;padding:12px 24px;font-size:14px;font-weight:600;color:var(--white);margin-top:32px}
+
+/* ── SLOT PICKER ─── */
+.slot-picker-section{margin-bottom:8px}
+.slot-picker-day-tabs{display:flex;background:var(--s1);border-radius:100px;padding:4px;margin-bottom:20px}
+.spdt{flex:1;text-align:center;padding:10px 6px;border-radius:100px;cursor:pointer;transition:all .25s cubic-bezier(.25,1,.5,1)}
+.spdt.active{background:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.08)}
+.spdt-n{font-size:17px;font-weight:600;color:var(--g5);transition:color .2s}
+.spdt.active .spdt-n{color:var(--white)}
+.spdt-m{font-size:10px;color:var(--g5);margin-top:2px;font-weight:500}
+
+.slot-grid{display:flex;flex-direction:column;gap:10px}
+.slot-item{
+  border-radius:16px;overflow:hidden;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 2px 8px rgba(0,0,0,.03);
+  transition:transform .2s,box-shadow .2s;
+}
+.slot-item.vacant{cursor:pointer;background:var(--bg)}
+.slot-item.vacant:active{transform:scale(.98)}
+.slot-item.mine{background:var(--bg);cursor:pointer;border-color:rgba(0,122,255,.2)}
+.slot-item.mine:active{transform:scale(.98)}
+.slot-item.taken{background:var(--s1);cursor:default}
+
+.slot-hd{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px;
+}
+.slot-time-txt{font-size:15px;font-weight:600;color:var(--white)}
+.slot-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.02em}
+.slot-badge.vacant{background:rgba(52,199,89,.12);color:var(--green)}
+.slot-badge.mine{background:rgba(0,122,255,.12);color:#0077FF}
+.slot-badge.taken{background:rgba(0,0,0,.06);color:var(--g5)}
+
+.slot-body{padding:0 18px 16px}
+.slot-class{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.2}
+.slot-partner-name{font-size:13px;color:var(--g3);font-weight:500}
+.slot-vacant-hint{font-size:13px;color:var(--g5);padding-bottom:2px}
+.slot-mine-cta{font-size:13px;font-weight:600;color:#0077FF;margin-top:8px}
+.slot-divider{height:1px;background:var(--liner);margin:0 18px}
+
+/* ── PARTNER EDITOR (full-screen overlay) ─── */
+.ped-overlay{
+  display:none;position:fixed;inset:0;max-width:480px;margin:0 auto;
+  background:var(--s1);z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch;
+}
+.ped-overlay.open{display:block}
+.ped-topbar{
+  position:sticky;top:0;z-index:10;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top)+14px) 20px 14px;
+  background:rgba(245,245,247,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--line);
+}
+.ped-back{background:none;border:none;font-size:15px;font-weight:600;color:#0077FF;display:flex;align-items:center;gap:4px;padding:4px 0}
+.ped-back-icon{font-size:20px;line-height:1;margin-top:-1px}
+.ped-slot-tag{font-size:13px;font-weight:600;color:var(--white)}
+.ped-pub-btn{
+  background:var(--white);color:#FFF;border:none;
+  padding:8px 18px;border-radius:100px;font-size:14px;font-weight:600;
+  transition:transform .15s,opacity .15s;min-height:36px;
+}
+.ped-pub-btn:active{transform:scale(.96);opacity:.85}
+.ped-pub-btn:disabled{background:var(--s3);color:var(--g5);cursor:not-allowed}
+
+/* preview strip */
+.ped-preview-wrap{padding:20px 20px 0}
+.ped-preview-lbl{
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--g5);margin-bottom:12px;
+  display:flex;align-items:center;gap:8px;
+}
+.ped-preview-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
+.ped-live-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--green);flex-shrink:0;
+  box-shadow:0 0 0 0 rgba(52,199,89,.5);animation:pdot 2s infinite;
+}
+@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(52,199,89,.4)}50%{box-shadow:0 0 0 5px rgba(52,199,89,0)}}
+/* preview card is .session-card — pointer-events off */
+.ped-card-no-touch{pointer-events:none;user-select:none;margin-bottom:4px}
+
+/* form */
+.ped-form-wrap{padding:20px 20px calc(env(safe-area-inset-bottom)+40px)}
+.ped-form-lbl{
+  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--g5);margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;
+}
+.ped-form-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
+.ped-fields{display:flex;flex-direction:column;gap:14px}
+.pef{
+  background:var(--bg);border-radius:var(--rs);border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 2px 8px rgba(0,0,0,.03);transition:border-color .2s,box-shadow .2s;
+}
+.pef label{display:block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);padding:12px 16px 2px}
+.pef input,.pef textarea{width:100%;background:none;border:none;padding:6px 16px 12px;color:var(--white);font-size:15px;font-weight:500;-webkit-appearance:none;resize:none}
+.pef input::placeholder,.pef textarea::placeholder{color:var(--g7);font-weight:400}
+.pef input:focus,.pef textarea:focus{outline:none}
+.pef.focused{border-color:rgba(0,0,0,.18);box-shadow:0 4px 16px rgba(0,0,0,.08)}
+.pef-hint{font-size:12px;color:var(--g5);margin-top:6px;padding:0 2px;line-height:1.5}
+.ped-divider{height:1px;background:var(--line);margin:20px 0}
+.ped-agenda-row{display:flex;align-items:flex-start;gap:8px}
+.ped-ag-num{
+  flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--s2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--g3);margin-top:12px;
+}
+.ped-agenda-row .pef{flex:1}
+.ped-pub-big{
+  width:100%;background:var(--white);color:#FFF;border:none;
+  padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;
+  margin-top:24px;min-height:56px;display:flex;align-items:center;justify-content:center;
+  transition:transform .2s,opacity .2s;letter-spacing:-.01em;
+}
+.ped-pub-big:active{transform:scale(.98);opacity:.85}
+.ped-release-btn{
+  width:100%;background:none;border:1px solid rgba(0,0,0,.1);border-radius:100px;
+  padding:13px;font-size:14px;font-weight:600;color:var(--red);margin-top:12px;
+  transition:background .2s;
+}
+.ped-release-btn:active{background:rgba(255,59,48,.06)}
+.ped-status-bar{
+  border-radius:var(--rs);padding:14px 16px;margin-bottom:20px;
+  display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;
+}
+.ped-status-bar.live{background:rgba(52,199,89,.1);color:#1D6B35}
+.ped-status-bar.draft{background:rgba(255,149,0,.1);color:#7A5100}
 
 /* admin dash */
 .adm-h{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
@@ -434,13 +546,25 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
   <button class="btn-done" onclick="closeConfirm()">Done</button>
 </div>
 
+<!-- ════════════════════════════════════
+     PARTNER EDITOR OVERLAY
+════════════════════════════════════ -->
+<div class="ped-overlay" id="ped-overlay">
+  <div class="ped-topbar">
+    <button class="ped-back" onclick="closePed()"><span class="ped-back-icon">‹</span> Back</button>
+    <div class="ped-slot-tag" id="ped-slot-tag">—</div>
+    <button class="ped-pub-btn" id="ped-top-pub" onclick="pedSave()">Publish</button>
+  </div>
+  <div id="ped-body"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = '';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxTE_tRks13dG9DhyJJhj0lHmis76CSBpwyftVBf8yYUxcervgi7e3laS9QJIKGvZAAZg/exec';
 const MOCK    = GAS_URL === '';
 const ADMIN_PASS_MOCK = 'xbloom2026';
 
@@ -463,7 +587,7 @@ const SLOTS_META = [
   { id:4, t:'16:00', e:'17:30' },
 ];
 
-// ── MOCK sessions — simulating what partners have already filled ──
+// ── SESSIONS — Partners self-select slots. partner='' means Vacant.
 let SESSIONS = [
   // Day 0 – 7 May
   { 
@@ -538,11 +662,13 @@ let SESSIONS = [
 
 let ALL_BOOKINGS = [];
 
+// Partners just need refCode+pin — they claim slots themselves
 const MOCK_PARTNERS = [
-  { refCode:'ROOTSC', company:'Roots Coffee Roaster', contact:'Somchai', email:'roots@demo.com', pin:'1111', sessions:['S07-0','S08-4'] },
-  { refCode:'RISTR8', company:'Ristr8to Lab',         contact:'Wipa',    email:'ristr8@demo.com',pin:'2222', sessions:['S07-1','S08-3','S09-0'] },
-  { refCode:'BRAVE0', company:'Brave Roasters',       contact:'Dao',     email:'brave@demo.com', pin:'3333', sessions:['S07-3','S09-2'] },
-  { refCode:'PACAM0', company:'Pacamara',             contact:'Mark',    email:'pacam@demo.com', pin:'4444', sessions:['S08-1','S09-4'] },
+  { refCode:'ROOTSC', company:'Roots Coffee Roaster', contact:'Somchai', email:'roots@demo.com',  pin:'1111' },
+  { refCode:'RISTR8', company:'Ristr8to Lab',         contact:'Wipa',    email:'ristr8@demo.com', pin:'2222' },
+  { refCode:'BRAVE0', company:'Brave Roasters',       contact:'Dao',     email:'brave@demo.com',  pin:'3333' },
+  { refCode:'PACAM0', company:'Pacamara',             contact:'Mark',    email:'pacam@demo.com',  pin:'4444' },
+  { refCode:'DEMO01', company:'Demo Roaster',         contact:'Test',    email:'demo@demo.com',   pin:'0000' },
 ];
 
 /* ═══════════════════════════════════════
@@ -552,9 +678,9 @@ const ST = {
   day: 0,
   bk: null,
   partner: null,
+  pDay: 0,
   admin: false,
   adminData: [],
-  editOpen: {},
 };
 
 /* ═══════════════════════════════════════
@@ -689,25 +815,90 @@ function renderBkForm() {
     <div class="sh-divider"></div>
 
     ${full ? `
-      <div style="text-align:center;padding:24px;background:var(--s1);border-radius:var(--rs);margin-bottom:32px;">
-        <div style="font-size:24px;margin-bottom:8px;">⏳</div>
-        <div style="font-weight:600;color:var(--white);margin-bottom:4px;">Fully Booked</div>
-        <div style="font-size:14px;color:var(--g5);">There are no seats left for this session.</div>
+      <div style="text-align:center;padding:20px;background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);border-radius:var(--rs);margin-bottom:24px">
+        <div style="font-size:28px;margin-bottom:8px">⏳</div>
+        <div style="font-weight:600;color:var(--white);margin-bottom:4px">Session เต็มแล้ว</div>
+        <div style="font-size:13px;color:var(--g5);margin-bottom:0">ลงชื่อสำรองไว้ — ถ้ามีคนยกเลิกจะได้ที่นั่งทันที</div>
       </div>
-    ` : `
-      <div class="sh-detail-h" style="margin-bottom:16px;">Reserve Your Seat</div>
+      <div class="sh-detail-h" style="margin-bottom:16px">เข้าคิวสำรอง</div>
       <div class="field-stack">
-        <div class="field" id="fw-name"><label>Full Name *</label><input id="f-name" type="text" placeholder="Enter your full name" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
-        <div class="field" id="fw-phone"><label>Phone *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
-        <div class="field" id="fw-email"><label>Email *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
+        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
+        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
+        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
       </div>
-      <button class="btn-primary" onclick="submitBk()">Confirm Booking</button>
+      <button class="btn-primary" style="background:var(--amber)" onclick="submitWaitlist()">เข้าคิวสำรอง</button>
+    ` : `
+      <div class="sh-detail-h" style="margin-bottom:16px">จองที่นั่ง</div>
+      <div class="field-stack">
+        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
+        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
+        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
+      </div>
+      <button class="btn-primary" onclick="submitBk()">ยืนยันการจอง</button>
     `}
   `;
 }
 
 function ff(id){document.getElementById(id)?.classList.add('focused')}
 function fb(id){document.getElementById(id)?.classList.remove('focused')}
+
+async function submitWaitlist() {
+  const name  = document.getElementById('f-name')?.value.trim();
+  const phone = document.getElementById('f-phone')?.value.trim();
+  const email = document.getElementById('f-email')?.value.trim();
+  if (!name || !phone || !email) { showToast('กรุณากรอกข้อมูลให้ครบ'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('รูปแบบอีเมลไม่ถูกต้อง'); return; }
+
+  const s = ST.bk;
+  let position = 1;
+
+  if (!MOCK) {
+    try {
+      const res = await gasCall({ action:'joinWaitlist', sid:s.sid, name, phone, email });
+      if (!res.ok) { showToast(res.error || 'เกิดข้อผิดพลาด'); return; }
+      position = res.position;
+    } catch { showToast('เกิดข้อผิดพลาด กรุณาลองใหม่'); return; }
+  }
+
+  closeBk();
+  // Show waitlist confirmation
+  showWaitlistConfirm(s, position, name);
+}
+
+function showWaitlistConfirm(ses, position, name) {
+  const slot = SLOTS_META[ses.slotId];
+  const day  = DAYS_META[ses.day];
+
+  // Inject a full-screen confirm similar to booking confirm
+  const el = document.getElementById('confirm-ov');
+  el.innerHTML = `
+    <div style="font-size:52px;margin-bottom:18px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both">🎟️</div>
+    <div style="font-size:28px;font-weight:600;text-align:center;margin-bottom:6px;letter-spacing:-.02em">อยู่ในคิวสำรองแล้ว!</div>
+    <div style="font-size:14px;color:var(--g3);text-align:center;margin-bottom:32px">เราจะแจ้งทันทีถ้ามีที่นั่งว่าง</div>
+
+    <div style="width:100%;background:var(--bg);border-radius:var(--r);padding:28px;text-align:center;margin-bottom:28px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px">คิวของคุณ</div>
+      <div style="font-family:'Playfair Display',serif;font-size:72px;font-weight:700;color:var(--amber);line-height:1">${position}</div>
+      <div style="height:1px;background:var(--liner);margin:20px 0"></div>
+      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px">${ses.className}</div>
+      <div style="font-size:13px;color:var(--g3)">${day.label} · ${slot.t}–${slot.e} · ${ses.partner}</div>
+      <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:14px">${name}</div>
+    </div>
+
+    <div style="width:100%;background:var(--bg);border-radius:var(--rs);padding:16px 20px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(0,0,0,.04)">
+      <div style="font-size:20px;flex-shrink:0">ℹ️</div>
+      <div style="font-size:13px;color:var(--g5);line-height:1.6">
+        ถ้ามีคนยกเลิก ระบบจะโปรโมตคุณอัตโนมัติ และส่งรายละเอียดทาง <strong style="color:var(--white)">Email</strong> 
+        ที่ลงทะเบียนไว้ กลับมาเช็คสถานะได้ที่ "ดูการจองของฉัน"
+      </div>
+    </div>
+
+    <button style="width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;font-family:inherit;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:center"
+      onclick="closeConfirm()">เข้าใจแล้ว</button>
+  `;
+  el.classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
 
 async function submitBk() {
   const name  = document.getElementById('f-name')?.value.trim();
@@ -768,175 +959,614 @@ function closeCp() {
   document.body.style.overflow = '';
 }
 
-function renderMyBooking(result) {
-  const last = JSON.parse(sessionStorage.getItem('lastBooking') || 'null');
-  let html = `<div class="my-booking-content">`;
+function renderMyBooking(bookings, waitlist = []) {
+  const body = document.getElementById('mb-body');
 
-  if (result) {
-    html += renderBookingCard(result);
-  } else if (last) {
-    html += `<div style="font-size:13px;color:var(--g5);margin-bottom:16px;text-transform:uppercase;letter-spacing:0.04em;font-weight:600;">Your Latest Booking</div>`;
-    html += renderBookingCard(last);
-    html += `<div style="height:24px"></div>`;
+  let cardsHtml = '';
+
+  // Booking cards
+  if (Array.isArray(bookings) && bookings.length) {
+    cardsHtml += bookings.map(b => renderBookingCard(b)).join('');
   }
 
-  html += `
-    <div style="font-size:13px;color:var(--g3);margin-bottom:10px;font-weight:500;">Search by Booking Reference</div>
-    <div class="field" id="mb-ref-w" style="margin-bottom:12px">
-      <label>Booking Reference</label>
-      <input id="mb-ref-input" type="text" placeholder="e.g., XB-0507-AB12" style="text-transform:uppercase" onfocus="ff('mb-ref-w')" onblur="fb('mb-ref-w')">
+  // Waitlist cards
+  if (Array.isArray(waitlist) && waitlist.length) {
+    cardsHtml += waitlist.map(w => renderWaitlistCard(w)).join('');
+  }
+
+  if (!cardsHtml && bookings === 'not_found') {
+    cardsHtml = `<div style="text-align:center;padding:28px 0 8px">
+      <div style="font-size:40px;margin-bottom:12px">🔍</div>
+      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px">ไม่พบการจอง</div>
+      <div style="font-size:13px;color:var(--g5)">ลองตรวจสอบเบอร์โทรหรืออีเมลอีกครั้ง</div>
+    </div>`;
+  }
+
+  const hasResults = (Array.isArray(bookings) && bookings.length) || (Array.isArray(waitlist) && waitlist.length);
+
+  body.innerHTML = `
+    <div style="padding:8px 0 20px">
+      ${cardsHtml}
+      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">
+        ${hasResults ? 'ค้นหาด้วยข้อมูลอื่น' : 'ค้นหาการจองของคุณ'}
+      </div>
+      <div class="field focused" id="mb-contact-w" style="margin-bottom:12px">
+        <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
+        <input id="mb-contact-i" type="text" inputmode="tel"
+          placeholder="08X-XXX-XXXX หรือ your@email.com"
+          onfocus="ff('mb-contact-w')" onblur="fb('mb-contact-w')"
+          onkeyup="if(event.key==='Enter')lookupBooking()">
+      </div>
+      <button class="btn-primary" id="mb-search-btn" onclick="lookupBooking()">ค้นหาการจอง</button>
+      <div style="text-align:center;margin-top:14px">
+        <button onclick="renderMyBookingByRef()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
+          มี Booking Ref อยู่แล้ว →
+        </button>
+      </div>
     </div>
-    <button class="btn-primary" onclick="lookupBooking()">Search</button>
+  `;
+
+  document.getElementById('mb-contact-i')?.focus();
+}
+
+function renderWaitlistCard(w) {
+  const ahead = w.aheadOf ?? (w.position - 1);
+  return `<div style="background:rgba(255,149,0,.06);border:1px solid rgba(255,149,0,.25);border-radius:var(--r);padding:20px;margin-bottom:20px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+                  background:rgba(255,149,0,.2);color:var(--amber);padding:4px 10px;border-radius:100px">
+        🎟️ คิวสำรอง
+      </div>
+    </div>
+    <div style="font-size:13px;color:var(--g3);margin-bottom:4px">${w.day} · ${w.time}</div>
+    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:4px">${w.className}</div>
+    <div style="font-size:13px;color:var(--g5);margin-bottom:16px">${w.partner}</div>
+    <div style="display:flex;align-items:center;gap:16px;padding:14px;background:var(--bg);border-radius:var(--rs)">
+      <div style="text-align:center;flex:1;border-right:1px solid var(--liner)">
+        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--amber);line-height:1">${w.position}</div>
+        <div style="font-size:11px;color:var(--g5);margin-top:2px">คิวของคุณ</div>
+      </div>
+      <div style="text-align:center;flex:1">
+        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--white);line-height:1">${ahead}</div>
+        <div style="font-size:11px;color:var(--g5);margin-top:2px">คนอยู่ข้างหน้า</div>
+      </div>
+    </div>
+    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:12px">${w.name}</div>
   </div>`;
-  document.getElementById('mb-body').innerHTML = html;
+}
+
+function renderMyBookingByRef() {
+  document.getElementById('mb-body').innerHTML = `
+    <div style="padding:8px 0 20px">
+      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">ค้นหาด้วย Booking Reference</div>
+      <div class="field focused" id="mb-ref-w" style="margin-bottom:12px">
+        <label>Booking Reference</label>
+        <input id="mb-ref-i" type="text" placeholder="เช่น XB-0507-AB12"
+          style="text-transform:uppercase"
+          onfocus="ff('mb-ref-w')" onblur="fb('mb-ref-w')"
+          onkeyup="if(event.key==='Enter')lookupByRef()">
+      </div>
+      <button class="btn-primary" onclick="lookupByRef()">ค้นหา</button>
+      <div style="text-align:center;margin-top:14px">
+        <button onclick="renderMyBooking()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
+          ← กลับ
+        </button>
+      </div>
+    </div>
+  `;
+  document.getElementById('mb-ref-i')?.focus();
 }
 
 function renderBookingCard(b) {
-  return `<div class="my-booking-found" style="margin-bottom:16px">
-    <div class="mbf-time">${b.day} · ${b.time}</div>
+  const couponsHtml = b.coupons && b.coupons.length
+    ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--liner)">
+        <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">สิทธิ์พิเศษของคุณ</div>
+        ${b.coupons.map(c => `
+          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--liner)">
+            <div style="font-size:18px">${{machine:'☕',beans:'🫘',gear:'🔧'}[c.type]||'🎁'}</div>
+            <div style="flex:1;font-size:12px;color:var(--g3)">${c.desc}</div>
+            <div style="font-size:15px;font-weight:700;color:var(--white)">${c.value}</div>
+          </div>`).join('')}
+      </div>` : '';
+
+  const isCancelled = b.status === 'cancelled';
+
+  return `<div class="my-booking-found" style="margin-bottom:20px;${isCancelled ? 'opacity:.5' : ''}">
+    ${isCancelled ? `<div style="background:rgba(255,59,48,.1);color:var(--red);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:100px;display:inline-block;margin-bottom:12px">ยกเลิกแล้ว</div>` : ''}
+    <div class="mbf-time">${b.day || ''} ${b.time ? '· ' + b.time : ''}</div>
     <div class="mbf-class">${b.className}</div>
-    <div class="mbf-partner">By ${b.partner}</div>
+    <div class="mbf-partner">${b.partner}</div>
     <div class="mbf-sep"></div>
-    <div class="mbf-ref">Reference Code</div>
-    <div class="mbf-ref" style="margin-bottom:0"><strong>${b.ref}</strong></div>
-    <div class="mbf-name">${b.name}</div>
+    <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">Booking Reference</div>
+    <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--white);letter-spacing:.02em">${b.ref}</div>
+    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:10px">${b.name}</div>
+    ${couponsHtml}
+    ${!isCancelled ? `
+    <button onclick="showCancelConfirm('${b.ref}')"
+      style="margin-top:16px;width:100%;background:none;border:1px solid rgba(255,59,48,.3);
+             border-radius:var(--rs);padding:12px;font-size:13px;font-weight:600;
+             color:var(--red);font-family:inherit;cursor:pointer;transition:background .2s"
+      onmouseover="this.style.background='rgba(255,59,48,.06)'"
+      onmouseout="this.style.background='none'">
+      ยกเลิกการจอง
+    </button>` : ''}
   </div>`;
 }
 
-async function lookupBooking() {
-  const ref = document.getElementById('mb-ref-input')?.value.trim().toUpperCase();
-  if (!ref) { showToast('Please enter Booking Reference'); return; }
+/* ── CANCEL FLOW ── */
+function showCancelConfirm(ref) {
+  // Inject a confirm panel below the booking card
+  const body = document.getElementById('mb-body');
+
+  // Find last lookup contact (stored when searching)
+  const lastContact = sessionStorage.getItem('mbLastContact') || '';
+
+  // Insert confirmation box
+  const existing = document.getElementById('cancel-confirm-box');
+  if (existing) existing.remove();
+
+  const box = document.createElement('div');
+  box.id = 'cancel-confirm-box';
+  box.style.cssText = `
+    background:var(--bg);border:1px solid rgba(255,59,48,.3);border-radius:var(--r);
+    padding:20px;margin-bottom:16px;
+  `;
+  box.innerHTML = `
+    <div style="font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px">ยืนยันการยกเลิก?</div>
+    <div style="font-size:13px;color:var(--g3);margin-bottom:16px;line-height:1.6">
+      การยกเลิกจะ<strong style="color:var(--white)">ไม่สามารถย้อนกลับได้</strong>
+      และคูปองทั้งหมดจะถูกยกเลิกด้วย
+    </div>
+    <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">
+      ยืนยันด้วยเบอร์โทรหรืออีเมล
+    </div>
+    <div class="field focused" id="cc-contact-w" style="margin-bottom:12px">
+      <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
+      <input id="cc-contact-i" type="text" value="${lastContact}"
+        placeholder="ใส่ข้อมูลที่ลงทะเบียนไว้"
+        onfocus="ff('cc-contact-w')" onblur="fb('cc-contact-w')">
+    </div>
+    <div style="display:flex;gap:10px">
+      <button onclick="document.getElementById('cancel-confirm-box').remove()"
+        style="flex:1;background:var(--s2);border:none;border-radius:var(--rs);padding:14px;
+               font-size:14px;font-weight:600;color:var(--white);font-family:inherit;cursor:pointer">
+        ไม่ยกเลิก
+      </button>
+      <button onclick="confirmCancel('${ref}')"
+        id="cc-confirm-btn"
+        style="flex:1;background:var(--red);border:none;border-radius:var(--rs);padding:14px;
+               font-size:14px;font-weight:600;color:#fff;font-family:inherit;cursor:pointer">
+        ยืนยันยกเลิก
+      </button>
+    </div>
+  `;
+
+  // Insert at top of mb-body
+  body.insertBefore(box, body.firstChild);
+  body.scrollTop = 0;
+  document.getElementById('cc-contact-i')?.focus();
+}
+
+async function confirmCancel(ref) {
+  const contact = document.getElementById('cc-contact-i')?.value.trim();
+  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
+
+  const btn = document.getElementById('cc-confirm-btn');
+  if (btn) { btn.textContent = 'กำลังยกเลิก...'; btn.disabled = true; }
 
   if (MOCK) {
-    const found = ALL_BOOKINGS.find(b => b.ref === ref);
-    if (found) renderMyBooking(found);
-    else showToast('Booking not found');
+    // Mock: mark cancelled locally
+    const bk = ALL_BOOKINGS.find(b => b.ref === ref);
+    if (bk) bk.status = 'cancelled';
+    showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
+    document.getElementById('cancel-confirm-box')?.remove();
+    // Re-render with updated status
+    const contact2 = sessionStorage.getItem('mbLastContact') || '';
+    if (contact2) await lookupBooking();
     return;
   }
+
+  try {
+    const res = await gasCall({ action: 'cancelBooking', ref, contact });
+    if (res.ok) {
+      showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
+      document.getElementById('cancel-confirm-box')?.remove();
+      // Reload bookings to show updated status
+      setTimeout(() => lookupBooking(), 600);
+    } else {
+      showToast(res.error || 'ไม่สามารถยกเลิกได้');
+      if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
+    }
+  } catch {
+    showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
+    if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
+  }
+}
+
+async function lookupBooking() {
+  const contact = document.getElementById('mb-contact-i')?.value.trim();
+  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
+
+  const btn = document.getElementById('mb-search-btn');
+  if (btn) { btn.textContent = 'กำลังค้นหา...'; btn.disabled = true; }
+
+  sessionStorage.setItem('mbLastContact', contact);
+
+  if (MOCK) {
+    const q = contact.toLowerCase();
+    const isEmail = q.includes('@');
+    const found = ALL_BOOKINGS.filter(b =>
+      isEmail ? (b.email||'').toLowerCase() === q
+               : (b.phone||'').replace(/\D/g,'') === q.replace(/\D/g,'')
+    );
+    renderMyBooking(found.length ? found : 'not_found', []);
+    return;
+  }
+
+  try {
+    const [bkRes, wlRes] = await Promise.all([
+      gasCall({ action:'getBookingByContact', contact }),
+      gasCall({ action:'getWaitlistPosition', contact }),
+    ]);
+    const bookings = (bkRes.ok && bkRes.bookings) ? bkRes.bookings : [];
+    const waitlist = (wlRes.ok && wlRes.waitlist)  ? wlRes.waitlist  : [];
+    if (!bookings.length && !waitlist.length) renderMyBooking('not_found', []);
+    else renderMyBooking(bookings, waitlist);
+  } catch {
+    renderMyBooking('not_found', []);
+  }
+}
+
+async function lookupByRef() {
+  const ref = document.getElementById('mb-ref-i')?.value.trim().toUpperCase();
+  if (!ref) { showToast('กรุณาใส่ Booking Reference'); return; }
+
+  if (MOCK) {
+    const found = ALL_BOOKINGS.filter(b => b.ref === ref);
+    renderMyBooking(found.length ? found : 'not_found');
+    return;
+  }
+
   try {
     const res = await gasCall({ action:'getBooking', ref });
-    if (res.ok) renderMyBooking(res.booking);
-    else showToast('Booking not found');
-  } catch { showToast('An error occurred'); }
+    if (res.ok && res.bookings) renderMyBooking(res.bookings);
+    else renderMyBooking('not_found');
+  } catch { renderMyBooking('not_found'); }
 }
 
 /* ═══════════════════════════════════════
-   PARTNER PORTAL
+   PARTNER PORTAL — no login
+   Anyone opens ?partner=1, sees slot grid,
+   taps Vacant → fills details → slot locks.
+   Claims tracked in sessionStorage.
 ═══════════════════════════════════════ */
-function renderPartnerPage() {
-  if (ST.partner) renderPartnerDash();
-  else renderPartnerLogin();
+
+const myClaimedSids = new Set(
+  JSON.parse(sessionStorage.getItem('xbMySlots') || '[]')
+);
+function saveMyClaims() {
+  sessionStorage.setItem('xbMySlots', JSON.stringify([...myClaimedSids]));
 }
 
-function renderPartnerLogin() {
-  document.getElementById('partner-page-body').innerHTML = `
-    <div class="auth-center">
-      <div class="auth-icon">☕</div>
-      <div class="auth-h">Partner Portal</div>
-      <div class="auth-sub">Log in with the Ref Code and PIN<br>provided by xBloom Thailand</div>
-      <div class="auth-form">
-        <div class="field" id="pf-rc"><label>Ref Code</label><input id="p-rc" type="text" placeholder="e.g., ROOTSC" style="text-transform:uppercase" onfocus="ff('pf-rc')" onblur="fb('pf-rc')"></div>
-        <div class="field" id="pf-pin"><label>PIN</label><input id="p-pin" type="password" inputmode="numeric" placeholder="4 Digits" onfocus="ff('pf-pin')" onblur="fb('pf-pin')" onkeyup="if(event.key==='Enter')partnerLogin()"></div>
-        <button class="auth-submit" onclick="partnerLogin()">Log In</button>
+function renderPartnerPage() {
+  ST.pDay = ST.pDay ?? 0;
+  renderPartnerDash();
+}
+
+function renderPartnerDash() {
+  const day      = ST.pDay ?? 0;
+  const daySlots = SESSIONS.filter(s => s.day === day);
+  const totalMine = [...myClaimedSids].filter(sid => SESSIONS.find(s => s.sid === sid)).length;
+
+  const slotRows = daySlots.map(ses => {
+    const slot    = SLOTS_META[ses.slotId];
+    const isMine  = myClaimedSids.has(ses.sid);
+    const isTaken = ses.partnerRef && !isMine;
+    const isVacant= !ses.partnerRef;
+    let cls, badge, body, onclick;
+
+    if (isMine) {
+      cls    = 'mine';
+      badge  = `<span class="slot-badge mine">${ses.published ? '● My Session' : '● Draft'}</span>`;
+      body   = ses.published
+        ? `<div class="slot-class">${ses.className}</div>
+           <div class="slot-partner-name">${ses.partner}${ses.instructor ? ' · '+ses.instructor : ''}</div>
+           <div class="slot-mine-cta">Edit details →</div>`
+        : `<div class="slot-vacant-hint" style="color:var(--amber)">Claimed — add workshop details →</div>`;
+      onclick = `openPed('${ses.sid}')`;
+    } else if (isTaken) {
+      cls    = 'taken';
+      badge  = `<span class="slot-badge taken">Taken</span>`;
+      body   = ses.published
+        ? `<div class="slot-class">${ses.className}</div><div class="slot-partner-name">by ${ses.partner}</div>`
+        : `<div class="slot-vacant-hint">Reserved by ${ses.partner}</div>`;
+      onclick = '';
+    } else {
+      cls    = 'vacant';
+      badge  = `<span class="slot-badge vacant">Vacant</span>`;
+      body   = `<div class="slot-vacant-hint">Tap to claim this slot</div>`;
+      onclick = `openPed('${ses.sid}')`;
+    }
+
+    return `<div class="slot-item ${cls}" ${onclick ? `onclick="${onclick}"` : ''}>
+      <div class="slot-hd">
+        <div class="slot-time-txt">${slot.t} – ${slot.e}</div>
+        ${badge}
       </div>
+      <div class="slot-divider"></div>
+      <div class="slot-body">${body}</div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('partner-page-body').innerHTML = `
+    <div class="p-greet">Partner Slot Booking</div>
+    <div class="p-greet-sub">${totalMine > 0
+      ? `You've claimed ${totalMine} slot${totalMine > 1 ? 's' : ''} this session`
+      : 'Tap any <span style="color:var(--green)">Vacant</span> slot to claim it'}</div>
+    <div class="slot-picker-section">
+      <div class="slot-picker-day-tabs">
+        ${DAYS_META.map((d, i) => `
+          <div class="spdt${i === day ? ' active' : ''}" onclick="pSelectDay(${i})">
+            <div class="spdt-n">${d.label.split(' ')[0]}</div>
+            <div class="spdt-m">${d.label.split(' ')[1]}</div>
+          </div>`).join('')}
+      </div>
+      <div class="slot-grid">${slotRows}</div>
     </div>
   `;
 }
 
-async function partnerLogin() {
-  const rc  = document.getElementById('p-rc')?.value.trim().toUpperCase();
-  const pin = document.getElementById('p-pin')?.value.trim();
-  if (!rc || !pin) { showToast('Please enter Ref Code and PIN'); return; }
+function pSelectDay(d) { ST.pDay = d; renderPartnerDash(); }
 
-  if (MOCK) {
-    const p = MOCK_PARTNERS.find(x => x.refCode === rc && x.pin === pin);
-    if (p) { ST.partner = p; renderPartnerDash(); }
-    else showToast('Invalid Ref Code or PIN');
-    return;
-  }
-  try {
-    const res = await gasCall({ action:'partnerLogin', refCode:rc, pin });
-    if (res.ok) { ST.partner = res.partner; renderPartnerDash(); }
-    else showToast('Invalid Ref Code or PIN');
-  } catch { showToast('An error occurred'); }
+/* ── EDITOR ── */
+let PED_SID = null;
+
+function openPed(sid) {
+  const ses = SESSIONS.find(s => s.sid === sid);
+  if (!ses) return;
+  // Block if taken by someone else
+  if (ses.partnerRef && !myClaimedSids.has(sid)) return;
+
+  PED_SID = sid;
+  const slot = SLOTS_META[ses.slotId];
+  const day  = DAYS_META[ses.day];
+  const isNew = !ses.partnerRef;
+
+  document.getElementById('ped-slot-tag').textContent = `${day.label} · ${slot.t}–${slot.e}`;
+  document.getElementById('ped-top-pub').textContent  = ses.published ? 'Save' : 'Publish';
+  renderPedBody(isNew);
+  document.getElementById('ped-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
 }
 
-function renderPartnerDash() {
-  const p = ST.partner;
-  const mySessions = SESSIONS.filter(s => p.sessions.includes(s.sid));
-
-  let sessHtml = mySessions.map(ses => {
-    const slot = SLOTS_META[ses.slotId];
-    const day  = DAYS_META[ses.day];
-    const isOpen = ST.editOpen[ses.sid];
-    const status = ses.published ? 'published' : 'draft';
-    const statusLabel = ses.published ? 'Published' : 'No Data';
-
-    return `<div class="p-session-card">
-      <div class="psc-hd">
-        <div><div class="psc-time">${slot.t} – ${slot.e}</div><div class="psc-date">${day.label}</div></div>
-        <div class="psc-status ${status}">${statusLabel}</div>
-      </div>
-      <div class="psc-body">
-        ${ses.published
-          ? `<div class="psc-preview"><div class="psc-class-name">${ses.className}</div><div class="psc-class-desc">${ses.desc}</div></div>`
-          : `<div class="psc-class-empty">Workshop details not added yet — click edit to add details</div>`
-        }
-        <div style="margin-top:12px">
-          <button class="psc-edit-btn" onclick="toggleEdit('${ses.sid}')">${isOpen ? 'Close ✕' : (ses.published ? 'Edit Details' : 'Add Workshop Details')}</button>
-        </div>
-        ${isOpen ? `
-          <div class="edit-form">
-            <div class="field" id="ef-cn-${ses.sid}"><label>Workshop Name *</label><input id="ef-cn-${ses.sid}-i" type="text" value="${ses.className}" placeholder="e.g., The Art of Pour Over" onfocus="ff('ef-cn-${ses.sid}')" onblur="fb('ef-cn-${ses.sid}')"></div>
-            <div class="field" id="ef-ds-${ses.sid}"><label>Description</label><textarea id="ef-ds-${ses.sid}-i" rows="3" placeholder="Briefly describe what will be learned in this workshop" onfocus="ff('ef-ds-${ses.sid}')" onblur="fb('ef-ds-${ses.sid}')">${ses.desc}</textarea></div>
-            <div class="field" id="ef-in-${ses.sid}"><label>Instructor Name</label><input id="ef-in-${ses.sid}-i" type="text" value="${ses.instructor}" placeholder="Instructor's full name" onfocus="ff('ef-in-${ses.sid}')" onblur="fb('ef-in-${ses.sid}')"></div>
-            <button class="ef-save" onclick="saveSession('${ses.sid}')">Save & Publish</button>
-          </div>
-        ` : ''}
-      </div>
-    </div>`;
-  }).join('');
-
-  const booked = mySessions.reduce((a,s)=>a+s.booked,0);
-  const cap    = mySessions.length * 15;
-
-  document.getElementById('partner-page-body').innerHTML = `
-    <div class="p-greet">Hello, ${p.company}</div>
-    <div class="p-greet-sub">${mySessions.length} slots · ${booked}/${cap} Seats</div>
-    ${sessHtml}
-    <button class="p-signout" onclick="partnerSignout()">Log Out</button>
-  `;
-}
-
-function toggleEdit(sid) {
-  ST.editOpen[sid] = !ST.editOpen[sid];
+function closePed() {
+  document.getElementById('ped-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+  PED_SID = null;
   renderPartnerDash();
 }
 
-async function saveSession(sid) {
-  const cn = document.getElementById(`ef-cn-${sid}-i`)?.value.trim();
-  const ds = document.getElementById(`ef-ds-${sid}-i`)?.value.trim();
-  const ins= document.getElementById(`ef-in-${sid}-i`)?.value.trim();
-  if (!cn) { showToast('Please enter Workshop Name'); return; }
+function renderPedBody(isNewClaim = false) {
+  const ses  = SESSIONS.find(s => s.sid === PED_SID);
+  const slot = SLOTS_META[ses.slotId];
+  const ag   = (ses.agenda && ses.agenda.length === 3) ? ses.agenda : ['', '', ''];
+
+  document.getElementById('ped-body').innerHTML = `
+    <div class="ped-preview-wrap">
+      <div class="ped-preview-lbl"><span class="ped-live-dot"></span> Live Preview</div>
+      <div class="ped-card-no-touch">
+        <div class="session-card" style="margin:0;box-shadow:0 8px 28px rgba(0,0,0,.08)">
+          <div id="ppv-img-wrap" style="display:${ses.img?'block':'none'}">
+            <div class="sc-img" id="ppv-img-el" style="background-image:url('${ses.img||''}')"></div>
+          </div>
+          <div class="sc-time-bar">
+            <div class="sc-time">${slot.t} – ${slot.e}</div>
+            <div class="sc-cap ok">15 Available</div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-partner" id="ppv-partner">In partnership with ${ses.partner||'—'}</div>
+            <div class="sc-class" id="ppv-class">${ses.className||'<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>'}</div>
+            <div class="sc-desc"  id="ppv-desc">${ses.desc||'<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>'}</div>
+            <div class="sc-footer">
+              <div class="sc-instructor-wrap">
+                <div class="sc-instructor-label">Instructor</div>
+                <div class="sc-instructor" id="ppv-inst">${ses.instructor||'—'}</div>
+              </div>
+              <button class="btn-book" style="pointer-events:none">Details & Book</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ped-form-wrap">
+      ${ses.published
+        ? `<div class="ped-status-bar live">✅ Published — visitors can see and book</div>`
+        : `<div class="ped-status-bar draft">${isNewClaim ? 'Fill in your details and publish to go live' : '⚠️ Draft — not visible yet'}</div>`}
+
+      <div class="ped-form-lbl">${isNewClaim ? 'Claim This Slot' : 'Workshop Details'}</div>
+      <div class="ped-fields">
+
+        ${isNewClaim ? `
+          <div class="pef focused" id="pef-co">
+            <label>Your Company / Roastery Name *</label>
+            <input id="pef-co-i" type="text" value=""
+              placeholder="e.g., Roots Coffee Roaster"
+              oninput="pedLive()" onfocus="peff('pef-co')" onblur="pefb('pef-co')">
+          </div>` : `
+          <div style="background:var(--s1);border-radius:var(--rs);padding:12px 16px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:4px">Company</div>
+            <div style="font-size:15px;font-weight:600;color:var(--white)">${ses.partner}</div>
+          </div>`}
+
+        <div class="pef" id="pef-cn">
+          <label>Workshop Name *</label>
+          <input id="pef-cn-i" type="text" value="${ses.className}"
+            placeholder="e.g., The Art of Pour Over"
+            oninput="pedLive()" onfocus="peff('pef-cn')" onblur="pefb('pef-cn')">
+        </div>
+
+        <div class="pef" id="pef-ds">
+          <label>Short Description</label>
+          <textarea id="pef-ds-i" rows="3"
+            placeholder="1–2 sentences about what this session covers."
+            oninput="pedLive()" onfocus="peff('pef-ds')" onblur="pefb('pef-ds')">${ses.desc}</textarea>
+        </div>
+
+        <div class="pef" id="pef-in">
+          <label>Instructor Name</label>
+          <input id="pef-in-i" type="text" value="${ses.instructor}"
+            placeholder="e.g., Ms. Wipa Leenaka"
+            oninput="pedLive()" onfocus="peff('pef-in')" onblur="pefb('pef-in')">
+        </div>
+
+        <div class="ped-divider"></div>
+
+        <div class="pef" id="pef-tg">
+          <label>Who is this for?</label>
+          <textarea id="pef-tg-i" rows="2"
+            placeholder="e.g., Home brewers and beginners."
+            onfocus="peff('pef-tg')" onblur="pefb('pef-tg')">${ses.target||''}</textarea>
+        </div>
+
+        <div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">90-Min Agenda</div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+            ${[0,1,2].map(i=>`
+              <div class="ped-agenda-row">
+                <div class="ped-ag-num">${i+1}</div>
+                <div class="pef" id="pef-ag${i}" style="flex:1">
+                  <label>${['Opening','Main Activity','Closing'][i]}</label>
+                  <input id="pef-ag${i}-i" type="text" value="${ag[i]||''}"
+                    placeholder="${['15m: Introduction & theory','45m: Hands-on brewing','30m: Tasting & Q&A'][i]}"
+                    onfocus="peff('pef-ag${i}')" onblur="pefb('pef-ag${i}')">
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>
+
+        <div class="pef" id="pef-tk">
+          <label>What participants will take home</label>
+          <textarea id="pef-tk-i" rows="2"
+            placeholder="e.g., Recipe card, 50g coffee sample, coupons."
+            onfocus="peff('pef-tk')" onblur="pefb('pef-tk')">${ses.takeaways||''}</textarea>
+        </div>
+
+        <div>
+          <div class="pef" id="pef-img">
+            <label>Cover Image URL (optional)</label>
+            <input id="pef-img-i" type="url" value="${ses.img||''}"
+              placeholder="https://images.unsplash.com/..."
+              oninput="pedLiveImg()" onfocus="peff('pef-img')" onblur="pefb('pef-img')">
+          </div>
+          <div class="pef-hint">Recommended ratio 2.2:1. Leave blank for no image.</div>
+        </div>
+
+      </div>
+
+      <button class="ped-pub-big" onclick="pedSave()">
+        ${ses.published ? 'Save Changes' : isNewClaim ? 'Claim & Publish' : 'Publish Workshop'}
+      </button>
+      ${myClaimedSids.has(PED_SID)
+        ? `<button class="ped-release-btn" onclick="pedRelease()">Release this slot</button>`
+        : ''}
+    </div>
+  `;
+  setTimeout(() => {
+    (document.getElementById('pef-co-i') || document.getElementById('pef-cn-i'))?.focus();
+  }, 350);
+}
+
+function peff(id){ document.getElementById(id)?.classList.add('focused'); }
+function pefb(id){ document.getElementById(id)?.classList.remove('focused'); }
+
+function pedLive() {
+  const co  = document.getElementById('pef-co-i')?.value || '';
+  const cn  = document.getElementById('pef-cn-i')?.value || '';
+  const ds  = document.getElementById('pef-ds-i')?.value || '';
+  const ins = document.getElementById('pef-in-i')?.value || '';
+  const ses = SESSIONS.find(s => s.sid === PED_SID);
+  const partner = co || ses?.partner || '';
+  const pe = document.getElementById('ppv-partner');
+  const ce = document.getElementById('ppv-class');
+  const de = document.getElementById('ppv-desc');
+  const ie = document.getElementById('ppv-inst');
+  if (pe) pe.textContent = `In partnership with ${partner||'—'}`;
+  if (ce) ce.innerHTML  = cn  || '<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>';
+  if (de) de.innerHTML  = ds  || '<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>';
+  if (ie) ie.textContent = ins || '—';
+}
+
+function pedLiveImg() {
+  const url  = document.getElementById('pef-img-i')?.value.trim() || '';
+  const wrap = document.getElementById('ppv-img-wrap');
+  const imgE = document.getElementById('ppv-img-el');
+  if (!wrap || !imgE) return;
+  if (url) { imgE.style.backgroundImage=`url('${url}')`;wrap.style.display='block'; }
+  else { wrap.style.display='none'; }
+}
+
+async function pedSave() {
+  const ses    = SESSIONS.find(s => s.sid === PED_SID);
+  const isNew  = !ses.partnerRef;
+  const coEl   = document.getElementById('pef-co-i');
+  const company= coEl ? coEl.value.trim() : ses.partner;
+  const cn  = document.getElementById('pef-cn-i')?.value.trim();
+  const ds  = document.getElementById('pef-ds-i')?.value.trim();
+  const ins = document.getElementById('pef-in-i')?.value.trim();
+  const tg  = document.getElementById('pef-tg-i')?.value.trim();
+  const tk  = document.getElementById('pef-tk-i')?.value.trim();
+  const img = document.getElementById('pef-img-i')?.value.trim();
+  const ag  = [0,1,2].map(i => document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
+
+  if (isNew && !company) { showToast('Please enter your company name'); return; }
+  if (!cn) { showToast('Please enter a Workshop Name'); return; }
 
   if (!MOCK) {
     try {
-      await gasCall({ action:'updateSession', sid, className:cn, desc:ds, instructor:ins, refCode:ST.partner.refCode, pin:ST.partner.pin });
-    } catch { showToast('An error occurred'); return; }
+      if (isNew) {
+        const res = await gasCall({ action:'claimSession', sid:PED_SID, company, className:cn, desc:ds, instructor:ins, target:tg, takeaways:tk, img, agenda:JSON.stringify(ag) });
+        if (!res.ok) { showToast(res.error || 'Could not claim slot'); return; }
+        // Store partnerRef returned by GAS so we can edit later
+        ses.partnerRef = res.partnerRef;
+      } else {
+        const res = await gasCall({ action:'updateSession', sid:PED_SID, partnerRef:ses.partnerRef, className:cn, desc:ds, instructor:ins, target:tg, takeaways:tk, img, agenda:JSON.stringify(ag) });
+        if (!res.ok) { showToast(res.error || 'Could not update'); return; }
+      }
+    } catch { showToast('Network error — please try again'); return; }
   }
 
-  // Update local
-  const ses = SESSIONS.find(s => s.sid === sid);
-  if (ses) { ses.className = cn; ses.desc = ds; ses.instructor = ins; ses.published = true; }
-  ST.editOpen[sid] = false;
-  showToast('✅ Saved successfully. Details are now live on the public schedule.');
-  renderPartnerDash();
+  ses.partner    = company;
+  if (!ses.partnerRef) ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase();
+  ses.className  = cn; ses.desc=ds; ses.instructor=ins;
+  ses.target=tg; ses.takeaways=tk; ses.img=img; ses.agenda=ag; ses.published=true;
+
+  myClaimedSids.add(PED_SID);
+  // Save partnerRef alongside sid for release/edit
+  const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
+  storedMap[PED_SID] = ses.partnerRef;
+  sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
+  saveMyClaims();
+
+  showToast('✅ Published — your workshop is now live');
+  closePed();
 }
 
-function partnerSignout() {
-  ST.partner = null; ST.editOpen = {};
-  renderPartnerLogin();
+function pedRelease() {
+  const ses = SESSIONS.find(s => s.sid === PED_SID);
+  if (!ses) return;
+  const slot = SLOTS_META[ses.slotId];
+  const day  = DAYS_META[ses.day];
+  if (!confirm(`Release ${day.label} ${slot.t}–${slot.e}? This slot will become Vacant again.`)) return;
+  ses.partner=''; ses.partnerRef=''; ses.className=''; ses.desc='';
+  ses.instructor=''; ses.target=''; ses.takeaways='';
+  ses.img=''; ses.agenda=['','','']; ses.published=false; ses.booked=0;
+  myClaimedSids.delete(PED_SID);
+  saveMyClaims();
+  showToast('Slot released — now Vacant');
+  closePed();
 }
+
 
 /* ═══════════════════════════════════════
    ADMIN
@@ -1051,35 +1681,66 @@ function exportCSV() {
 }
 
 /* ═══════════════════════════════════════
-   GAS
+   GAS — fetch bridge
+   GET  → getSessions, getBooking
+   POST → everything that writes data
 ═══════════════════════════════════════ */
-function gasCall(params) {
-  return new Promise((res,rej)=>{
-    const cb = 'cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
-    const url = GAS_URL+'?'+new URLSearchParams({...params,callback:cb});
-    window[cb] = data=>{delete window[cb];sc.remove();res(data);};
-    const sc = document.createElement('script');
-    sc.src=url; sc.onerror=rej;
-    document.head.appendChild(sc);
-    setTimeout(()=>{if(window[cb]){delete window[cb];sc.remove();rej(new Error('Timeout'));}},12000);
-  });
+const GAS_GET_ACTIONS  = new Set(['getSessions', 'getBooking']);
+
+async function gasCall(params) {
+  const { action, ...rest } = params;
+  const useGet = GAS_GET_ACTIONS.has(action);
+
+  if (useGet) {
+    const qs  = new URLSearchParams({ action, ...rest });
+    const res = await fetch(`${GAS_URL}?${qs}`, { redirect: 'follow' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  } else {
+    const res = await fetch(GAS_URL, {
+      method  : 'POST',
+      redirect: 'follow',
+      headers : { 'Content-Type': 'text/plain' }, // GAS quirk: text/plain avoids preflight
+      body    : JSON.stringify({ action, ...rest }),
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  }
+}
+
+// Load live sessions from GAS and merge into SESSIONS array
+async function loadLiveSessions() {
+  if (MOCK) return;
+  try {
+    const res = await gasCall({ action: 'getSessions' });
+    if (res.ok && res.sessions) {
+      // Replace SESSIONS with live data
+      SESSIONS.length = 0;
+      res.sessions.forEach(s => SESSIONS.push(s));
+    }
+  } catch (e) {
+    console.warn('Could not load sessions from GAS:', e.message);
+  }
 }
 
 /* ═══════════════════════════════════════
    UTILS
 ═══════════════════════════════════════ */
 let toastT;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg; t.classList.add('show');
-  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000);
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
 /* ═══════════════════════════════════════
    INIT — URL routing
 ═══════════════════════════════════════ */
-function init() {
+async function init() {
   const params = new URLSearchParams(location.search);
+
+  // Load live data first (if GAS is configured)
+  await loadLiveSessions();
 
   if (params.get('partner') === '1') {
     document.getElementById('page-pub').classList.remove('active');
@@ -1100,9 +1761,9 @@ function init() {
   renderSessionList();
 }
 
-document.getElementById('bk-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('bk-overlay')) closeBk(); });
-document.getElementById('mb-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('mb-overlay')) closeMb(); });
-document.getElementById('cp-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('cp-overlay')) closeCp(); });
+document.getElementById('bk-overlay').addEventListener('click', e => { if (e.target === document.getElementById('bk-overlay')) closeBk(); });
+document.getElementById('mb-overlay').addEventListener('click', e => { if (e.target === document.getElementById('mb-overlay')) closeMb(); });
+document.getElementById('cp-overlay').addEventListener('click', e => { if (e.target === document.getElementById('cp-overlay')) closeCp(); });
 
 init();
 </script>
