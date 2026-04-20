@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<title>xBloom × WOC Bangkok 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF;--s1:#F5F5F7;--s2:#E5E5EA;--s3:#D1D1D6;--s4:#C7C7CC;
+  --white:#1D1D1F;--g1:#3A3A3C;--g3:#86868B;--g5:#98989D;--g7:#AEAEB2;
+  --green:#34C759;--red:#FF3B30;--amber:#FF9500;
+  --line:rgba(0,0,0,.08);--liner:rgba(0,0,0,.04);
+  --r:24px;--rs:14px;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;background-color:var(--s1);}
+body{max-width:480px;margin:0 auto;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,'DM Sans',sans-serif;font-size:15px;letter-spacing:-0.015em;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100svh;box-shadow:0 0 40px rgba(0,0,0,0.05);position:relative;}
+button{font-family:inherit;cursor:pointer}
+input,select,textarea{font-family:inherit}
+
+/* ─── SHARED ─────────────────────────────────────── */
+.serif{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
+.page{display:none;min-height:100svh}
+.page.active{display:block}
+
+/* ─── HEADER ─────────────────────────────────────── */
+.hdr{
+  position:fixed;top:0;left:0;right:0;z-index:80;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:calc(env(safe-area-inset-top) + 16px) 24px 16px;
+  background:rgba(255,255,255,.7);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);
+  border-bottom:1px solid var(--line);
+  max-width:480px;margin:0 auto;
+}
+.hdr-logo{font-family:'Quincy CF', 'Quincy', serif;font-size:26px;font-weight:700;letter-spacing:-0.03em;}
+.hdr-tag{font-size:11px;color:var(--g3);letter-spacing:.04em;text-transform:uppercase;font-weight:500}
+.hdr-right{display:flex;align-items:center;gap:12px}
+
+/* ─── PUBLIC SCHEDULE ────────────────────────────── */
+.pub-hero{
+  position:relative;
+  padding:calc(env(safe-area-inset-top) + 110px) 24px 40px;
+  text-align:center;display:flex;flex-direction:column;align-items:center;
+  overflow:hidden;
+}
+.pub-hero::before{
+  content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
+  width:140vw;height:400px;
+  background:radial-gradient(ellipse at center, rgba(0,0,0,0.03) 0%, rgba(255,255,255,0) 60%);
+  z-index:-1;pointer-events:none;
+}
+.pub-kicker{
+  display:inline-flex;align-items:center;padding:6px 16px;
+  background:var(--white);color:#FFF;border-radius:100px;
+  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
+  margin-bottom:24px;box-shadow:0 8px 16px rgba(0,0,0,0.1);
+}
+.font-logo{font-family:'Quincy CF', 'Quincy', serif;font-weight:700;letter-spacing:-0.03em;}
+.pub-h1{
+  font-family:'Playfair Display',serif;font-size:52px;font-weight:500;line-height:1.05;
+  letter-spacing:-0.03em;margin-bottom:16px;color:var(--white);
+}
+.pub-h1 em{color:var(--g1);font-style:italic;font-weight:400}
+.pub-sub{
+  font-size:16px;color:var(--g3);margin-bottom:32px;font-weight:400;
+  max-width:320px;line-height:1.5;
+}
+.pub-info-row{
+  display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;
+}
+.pub-info-item{
+  display:flex;align-items:center;gap:6px;font-size:13px;font-weight:500;color:var(--g1);
+  background:var(--s1);padding:8px 16px;border-radius:100px;
+}
+
+/* day tabs (iOS Segmented Control Style) */
+.day-tabs{display:flex;position:sticky;top:calc(env(safe-area-inset-top) + 68px);background:var(--s1);z-index:70;margin:0 24px 24px;border-radius:100px;padding:4px}
+.day-tab{flex:1;padding:10px 8px;text-align:center;cursor:pointer;border-radius:100px;transition:all .3s cubic-bezier(.25,1,.5,1)}
+.day-tab.active{background:#FFFFFF;box-shadow:0 2px 10px rgba(0,0,0,.06)}
+.day-tab .dt-n{font-size:17px;font-weight:600;color:var(--g3);transition:color .3s}
+.day-tab.active .dt-n{color:var(--white)}
+.day-tab .dt-m{font-size:10px;color:var(--g5);letter-spacing:.02em;margin-top:2px}
+.day-tab .dt-d{display:none;} /* simplify visual noise */
+
+/* session list */
+.session-list{padding:0 0 calc(env(safe-area-inset-bottom) + 100px)}
+
+.session-card{
+  margin:0 24px 16px;
+  background:var(--s1);border-radius:var(--r);
+  overflow:hidden;
+  transition:transform .2s ease, background .2s ease;
+}
+.session-card:active{transform:scale(0.98);background:var(--s2)}
+
+.sc-time-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px 24px 0;
+}
+.sc-time{font-size:14px;font-weight:500;color:var(--g3);letter-spacing:.01em}
+.sc-cap{font-size:12px;font-weight:500}
+.sc-cap.ok{color:var(--green)}
+.sc-cap.warn{color:var(--amber)}
+.sc-cap.full{color:var(--red)}
+
+.sc-body{padding:16px 24px 24px}
+.sc-empty{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:32px 24px;text-align:center;gap:8px;
+}
+.sc-empty-label{font-size:14px;color:var(--g5)}
+
+.sc-partner{font-size:12px;color:var(--g3);letter-spacing:.02em;margin-bottom:10px;font-weight:600}
+.sc-class{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;line-height:1.2;margin-bottom:10px;letter-spacing:-0.01em}
+.sc-desc{font-size:14px;color:var(--g3);line-height:1.5;margin-bottom:20px}
+.sc-instructor{font-size:13px;color:var(--g5);font-weight:500}
+.sc-footer{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:20px;border-top:1px solid var(--liner)}
+.sc-spots{font-size:13px;color:var(--g5);font-weight:500}
+
+.btn-book{
+  background:var(--white);color:#FFF;
+  border:none;padding:12px 24px;border-radius:100px;
+  font-size:14px;font-weight:600;letter-spacing:-0.01em;
+  transition:transform .2s ease, opacity .2s ease;
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center;
+}
+.btn-book:active{transform:scale(.95);opacity:.8}
+.btn-book.full{background:var(--s3);color:var(--g5);cursor:not-allowed;transform:none;opacity:1}
+
+/* bottom actions */
+.pub-bottom{
+  position:fixed;bottom:0;left:0;right:0;
+  padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);
+  background:rgba(255,255,255,.7);backdrop-filter:saturate(180%) blur(24px);-webkit-backdrop-filter:saturate(180%) blur(24px);
+  border-top:1px solid var(--line);
+  display:flex;justify-content:center;gap:12px;
+  max-width:480px;margin:0 auto;
+}
+.btn-ghost-sm{
+  background:rgba(0,0,0,0.05);border:none;border-radius:100px;
+  padding:12px 16px;font-size:13px;color:var(--white);font-weight:500;
+  transition:background .2s;
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center;
+  flex:1;
+}
+.btn-ghost-sm:hover{background:rgba(0,0,0,0.08)}
+
+/* ─── BOOKING SHEET ──────────────────────────────── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:200;align-items:flex-end;justify-content:center;}
+.overlay.open{display:flex}
+.sheet{background:var(--bg);border-radius:32px 32px 0 0;width:100%;max-width:480px;max-height:90svh;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:shUp .4s cubic-bezier(.22,.9,.36,1);padding-bottom:calc(env(safe-area-inset-bottom) + 32px);box-shadow:0 -10px 40px rgba(0,0,0,0.15)}
+@keyframes shUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sh-handle{width:40px;height:5px;background:var(--g7);border-radius:100px;margin:16px auto 0}
+.sh-hd{display:flex;justify-content:space-between;align-items:center;padding:24px 24px 16px}
+.sh-title{font-size:20px;font-weight:600;letter-spacing:-0.02em}
+.sh-close{width:32px;height:32px;border-radius:50%;background:var(--s3);border:none;color:var(--g3);font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.sh-close:hover{background:var(--s4);color:var(--white)}
+.sh-body{padding:0 24px}
+
+/* session summary in sheet */
+.sh-session{background:var(--s2);border-radius:var(--rs);padding:20px;margin-bottom:32px}
+.sh-ses-time{font-size:13px;color:var(--g1);font-weight:600;margin-bottom:8px;letter-spacing:0.01em}
+.sh-ses-class{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;line-height:1.2;margin-bottom:6px;color:var(--white)}
+.sh-ses-partner{font-size:13px;color:var(--g3)}
+
+/* form */
+.field-stack{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
+.field{background:var(--s1);border-radius:var(--rs);border:1px solid transparent;transition:border-color .2s, background .2s}
+.field label{display:block;font-size:11px;font-weight:500;letter-spacing:.02em;color:var(--g5);padding:12px 16px 2px}
+.field input,.field textarea,.field select{width:100%;background:none;border:none;padding:6px 16px 14px;color:var(--white);font-size:16px;-webkit-appearance:none}
+.field input::placeholder,.field textarea::placeholder{color:var(--g5)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none}
+.field.focused{border-color:var(--white);background:var(--bg)}
+
+.btn-primary{width:100%;background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;transition:transform .2s, opacity .2s;letter-spacing:-0.01em;margin-bottom:12px;min-height:54px;display:flex;align-items:center;justify-content:center;}
+.btn-primary:active{transform:scale(.98);opacity:.9}
+.btn-primary:disabled{background:var(--s3);color:var(--g5);cursor:not-allowed}
+
+/* ─── CONFIRM ────────────────────────────────────── */
+.confirm-ov{display:none;position:fixed;top:0;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--s1);z-index:300;overflow-y:auto;align-items:center;justify-content:flex-start;flex-direction:column;padding:calc(env(safe-area-inset-top)+80px) 24px calc(env(safe-area-inset-bottom)+40px)}
+.confirm-ov.open{display:flex}
+.co-icon{font-size:64px;margin-bottom:24px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
+.co-h{font-size:28px;font-weight:600;text-align:center;margin-bottom:8px;letter-spacing:-0.02em}
+.co-sub{font-size:15px;color:var(--g3);text-align:center;margin-bottom:40px}
+.co-card{width:100%;background:var(--bg);border-radius:var(--r);padding:32px;text-align:center;margin-bottom:32px;box-shadow:0 10px 30px rgba(0,0,0,0.06)}
+.co-rl{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px}
+.co-ref{font-family:'Playfair Display',serif;font-size:40px;font-weight:600;color:var(--white);letter-spacing:0;margin-bottom:24px}
+.co-sep{height:1px;background:var(--line);margin:20px 0}
+.co-class{font-family:'Playfair Display',serif;font-size:20px;font-weight:500;color:var(--white);margin-bottom:6px}
+.co-dt{font-size:14px;color:var(--g3)}
+.co-name-val{font-size:16px;font-weight:500;color:var(--g1);margin-top:16px}
+.co-note-sm{font-size:12px;color:var(--g5);margin-top:8px}
+
+.promos-label{width:100%;font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--g3);margin-bottom:16px;padding-left:8px}
+.promos{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
+.promo-row{background:var(--bg);border-radius:var(--rs);padding:16px 20px;display:flex;align-items:center;gap:16px;animation:fadeUp .5s cubic-bezier(.2,0,0,1) both}
+.promo-row:nth-child(1){animation-delay:.1s}
+.promo-row:nth-child(2){animation-delay:.2s}
+.promo-row:nth-child(3){animation-delay:.3s}
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.pr-ico{font-size:24px;flex-shrink:0;background:var(--s2);width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+.pr-info{flex:1}
+.pr-title{font-size:15px;font-weight:600;color:var(--white)}
+.pr-desc{font-size:13px;color:var(--g5);margin-top:2px}
+.pr-val{font-size:18px;color:var(--white);font-weight:600;white-space:nowrap}
+.co-note-email{font-size:13px;color:var(--g5);text-align:center;margin-bottom:32px}
+.btn-done{width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;transition:opacity .2s;min-height:54px;display:flex;align-items:center;justify-content:center;}
+.btn-done:active{opacity:.9}
+
+/* ─── MY BOOKING ─────────────────────────────────── */
+.my-booking-content{text-align:center;padding:16px 0 16px}
+.my-booking-found{background:var(--s1);border-radius:var(--r);padding:24px;text-align:left}
+.mbf-time{font-size:13px;color:var(--g1);font-weight:600;margin-bottom:8px}
+.mbf-class{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin-bottom:6px}
+.mbf-partner{font-size:13px;color:var(--g3);margin-bottom:16px}
+.mbf-sep{height:1px;background:var(--liner);margin:16px 0}
+.mbf-ref{font-size:12px;color:var(--g5);margin-bottom:6px}
+.mbf-ref strong{font-size:18px;font-weight:600;color:var(--white);letter-spacing:0.02em}
+.mbf-name{font-size:15px;font-weight:500;color:var(--g1);margin-top:12px}
+
+/* ─── PARTNER & ADMIN PAGES ─────────────────────────────── */
+.partner-page, .admin-page{padding:calc(env(safe-area-inset-top)+100px) 24px calc(env(safe-area-inset-bottom)+40px)}
+.auth-center{display:flex;flex-direction:column;align-items:center;min-height:60vh;justify-content:center;text-align:center;padding:40px 0}
+.auth-icon{font-size:48px;margin-bottom:24px}
+.auth-h{font-size:28px;font-weight:600;margin-bottom:12px;letter-spacing:-0.02em}
+.auth-sub{font-size:15px;color:var(--g3);margin-bottom:40px;line-height:1.5}
+.auth-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:16px;margin:0 auto;}
+.auth-submit{background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;margin-top:8px;transition:transform .2s;min-height:54px;display:flex;align-items:center;justify-content:center;}
+.auth-submit:active{transform:scale(.97)}
+
+/* partner dash */
+.p-greet{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
+.p-greet-sub{font-size:15px;color:var(--g3);margin-bottom:32px}
+.p-session-card{background:var(--s1);border-radius:var(--r);margin-bottom:16px;overflow:hidden}
+.psc-hd{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--liner);background:var(--s2)}
+.psc-time{font-size:15px;font-weight:600;color:var(--white)}
+.psc-date{font-size:12px;color:var(--g3);margin-top:2px}
+.psc-status{font-size:12px;padding:4px 12px;border-radius:100px;font-weight:600}
+.psc-status.draft{background:rgba(255,159,10,.15);color:var(--amber)}
+.psc-status.published{background:rgba(48,209,88,.15);color:var(--green)}
+.psc-body{padding:20px}
+.psc-class-name{font-family:'Playfair Display',serif;font-size:22px;font-weight:600;margin-bottom:6px}
+.psc-class-desc{font-size:14px;color:var(--g3);line-height:1.5}
+.psc-class-empty{font-size:14px;color:var(--g5)}
+.psc-edit-btn{background:var(--s2);border:none;border-radius:100px;padding:10px 20px;font-size:14px;font-weight:500;color:var(--white);transition:background .2s}
+.psc-edit-btn:active{background:var(--s3)}
+.edit-form{margin-top:20px;padding-top:20px;border-top:1px solid var(--liner);display:flex;flex-direction:column;gap:12px}
+.ef-save{background:var(--white);color:#FFF;border:none;padding:16px;border-radius:var(--rs);font-size:15px;font-weight:600;margin-top:8px}
+.p-signout{background:var(--s2);border:none;border-radius:100px;padding:12px 24px;font-size:14px;font-weight:500;color:var(--white);margin-top:32px}
+
+/* admin dash */
+.adm-h{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
+.adm-sub{font-size:15px;color:var(--g3);margin-bottom:32px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
+.stat-box{background:var(--s1);border-radius:var(--rs);padding:20px}
+.stat-n{font-size:36px;font-weight:600;color:var(--white);line-height:1}
+.stat-l{font-size:12px;color:var(--g5);margin-top:6px;font-weight:500}
+.tbl-wrap{overflow-x:auto;margin-bottom:24px;background:var(--s1);border-radius:var(--rs);padding:1px}
+table{width:100%;border-collapse:collapse;min-width:560px}
+th{font-size:11px;font-weight:600;color:var(--g3);padding:14px 16px;text-align:left;border-bottom:1px solid var(--liner)}
+td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-size:14px}
+.td-ref{color:var(--white);font-weight:600;font-size:13px}
+.btn-csv{background:var(--s2);border:none;border-radius:100px;padding:12px 20px;font-size:13px;font-weight:500;color:var(--white);margin-bottom:20px}
+.adm-section-label{font-size:13px;font-weight:600;color:var(--g3);margin:32px 0 16px;padding-left:4px}
+.fill-bar-row{background:var(--s1);border-radius:var(--rs);padding:16px}
+.fbr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+.fbr-label{font-size:13px;font-weight:500;color:var(--white)}
+.fbr-count{font-size:13px;color:var(--g5)}
+.fill-bar{height:6px;background:var(--s3);border-radius:100px;overflow:hidden}
+.fill-bar-inner{height:100%;border-radius:100px;background:var(--white);transition:width .8s cubic-bezier(.2,0,0,1)}
+
+/* ─── TOAST ──────────────────────────────────────── */
+.toast{position:fixed;top:calc(env(safe-area-inset-top)+16px);left:0;right:0;max-width:400px;margin:0 auto;background:rgba(255,255,255,0.9);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:100px;padding:16px 20px;font-size:14px;font-weight:500;color:var(--white);z-index:500;display:none;animation:toastIn .4s cubic-bezier(.2,0,0,1);text-align:center;box-shadow:0 8px 24px rgba(0,0,0,0.15)}
+.toast.show{display:block}
+@keyframes toastIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════
+     PUBLIC SCHEDULE
+════════════════════════════════════ -->
+<div class="page active" id="page-pub">
+
+  <header class="hdr">
+    <div class="hdr-logo">xbloom</div>
+    <div class="hdr-right">
+      <div class="hdr-tag">WOC Bangkok · May 7–9</div>
+    </div>
+  </header>
+
+  <div class="pub-hero">
+    <div class="pub-kicker">World of Coffee 2026</div>
+    <h1 class="pub-h1"><span class="font-logo">xbloom</span><br><em>Discovery Class</em></h1>
+    <p class="pub-sub">Experience the future of specialty coffee. Join our exclusive hands-on sessions.</p>
+    <div class="pub-info-row">
+      <div class="pub-info-item">📍 Booth A101, BITEC</div>
+      <div class="pub-info-item">🗓️ May 7–9</div>
+    </div>
+  </div>
+
+  <div class="day-tabs" id="day-tabs">
+    <div class="day-tab active" onclick="selectDay(0)"><div class="dt-n">7</div><div class="dt-m">May</div><div class="dt-d">Thu</div></div>
+    <div class="day-tab" onclick="selectDay(1)"><div class="dt-n">8</div><div class="dt-m">May</div><div class="dt-d">Fri</div></div>
+    <div class="day-tab" onclick="selectDay(2)"><div class="dt-n">9</div><div class="dt-m">May</div><div class="dt-d">Sat</div></div>
+  </div>
+
+  <div class="session-list" id="session-list"></div>
+
+  <div class="pub-bottom">
+    <button class="btn-ghost-sm" onclick="openMyBooking()">View My Bookings</button>
+    <button class="btn-ghost-sm" onclick="openMyCoupon()">View my Coupon</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     PARTNER PAGE (?partner=1)
+════════════════════════════════════ -->
+<div class="page" id="page-partner">
+  <header class="hdr">
+    <div class="hdr-logo">xbloom</div>
+    <div class="hdr-tag">Partner Portal</div>
+  </header>
+  <div class="partner-page" id="partner-page-body"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     ADMIN PAGE (?admin=1)
+════════════════════════════════════ -->
+<div class="page" id="page-admin">
+  <header class="hdr">
+    <div class="hdr-logo">xbloom</div>
+    <div class="hdr-tag">Admin</div>
+  </header>
+  <div class="admin-page" id="admin-page-body"></div>
+</div>
+
+<!-- ════════════════════════════════════
+     BOOKING SHEET
+════════════════════════════════════ -->
+<div class="overlay" id="bk-overlay">
+  <div class="sheet" id="bk-sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-hd">
+      <div class="sh-title" id="bk-title">Book a Seat</div>
+      <button class="sh-close" onclick="closeBk()">✕</button>
+    </div>
+    <div class="sh-body" id="bk-body"></div>
+  </div>
+</div>
+
+<!-- MY BOOKING SHEET -->
+<div class="overlay" id="mb-overlay">
+  <div class="sheet" id="mb-sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-hd">
+      <div class="sh-title">My Bookings</div>
+      <button class="sh-close" onclick="closeMb()">✕</button>
+    </div>
+    <div class="sh-body" id="mb-body"></div>
+  </div>
+</div>
+
+<!-- MY COUPON SHEET -->
+<div class="overlay" id="cp-overlay">
+  <div class="sheet" id="cp-sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-hd">
+      <div class="sh-title">My Coupons</div>
+      <button class="sh-close" onclick="closeCp()">✕</button>
+    </div>
+    <div class="sh-body" id="cp-body">
+      <div style="text-align:center;padding:40px 0 20px;">
+        <div style="font-size:48px;margin-bottom:16px;">🎟️</div>
+        <div style="font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px;">No coupons yet</div>
+        <div style="font-size:14px;color:var(--g3);line-height:1.5;">Book a discovery class<br>to unlock your exclusive perks.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════
+     CONFIRM OVERLAY
+════════════════════════════════════ -->
+<div class="confirm-ov" id="confirm-ov">
+  <div class="co-icon">✅</div>
+  <div class="co-h">Booking Successful!</div>
+  <div class="co-sub">Show your reference at the booth to claim your spot.</div>
+  <div class="co-card">
+    <div class="co-rl">Booking Reference</div>
+    <div class="co-ref" id="co-ref">XB-0507-XXXX</div>
+    <div class="co-sep"></div>
+    <div class="co-class" id="co-class">—</div>
+    <div class="co-dt" id="co-dt">—</div>
+    <div class="co-name-val" id="co-name">—</div>
+    <div class="co-note-sm">World of Coffee Bangkok 2026 · Booth A101, BITEC</div>
+  </div>
+  <div class="promos-label">Exclusive Perks Await</div>
+  <div class="promos">
+    <div class="promo-row"><span class="pr-ico">☕</span><div class="pr-info"><div class="pr-title">Discount on xBloom Machine</div><div class="pr-desc">Full payment via transfer/card at the booth</div></div><div class="pr-val">฿3,900</div></div>
+    <div class="promo-row"><span class="pr-ico">🫘</span><div class="pr-info"><div class="pr-title">Coffee Bean Coupon</div><div class="pr-desc">Sent via Email post-event</div></div><div class="pr-val">−10%</div></div>
+    <div class="promo-row"><span class="pr-ico">🔧</span><div class="pr-info"><div class="pr-title">Gear Coupon</div><div class="pr-desc">At booth or xbloom.co.th (30 days)</div></div><div class="pr-val">−15%</div></div>
+  </div>
+  <div class="co-note-email">📧 Details and coupons will be sent to your registered Email.</div>
+  <button class="btn-done" onclick="closeConfirm()">Done</button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ═══════════════════════════════════════
+   CONFIG
+═══════════════════════════════════════ */
+const GAS_URL = '';
+const MOCK    = GAS_URL === '';
+const ADMIN_PASS_MOCK = 'xbloom2026';
+
+/* ═══════════════════════════════════════
+   DATA MODEL
+   Sessions = 3 days × 5 slots = 15 sessions
+   Partner fills in: className, desc, instructor
+   Admin can see all bookings
+═══════════════════════════════════════ */
+const DAYS_META = [
+  { label:'7 May', full:'7 May 2026 · Thursday', date:'2026-05-07' },
+  { label:'8 May', full:'8 May 2026 · Friday',   date:'2026-05-08' },
+  { label:'9 May', full:'9 May 2026 · Saturday',  date:'2026-05-09' },
+];
+const SLOTS_META = [
+  { id:0, t:'10:00', e:'11:30' },
+  { id:1, t:'11:30', e:'13:00' },
+  { id:2, t:'13:00', e:'14:30' },
+  { id:3, t:'14:30', e:'16:00' },
+  { id:4, t:'16:00', e:'17:30' },
+];
+
+// ── MOCK sessions — simulating what partners have already filled ──
+// In production this comes from GAS/Sheets
+let SESSIONS = [
+  // Day 0 – 7 May
+  { sid:'S07-0', day:0, slotId:0, partner:'Roots Coffee Roaster', className:'The Art of Pour Over', desc:'Learn slow bar hand brew techniques and taste the results of your own craft.', instructor:'Mr. Somchai Chankafae', booked:8,  published:true },
+  { sid:'S07-1', day:0, slotId:1, partner:'Ristr8to Lab',         className:'Espresso Decoded',    desc:'Decode espresso — pressure, temperature, and ratio for the perfect shot.', instructor:'Ms. Wipa Leenaka', booked:12, published:true },
+  { sid:'S07-2', day:0, slotId:2, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  { sid:'S07-3', day:0, slotId:3, partner:'Brave Roasters',       className:'Natural vs Washed',   desc:'Compare processing methods and their impact on flavor profiles via side-by-side cupping.', instructor:'Ms. Dao Sukjai', booked:5,  published:true },
+  { sid:'S07-4', day:0, slotId:4, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  // Day 1 – 8 May
+  { sid:'S08-0', day:1, slotId:0, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  { sid:'S08-1', day:1, slotId:1, partner:'Pacamara',             className:'Single Origin Journey', desc:'Journey through 4 single origins from 4 continents in 90 mins — Ethiopia, Colombia, Yemen, Thailand.', instructor:'Mr. Mark Leedee', booked:10, published:true },
+  { sid:'S08-2', day:1, slotId:2, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  { sid:'S08-3', day:1, slotId:3, partner:'Ristr8to Lab',         className:'Milk & Microfoam',    desc:'Milk steaming techniques for perfect microfoam, plus basic free pour practice.', instructor:'Ms. Wipa Leenaka', booked:7,  published:true },
+  { sid:'S08-4', day:1, slotId:4, partner:'Roots Coffee Roaster', className:'Cold Brew Science',   desc:'The science behind cold brew — extraction time, ratio, and home-brewing techniques.', instructor:'Mr. Somchai Chankafae', booked:3,  published:true },
+  // Day 2 – 9 May
+  { sid:'S09-0', day:2, slotId:0, partner:'Ristr8to Lab',         className:'Latte Art: First Steps', desc:'Learn basic free pouring — rosetta, heart, and tulip for beginners.', instructor:'Ms. Wipa Leenaka', booked:15, published:true },
+  { sid:'S09-1', day:2, slotId:1, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  { sid:'S09-2', day:2, slotId:2, partner:'Brave Roasters',       className:'Roasting 101',        desc:'Discover roast profiles, development time, and first crack — the basic theory of roasting.', instructor:'Ms. Dao Sukjai', booked:7,  published:true },
+  { sid:'S09-3', day:2, slotId:3, partner:'',                     className:'',   desc:'', instructor:'', booked:0,  published:false },
+  { sid:'S09-4', day:2, slotId:4, partner:'Pacamara',             className:'Cupping Like a Pro',  desc:'Learn the SCA cupping protocol — practice tasting, scoring, and writing score sheets like a pro.', instructor:'Mr. Mark Leedee', booked:9,  published:true },
+];
+
+// Mock bookings (for admin view)
+let ALL_BOOKINGS = [];
+
+// Mock partners (for partner login)
+const MOCK_PARTNERS = [
+  { refCode:'ROOTSC', company:'Roots Coffee Roaster', contact:'Somchai', email:'roots@demo.com', pin:'1111', sessions:['S07-0','S08-4'] },
+  { refCode:'RISTR8', company:'Ristr8to Lab',         contact:'Wipa',    email:'ristr8@demo.com',pin:'2222', sessions:['S07-1','S08-3','S09-0'] },
+  { refCode:'BRAVE0', company:'Brave Roasters',       contact:'Dao',     email:'brave@demo.com', pin:'3333', sessions:['S07-3','S09-2'] },
+  { refCode:'PACAM0', company:'Pacamara',             contact:'Mark',    email:'pacam@demo.com', pin:'4444', sessions:['S08-1','S09-4'] },
+];
+
+/* ═══════════════════════════════════════
+   STATE
+═══════════════════════════════════════ */
+const ST = {
+  day: 0,
+  bk: null,     // session being booked
+  partner: null, // logged-in partner
+  admin: false,
+  adminData: [],
+  editOpen: {},  // {sid: bool}
+};
+
+/* ═══════════════════════════════════════
+   PUBLIC SCHEDULE
+═══════════════════════════════════════ */
+let curDay = 0;
+
+function selectDay(d) {
+  curDay = d;
+  document.querySelectorAll('.day-tab').forEach((el,i) => el.classList.toggle('active', i === d));
+  renderSessionList();
+}
+
+function renderSessionList() {
+  const el = document.getElementById('session-list');
+  el.innerHTML = '';
+  const daySessions = SESSIONS.filter(s => s.day === curDay);
+
+  daySessions.forEach(ses => {
+    const slot  = SLOTS_META[ses.slotId];
+    const rem   = 15 - ses.booked;
+    const full  = rem <= 0;
+    const empty = !ses.published;
+
+    const card = document.createElement('div');
+    card.className = 'session-card';
+
+    let capHtml = '';
+    let capCls  = '';
+    if (!empty) {
+      if (full)       { capHtml = 'Full';        capCls = 'full'; }
+      else if (rem<=4){ capHtml = `Only ${rem} left`;  capCls = 'warn'; }
+      else            { capHtml = `${rem} available`;    capCls = 'ok'; }
+    }
+
+    let bodyHtml = '';
+    if (empty) {
+      bodyHtml = `<div class="sc-empty"><div class="sc-empty-label">Coming Soon — Stay Tuned</div></div>`;
+    } else {
+      bodyHtml = `
+        <div class="sc-body">
+          <div class="sc-partner">${ses.partner}</div>
+          <div class="sc-class">${ses.className}</div>
+          <div class="sc-desc">${ses.desc}</div>
+          <div class="sc-instructor">Instructor: ${ses.instructor}</div>
+          <div class="sc-footer">
+            <div class="sc-spots">${ses.booked}/15 Seats</div>
+            <button class="btn-book${full?' full':''}" onclick="${full?'':'openBk(\''+ses.sid+'\')'}">${full ? 'Fully Booked' : 'Book Seat'}</button>
+          </div>
+        </div>`;
+    }
+
+    card.innerHTML = `
+      <div class="sc-time-bar">
+        <div class="sc-time">${slot.t} – ${slot.e}</div>
+        ${capHtml ? `<div class="sc-cap ${capCls}">${capHtml}</div>` : ''}
+      </div>
+      ${bodyHtml}`;
+    el.appendChild(card);
+  });
+}
+
+/* ═══════════════════════════════════════
+   BOOKING
+═══════════════════════════════════════ */
+function openBk(sid) {
+  ST.bk = SESSIONS.find(s => s.sid === sid);
+  if (!ST.bk) return;
+  document.getElementById('bk-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderBkForm();
+}
+function closeBk() {
+  document.getElementById('bk-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderBkForm() {
+  const s    = ST.bk;
+  const slot = SLOTS_META[s.slotId];
+  const day  = DAYS_META[s.day];
+  document.getElementById('bk-body').innerHTML = `
+    <div class="sh-session">
+      <div class="sh-ses-time">${day.label} · ${slot.t} – ${slot.e}</div>
+      <div class="sh-ses-class">${s.className}</div>
+      <div class="sh-ses-partner">${s.partner}</div>
+    </div>
+    <div class="field-stack">
+      <div class="field" id="fw-name"><label>Full Name *</label><input id="f-name" type="text" placeholder="Enter your full name" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
+      <div class="field" id="fw-phone"><label>Phone *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
+      <div class="field" id="fw-email"><label>Email *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
+    </div>
+    <button class="btn-primary" onclick="submitBk()">Confirm Booking</button>
+  `;
+}
+
+function ff(id){document.getElementById(id)?.classList.add('focused')}
+function fb(id){document.getElementById(id)?.classList.remove('focused')}
+
+async function submitBk() {
+  const name  = document.getElementById('f-name')?.value.trim();
+  const phone = document.getElementById('f-phone')?.value.trim();
+  const email = document.getElementById('f-email')?.value.trim();
+  if (!name || !phone || !email) { showToast('Please fill in all fields'); return; }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email format'); return; }
+
+  const s    = ST.bk;
+  const slot = SLOTS_META[s.slotId];
+  const day  = DAYS_META[s.day];
+  const ref  = `XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
+
+  if (!MOCK) {
+    try { await gasCall({ action:'book', sid:s.sid, name, phone, email, ref }); }
+    catch { showToast('An error occurred, please try again'); return; }
+  }
+
+  // Update local state
+  s.booked = (s.booked || 0) + 1;
+  ALL_BOOKINGS.push({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, name, phone, email, className:s.className, partner:s.partner });
+  sessionStorage.setItem('lastBooking', JSON.stringify({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, className:s.className, partner:s.partner, name }));
+
+  closeBk();
+  document.getElementById('co-ref').textContent   = ref;
+  document.getElementById('co-class').textContent = s.className;
+  document.getElementById('co-dt').textContent    = `${day.label} · ${slot.t}–${slot.e} · ${s.partner}`;
+  document.getElementById('co-name').textContent  = name;
+  document.getElementById('confirm-ov').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderSessionList();
+}
+
+function closeConfirm() {
+  document.getElementById('confirm-ov').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+/* ═══════════════════════════════════════
+   MY BOOKING
+═══════════════════════════════════════ */
+function openMyBooking() {
+  document.getElementById('mb-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  renderMyBooking();
+}
+function closeMb() {
+  document.getElementById('mb-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function openMyCoupon() {
+  document.getElementById('cp-overlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeCp() {
+  document.getElementById('cp-overlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function renderMyBooking(result) {
+  const last = JSON.parse(sessionStorage.getItem('lastBooking') || 'null');
+  let html = `<div class="my-booking-content">`;
+
+  if (result) {
+    html += renderBookingCard(result);
+  } else if (last) {
+    html += `<div style="font-size:13px;color:var(--g3);margin-bottom:16px">Your Latest Booking</div>`;
+    html += renderBookingCard(last);
+    html += `<div style="height:16px"></div>`;
+  }
+
+  html += `
+    <div style="font-size:13px;color:var(--g3);margin-bottom:10px">Search by Booking Reference</div>
+    <div class="field" id="mb-ref-w" style="margin-bottom:12px">
+      <label>Booking Reference</label>
+      <input id="mb-ref-input" type="text" placeholder="e.g., XB-0507-AB12" style="text-transform:uppercase" onfocus="ff('mb-ref-w')" onblur="fb('mb-ref-w')">
+    </div>
+    <button class="btn-primary" onclick="lookupBooking()">Search</button>
+  </div>`;
+  document.getElementById('mb-body').innerHTML = html;
+}
+
+function renderBookingCard(b) {
+  return `<div class="my-booking-found" style="margin-bottom:16px">
+    <div class="mbf-time">${b.day} · ${b.time}</div>
+    <div class="mbf-class">${b.className}</div>
+    <div class="mbf-partner">${b.partner}</div>
+    <div class="mbf-sep"></div>
+    <div class="mbf-ref">Ref: <strong>${b.ref}</strong></div>
+    <div class="mbf-name">${b.name}</div>
+  </div>`;
+}
+
+async function lookupBooking() {
+  const ref = document.getElementById('mb-ref-input')?.value.trim().toUpperCase();
+  if (!ref) { showToast('Please enter Booking Reference'); return; }
+
+  if (MOCK) {
+    const found = ALL_BOOKINGS.find(b => b.ref === ref);
+    if (found) renderMyBooking(found);
+    else showToast('Booking not found');
+    return;
+  }
+  try {
+    const res = await gasCall({ action:'getBooking', ref });
+    if (res.ok) renderMyBooking(res.booking);
+    else showToast('Booking not found');
+  } catch { showToast('An error occurred'); }
+}
+
+/* ═══════════════════════════════════════
+   PARTNER PORTAL
+═══════════════════════════════════════ */
+function renderPartnerPage() {
+  if (ST.partner) renderPartnerDash();
+  else renderPartnerLogin();
+}
+
+function renderPartnerLogin() {
+  document.getElementById('partner-page-body').innerHTML = `
+    <div class="auth-center">
+      <div class="auth-icon">☕</div>
+      <div class="auth-h">Partner Portal</div>
+      <div class="auth-sub">Log in with the Ref Code and PIN<br>provided by xBloom Thailand</div>
+      <div class="auth-form">
+        <div class="field" id="pf-rc"><label>Ref Code</label><input id="p-rc" type="text" placeholder="e.g., ROOTSC" style="text-transform:uppercase" onfocus="ff('pf-rc')" onblur="fb('pf-rc')"></div>
+        <div class="field" id="pf-pin"><label>PIN</label><input id="p-pin" type="password" inputmode="numeric" placeholder="4 Digits" onfocus="ff('pf-pin')" onblur="fb('pf-pin')" onkeyup="if(event.key==='Enter')partnerLogin()"></div>
+        <button class="auth-submit" onclick="partnerLogin()">Log In</button>
+      </div>
+    </div>
+  `;
+}
+
+async function partnerLogin() {
+  const rc  = document.getElementById('p-rc')?.value.trim().toUpperCase();
+  const pin = document.getElementById('p-pin')?.value.trim();
+  if (!rc || !pin) { showToast('Please enter Ref Code and PIN'); return; }
+
+  if (MOCK) {
+    const p = MOCK_PARTNERS.find(x => x.refCode === rc && x.pin === pin);
+    if (p) { ST.partner = p; renderPartnerDash(); }
+    else showToast('Invalid Ref Code or PIN');
+    return;
+  }
+  try {
+    const res = await gasCall({ action:'partnerLogin', refCode:rc, pin });
+    if (res.ok) { ST.partner = res.partner; renderPartnerDash(); }
+    else showToast('Invalid Ref Code or PIN');
+  } catch { showToast('An error occurred'); }
+}
+
+function renderPartnerDash() {
+  const p = ST.partner;
+  const mySessions = SESSIONS.filter(s => p.sessions.includes(s.sid));
+
+  let sessHtml = mySessions.map(ses => {
+    const slot = SLOTS_META[ses.slotId];
+    const day  = DAYS_META[ses.day];
+    const isOpen = ST.editOpen[ses.sid];
+    const status = ses.published ? 'published' : 'draft';
+    const statusLabel = ses.published ? 'Published' : 'No Data';
+
+    return `<div class="p-session-card">
+      <div class="psc-hd">
+        <div><div class="psc-time">${slot.t} – ${slot.e}</div><div class="psc-date">${day.label}</div></div>
+        <div class="psc-status ${status}">${statusLabel}</div>
+      </div>
+      <div class="psc-body">
+        ${ses.published
+          ? `<div class="psc-preview"><div class="psc-class-name">${ses.className}</div><div class="psc-class-desc">${ses.desc}</div></div>`
+          : `<div class="psc-class-empty">Workshop details not added yet — click edit to add details</div>`
+        }
+        <div style="margin-top:12px">
+          <button class="psc-edit-btn" onclick="toggleEdit('${ses.sid}')">${isOpen ? 'Close ✕' : (ses.published ? 'Edit Details' : 'Add Workshop Details')}</button>
+        </div>
+        ${isOpen ? `
+          <div class="edit-form">
+            <div class="field" id="ef-cn-${ses.sid}"><label>Workshop Name *</label><input id="ef-cn-${ses.sid}-i" type="text" value="${ses.className}" placeholder="e.g., The Art of Pour Over" onfocus="ff('ef-cn-${ses.sid}')" onblur="fb('ef-cn-${ses.sid}')"></div>
+            <div class="field" id="ef-ds-${ses.sid}"><label>Description</label><textarea id="ef-ds-${ses.sid}-i" rows="3" placeholder="Briefly describe what will be learned in this workshop" onfocus="ff('ef-ds-${ses.sid}')" onblur="fb('ef-ds-${ses.sid}')">${ses.desc}</textarea></div>
+            <div class="field" id="ef-in-${ses.sid}"><label>Instructor Name</label><input id="ef-in-${ses.sid}-i" type="text" value="${ses.instructor}" placeholder="Instructor's full name" onfocus="ff('ef-in-${ses.sid}')" onblur="fb('ef-in-${ses.sid}')"></div>
+            <button class="ef-save" onclick="saveSession('${ses.sid}')">Save & Publish</button>
+          </div>
+        ` : ''}
+      </div>
+    </div>`;
+  }).join('');
+
+  const booked = mySessions.reduce((a,s)=>a+s.booked,0);
+  const cap    = mySessions.length * 15;
+
+  document.getElementById('partner-page-body').innerHTML = `
+    <div class="p-greet">Hello, ${p.company}</div>
+    <div class="p-greet-sub">${mySessions.length} slots · ${booked}/${cap} Seats</div>
+    ${sessHtml}
+    <button class="p-signout" onclick="partnerSignout()">Log Out</button>
+  `;
+}
+
+function toggleEdit(sid) {
+  ST.editOpen[sid] = !ST.editOpen[sid];
+  renderPartnerDash();
+}
+
+async function saveSession(sid) {
+  const cn = document.getElementById(`ef-cn-${sid}-i`)?.value.trim();
+  const ds = document.getElementById(`ef-ds-${sid}-i`)?.value.trim();
+  const ins= document.getElementById(`ef-in-${sid}-i`)?.value.trim();
+  if (!cn) { showToast('Please enter Workshop Name'); return; }
+
+  if (!MOCK) {
+    try {
+      await gasCall({ action:'updateSession', sid, className:cn, desc:ds, instructor:ins, refCode:ST.partner.refCode, pin:ST.partner.pin });
+    } catch { showToast('An error occurred'); return; }
+  }
+
+  // Update local
+  const ses = SESSIONS.find(s => s.sid === sid);
+  if (ses) { ses.className = cn; ses.desc = ds; ses.instructor = ins; ses.published = true; }
+  ST.editOpen[sid] = false;
+  showToast('✅ Saved successfully. Details are now live on the public schedule.');
+  renderPartnerDash();
+}
+
+function partnerSignout() {
+  ST.partner = null; ST.editOpen = {};
+  renderPartnerLogin();
+}
+
+/* ═══════════════════════════════════════
+   ADMIN
+═══════════════════════════════════════ */
+function renderAdminPage() {
+  if (ST.admin) renderAdminDash();
+  else renderAdminAuth();
+}
+
+function renderAdminAuth() {
+  document.getElementById('admin-page-body').innerHTML = `
+    <div class="auth-center">
+      <div class="auth-icon">🔐</div>
+      <div class="auth-h">Admin Dashboard</div>
+      <div class="auth-sub">Enter password to view bookings and session status</div>
+      <div class="auth-form">
+        <div class="field" id="af-pw"><label>Password</label><input id="a-pw" type="password" onfocus="ff('af-pw')" onblur="fb('af-pw')" onkeyup="if(event.key==='Enter')adminLogin()"></div>
+        <button class="auth-submit" onclick="adminLogin()">Log In</button>
+      </div>
+    </div>
+  `;
+}
+
+async function adminLogin() {
+  const pass = document.getElementById('a-pw')?.value;
+  if (MOCK) {
+    if (pass === ADMIN_PASS_MOCK) {
+      ST.admin = true; ST.adminData = generateMockBookings();
+      renderAdminDash();
+    } else showToast('Invalid password');
+    return;
+  }
+  try {
+    const res = await gasCall({ action:'adminBookings', pass });
+    if (res.ok) { ST.admin=true; ST.adminData=res.bookings; renderAdminDash(); }
+    else showToast('Invalid password');
+  } catch { showToast('An error occurred'); }
+}
+
+function generateMockBookings() {
+  const names = ['Somchai Meesuk','Wipa Deejai','John Smith','Dao Suksom','Mark Lee','Kafae Rakchong'];
+  return SESSIONS.filter(s=>s.published).flatMap(ses => {
+    const day=DAYS_META[ses.day]; const slot=SLOTS_META[ses.slotId];
+    return Array.from({length:ses.booked},(_,i)=>({
+      ref:`XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`,
+      name:names[Math.floor(Math.random()*names.length)],
+      email:'demo@email.com', phone:'081-234-5678',
+      className:ses.className, partner:ses.partner,
+      day:day.label, time:`${slot.t}–${slot.e}`
+    }));
+  });
+}
+
+function renderAdminDash() {
+  const data = [...ST.adminData, ...ALL_BOOKINGS];
+  const total = data.length;
+  const byday = DAYS_META.map(d=>data.filter(b=>b.day===d.label).length);
+
+  const fillRateHtml = SESSIONS.filter(s=>s.published).map(ses=>{
+    const day=DAYS_META[ses.day]; const slot=SLOTS_META[ses.slotId];
+    const pct = Math.round((ses.booked/15)*100);
+    return `<div class="fill-bar-row">
+      <div class="fbr-top">
+        <div class="fbr-label">${day.label} ${slot.t} · ${ses.className}</div>
+        <div class="fbr-count">${ses.booked}/15</div>
+      </div>
+      <div class="fill-bar"><div class="fill-bar-inner" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  const tableRows = data.map(b=>`<tr>
+    <td class="td-ref">${b.ref}</td>
+    <td>${b.name}</td>
+    <td>${b.className}</td>
+    <td>${b.day}</td>
+    <td>${b.time}</td>
+  </tr>`).join('');
+
+  document.getElementById('admin-page-body').innerHTML = `
+    <div class="adm-h">Dashboard</div>
+    <div class="adm-sub">xBloom × WOC Bangkok 2026</div>
+
+    <div class="stat-grid">
+      <div class="stat-box"><div class="stat-n">${total}</div><div class="stat-l">Total Bookings</div></div>
+      ${byday.map((n,i)=>`<div class="stat-box"><div class="stat-n">${n}</div><div class="stat-l">${DAYS_META[i].label}</div></div>`).join('')}
+      <div class="stat-box"><div class="stat-n">${SESSIONS.filter(s=>s.published).length}</div><div class="stat-l">Sessions Live</div></div>
+      <div class="stat-box"><div class="stat-n">${SESSIONS.filter(s=>!s.published).length}</div><div class="stat-l">Sessions TBA</div></div>
+    </div>
+
+    <div class="adm-section-label">Fill Rate per Session</div>
+    <div class="fill-rate-grid">${fillRateHtml}</div>
+
+    <button class="btn-csv" onclick="exportCSV()">⬇ Export Bookings CSV</button>
+    <div class="tbl-wrap">
+      <table>
+        <thead><tr><th>Ref</th><th>Name</th><th>Workshop</th><th>Day</th><th>Time</th></tr></thead>
+        <tbody>${tableRows || '<tr><td colspan="5" style="color:var(--g5);text-align:center;padding:20px">No bookings yet</td></tr>'}</tbody>
+      </table>
+    </div>
+    <button class="p-signout" onclick="ST.admin=false;renderAdminPage()">Log Out</button>
+  `;
+}
+
+function exportCSV() {
+  const data = [...ST.adminData, ...ALL_BOOKINGS];
+  const rows = [['Ref','Name','Email','Phone','Workshop','Partner','Date','Time']];
+  data.forEach(b=>rows.push([b.ref, b.name, b.email||'', b.phone||'', b.className, b.partner, b.day, b.time]));
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n')],{type:'text/csv'}));
+  a.download = `xbloom-woc-${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+/* ═══════════════════════════════════════
+   GAS
+═══════════════════════════════════════ */
+function gasCall(params) {
+  return new Promise((res,rej)=>{
+    const cb = 'cb_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const url = GAS_URL+'?'+new URLSearchParams({...params,callback:cb});
+    window[cb] = data=>{delete window[cb];sc.remove();res(data);};
+    const sc = document.createElement('script');
+    sc.src=url; sc.onerror=rej;
+    document.head.appendChild(sc);
+    setTimeout(()=>{if(window[cb]){delete window[cb];sc.remove();rej(new Error('Timeout'));}},12000);
+  });
+}
+
+/* ═══════════════════════════════════════
+   UTILS
+═══════════════════════════════════════ */
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+/* ═══════════════════════════════════════
+   INIT — URL routing
+═══════════════════════════════════════ */
+function init() {
+  const params = new URLSearchParams(location.search);
+
+  if (params.get('partner') === '1') {
+    document.getElementById('page-pub').classList.remove('active');
+    document.getElementById('page-partner').classList.add('active');
+    renderPartnerPage();
+    return;
+  }
+  if (params.get('admin') === '1') {
+    document.getElementById('page-pub').classList.remove('active');
+    document.getElementById('page-admin').classList.add('active');
+    renderAdminPage();
+    return;
+  }
+
+  // Default: public schedule
+  const ref = params.get('ref');
+  if (ref) { sessionStorage.setItem('partnerRef', ref); showToast(`🤝 From Partner: ${ref}`); }
+  renderSessionList();
+}
+
+document.getElementById('bk-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('bk-overlay')) closeBk(); });
+document.getElementById('mb-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('mb-overlay')) closeMb(); });
+document.getElementById('cp-overlay').addEventListener('click', e=>{ if(e.target===document.getElementById('cp-overlay')) closeCp(); });
+
+init();
+</script>
+</body>
+</html>
