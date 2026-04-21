@@ -564,7 +564,7 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwvLNJaqwa3-1Wa0xeFtPq2JZZoeGjTl2PvzUPZiis5ikURpFkrdtzZkF-GdNM1vltvDA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbyZi-PK1qffpWk8aRmPsjbInWaIETrfZqJSBKh9Jz5uvQOI9dWEuCFOaQgmXlGA7-M2Og/exec';
 const MOCK    = GAS_URL === '';
 const CLOUDINARY_CLOUD  = 'deivvwfq2';
 const CLOUDINARY_PRESET = 'vrgr8ux6';
@@ -1639,13 +1639,11 @@ async function pedSave() {
   btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
 
   if (!MOCK) {
-    // Generate partnerRef locally for new claims
     if (isNew) {
       ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase()
                      + Math.random().toString(36).slice(2,4).toUpperCase();
     }
-    // Fire-and-forget to GAS — no waiting for response, UI updates optimistically
-    gasWrite({
+    const res = await gasWrite({
       action     : isNew ? 'claimSession' : 'updateSession',
       sid        : PED_SID,
       company    : company.slice(0, 60),
@@ -1658,6 +1656,12 @@ async function pedSave() {
       agenda     : JSON.stringify(ag),
       partnerRef : ses.partnerRef,
     });
+    if (res && !res.ok) {
+      showToast('❌ ' + (res.error || 'Could not save'));
+      btns.forEach(b => { if(b){ b.disabled=false; b.textContent=isNew?'Claim & Publish':'Save Changes'; }});
+      return;
+    }
+    if (res && res.partnerRef) ses.partnerRef = res.partnerRef;
   }
 
   ses.partner    = company;
@@ -1865,17 +1869,21 @@ function gasCall(params, timeoutMs = 15000) {
   });
 }
 
-// Fire-and-forget write to GAS (no-cors = no response, but GAS receives it)
-function gasWrite(params) {
+// Write to GAS via fetch GET with redirect:follow
+// GAS returns JSON — we follow the redirect to googleusercontent.com which allows CORS reads
+async function gasWrite(params) {
   const qs = Object.entries(params)
     .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
     .join('&');
-  // Try fetch no-cors first, fallback to image beacon
+  const url = GAS_URL + '?' + qs;
   try {
-    fetch(GAS_URL + '?' + qs, { method: 'GET', mode: 'no-cors' }).catch(() => {});
-  } catch(e) {}
-  // Also send via Image beacon as backup (always works, no CORS)
-  try { new Image().src = GAS_URL + '?' + qs; } catch(e) {}
+    const resp = await fetch(url, { redirect: 'follow' });
+    const json = await resp.json();
+    return json;
+  } catch(e) {
+    console.warn('gasWrite error:', e.message);
+    return { ok: false, error: e.message };
+  }
 }
 
 
