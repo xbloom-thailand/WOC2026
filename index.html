@@ -564,7 +564,7 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwMT0ONY14GhgmmFdrWm-yFdKxEJrHgBo9_EPUSkiZnxXzJ73_t48pv2sWkUrla3pxtYA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwrVPeBvgoYpf21SDOL27BSmmJdae-6y1rXP_segAnvZHkf0AdGKUBkNXVAPwNJ5Pac3g/exec';
 const MOCK    = GAS_URL === '';
 const ADMIN_PASS_MOCK = 'xbloom2026';
 
@@ -681,6 +681,8 @@ const ST = {
   pDay: 0,
   admin: false,
   adminData: [],
+  adminSessions: [],
+  adminCoupons: [],
 };
 
 /* ═══════════════════════════════════════
@@ -1539,120 +1541,140 @@ function pedLiveImg(url) {
 function handleImagePick(input) {
   const file = input.files[0];
   if (!file) return;
-
-  // Show local preview immediately while uploading
   const reader = new FileReader();
   reader.onload = (ev) => {
-    // Compress via canvas, then upload
+    // Show local preview immediately
+    const area = document.getElementById('ped-img-area');
+    let preview = document.getElementById('ped-img-preview');
+    const ph = document.getElementById('ped-img-placeholder');
+    if (ph) ph.style.display = 'none';
+    if (!preview) {
+      preview = document.createElement('img');
+      preview.id = 'ped-img-preview';
+      preview.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
+      area.appendChild(preview);
+    }
+    preview.src = ev.target.result;
+    // Compress and upload
     const img = new Image();
     img.onload = () => uploadImageToDrive(img, file.name);
     img.src = ev.target.result;
-
-    // Show preview right away from local data
-    const area = document.getElementById('ped-img-area');
-    if (area) {
-      let preview = document.getElementById('ped-img-preview');
-      const ph    = document.getElementById('ped-img-placeholder');
-      if (ph) ph.style.display = 'none';
-      if (!preview) {
-        preview = document.createElement('img');
-        preview.id = 'ped-img-preview';
-        preview.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
-        area.appendChild(preview);
-      }
-      preview.src = ev.target.result;
-    }
   };
   reader.readAsDataURL(file);
 }
 
 async function uploadImageToDrive(imgEl, originalName) {
-  // Show upload overlay
-  const overlay   = document.getElementById('ped-upload-overlay');
-  const statusEl  = document.getElementById('ped-img-status');
-  if (overlay) overlay.style.display = 'flex';
-  if (statusEl) statusEl.textContent = 'กำลัง compress และอัปโหลด...';
+  const overlay  = document.getElementById('ped-upload-overlay');
+  const statusEl = document.getElementById('ped-img-status');
+  if (overlay)  overlay.style.display = 'flex';
+  if (statusEl) statusEl.textContent  = 'กำลัง compress รูป...';
 
   try {
-    // Compress to max 1200×675 @ 80% JPEG
-    const maxW = 1200, maxH = 675;
+    // Guard: image must have dimensions
+    if (!imgEl.naturalWidth || !imgEl.naturalHeight) {
+      throw new Error('ไม่สามารถอ่านขนาดรูปได้ — ลองรูปอื่น');
+    }
+
+    // Compress: target 500×227 (2.2:1) at 60% JPEG → ~10-18KB base64
+    const maxW = 500, maxH = 227;
     let w = imgEl.naturalWidth, h = imgEl.naturalHeight;
     const ratio = Math.min(maxW / w, maxH / h, 1);
-    w = Math.round(w * ratio);
-    h = Math.round(h * ratio);
-
     const canvas = document.createElement('canvas');
-    canvas.width = w; canvas.height = h;
-    canvas.getContext('2d').drawImage(imgEl, 0, 0, w, h);
-    const base64   = canvas.toDataURL('image/jpeg', 0.80).split(',')[1];
-    const filename = originalName.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
+    canvas.width  = Math.round(w * ratio);
+    canvas.height = Math.round(h * ratio);
+    canvas.getContext('2d').drawImage(imgEl, 0, 0, canvas.width, canvas.height);
 
-    // Upload via hidden iframe form POST (bypasses CORS / redirect issues)
-    const url = await iframeFormUpload(base64, filename);
+    const base64  = canvas.toDataURL('image/jpeg', 0.60).split(',')[1];
+    if (!base64)  throw new Error('Compress รูปไม่สำเร็จ');
 
-    // Success — store URL and update everything
-    const urlInput = document.getElementById('ped-img-url');
-    if (urlInput) urlInput.value = url;
-    if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
-    pedLiveImg(url); // update card preview
+    const filename  = originalName.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
+    const uploadId  = 'up_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
 
-  } catch (e) {
-    if (statusEl) statusEl.textContent = '❌ อัปโหลดไม่สำเร็จ: ' + e.message;
-    showToast('อัปโหลดรูปไม่สำเร็จ — ' + e.message);
+    // Split into 3KB chunks (safe for JSONP URL + GAS parameter limits)
+    const CHUNK_SZ = 3000;
+    const chunks   = [];
+    for (let i = 0; i < base64.length; i += CHUNK_SZ) {
+      chunks.push(base64.slice(i, i + CHUNK_SZ));
+    }
+
+    if (statusEl) statusEl.textContent = `กำลังอัปโหลด... (0/${chunks.length} ส่วน)`;
+
+    // Send chunks sequentially, with retry for each
+    for (let i = 0; i < chunks.length; i++) {
+      if (statusEl) statusEl.textContent = `กำลังอัปโหลด... (${i+1}/${chunks.length} ส่วน)`;
+
+      let res = null;
+      for (let attempt = 0; attempt < 3; attempt++) {
+        try {
+          res = await gasCallWithTimeout({
+            action: 'receiveChunk',
+            uploadId,
+            chunkIdx     : i,
+            totalChunks  : chunks.length,
+            data         : chunks[i],
+            filename,
+          }, 25000); // 25s — final chunk triggers Drive API
+          break; // success
+        } catch(e) {
+          if (attempt === 2) throw new Error(`Chunk ${i+1} ล้มเหลวหลัง 3 ครั้ง: ${e.message}`);
+          await new Promise(r => setTimeout(r, 1500));
+        }
+      }
+
+      if (!res.ok) throw new Error(res.error || `Chunk ${i+1} error`);
+
+      // Final chunk returns url directly if Drive save succeeded
+      if (res.done && res.url) {
+        setImageUrl(res.url, statusEl);
+        return;
+      }
+    }
+
+    // Fallback poll (shouldn't normally reach here)
+    if (statusEl) statusEl.textContent = 'กำลังบันทึกรูปใน Drive...';
+    for (let i = 0; i < 10; i++) {
+      await new Promise(r => setTimeout(r, 3000));
+      const res = await gasCall({ action: 'getUploadResult', uploadId });
+      if (res.ok && res.url)   { setImageUrl(res.url, statusEl); return; }
+      if (res.ok && res.error) throw new Error(res.error);
+    }
+    throw new Error('Drive ไม่ตอบกลับหลัง 30 วินาที');
+
+  } catch(err) {
+    if (statusEl) statusEl.textContent = '❌ ' + err.message;
+    showToast('อัปโหลดไม่สำเร็จ: ' + err.message);
   } finally {
     if (overlay) overlay.style.display = 'none';
   }
 }
 
-function iframeFormUpload(base64, filename) {
-  return new Promise((resolve, reject) => {
-    const iframeName = 'ped_upload_' + Date.now();
-    const iframe = document.createElement('iframe');
-    iframe.name  = iframeName;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
+function setImageUrl(url, statusEl) {
+  const inp = document.getElementById('ped-img-url');
+  if (inp) inp.value = url;
+  if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
+  pedLiveImg(url);
+}
 
-    const timer = setTimeout(() => {
-      cleanup(); reject(new Error('Upload timeout (30s)'));
-    }, 30000);
-
-    function onMessage(ev) {
-      try {
-        const data = JSON.parse(ev.data);
-        if (data.type === 'uploadDone')  { cleanup(); resolve(data.url); }
-        if (data.type === 'uploadError') { cleanup(); reject(new Error(data.error)); }
-      } catch {}
-    }
-
-    function cleanup() {
-      clearTimeout(timer);
-      window.removeEventListener('message', onMessage);
-      iframe.remove();
-      form.remove();
-    }
-
-    window.addEventListener('message', onMessage);
-
-    // Build hidden form
-    const form = document.createElement('form');
-    form.method   = 'POST';
-    form.action   = GAS_URL;
-    form.target   = iframeName;
-    form.style.display = 'none';
-
-    const addField = (name, value) => {
-      const inp = document.createElement('input');
-      inp.type = 'hidden'; inp.name = name; inp.value = value;
-      form.appendChild(inp);
-    };
-
-    addField('action',    'uploadImage');
-    addField('imageData', base64);
-    addField('filename',  filename);
-
-    document.body.appendChild(form);
-    form.submit();
-  });
+// POST-based call for large payloads (image chunks) — avoids JSONP URL-length limits
+async function gasCallWithTimeout(params, timeoutMs) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const resp = await fetch(GAS_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+      signal: controller.signal,
+      redirect: 'follow',
+    });
+    if (!resp.ok) throw new Error('HTTP ' + resp.status);
+    return await resp.json();
+  } catch(e) {
+    if (e.name === 'AbortError') throw new Error('Timeout after ' + Math.round(timeoutMs/1000) + 's');
+    throw e;
+  } finally {
+    clearTimeout(timer);
+  }
 }
 
 async function pedSave() {
@@ -1749,10 +1771,19 @@ async function adminLogin() {
     return;
   }
   try {
-    const res = await gasCall({ action:'adminBookings', pass });
-    if (res.ok) { ST.admin=true; ST.adminData=res.bookings; renderAdminDash(); }
-    else showToast('Invalid password');
-  } catch { showToast('An error occurred'); }
+    const res = await gasCall({ action:'adminData', pass });
+    if (res.ok) {
+      ST.admin = true;
+      ST.adminData  = res.bookings  || [];
+      ST.adminSessions = res.sessions || [];
+      ST.adminCoupons  = res.coupons  || [];
+      renderAdminDash();
+    } else {
+      showToast(res.error || 'รหัสผ่านไม่ถูกต้อง');
+    }
+  } catch (e) {
+    showToast('เกิดข้อผิดพลาด: ' + e.message);
+  }
 }
 
 function generateMockBookings() {
@@ -1770,52 +1801,72 @@ function generateMockBookings() {
 }
 
 function renderAdminDash() {
-  const data = [...ST.adminData, ...ALL_BOOKINGS];
-  const total = data.length;
-  const byday = DAYS_META.map(d=>data.filter(b=>b.day===d.label).length);
+  // Use live GAS data (ST.adminData) merged with any local session bookings
+  const data     = ST.adminData || [];
+  const sessions = ST.adminSessions || SESSIONS;
+  const total    = data.filter(b => b.status !== 'cancelled').length;
+  const cancelled= data.filter(b => b.status === 'cancelled').length;
 
-  const fillRateHtml = SESSIONS.filter(s=>s.published).map(ses=>{
-    const day=DAYS_META[ses.day]; const slot=SLOTS_META[ses.slotId];
-    const pct = Math.round((ses.booked/15)*100);
+  // Bookings per day — match on day label OR date string
+  const byday = DAYS_META.map(d =>
+    data.filter(b => b.status !== 'cancelled' &&
+      (b.day === d.label || String(b.day||'').includes(d.label))).length
+  );
+
+  // Sessions live / TBA
+  const liveSessions = sessions.filter(s => s.published);
+  const tbaSessions  = sessions.filter(s => !s.published);
+
+  const fillRateHtml = liveSessions.map(ses => {
+    const day = DAYS_META[ses.day] || {};
+    const slot = SLOTS_META[ses.slotId] || {};
+    const booked = data.filter(b => b.sid === ses.sid && b.status !== 'cancelled').length;
+    const pct    = Math.round((booked / 15) * 100);
     return `<div class="fill-bar-row">
       <div class="fbr-top">
-        <div class="fbr-label">${day.label} ${slot.t} · ${ses.className}</div>
-        <div class="fbr-count">${ses.booked}/15</div>
+        <div class="fbr-label">${day.label||''} ${slot.t||''} · ${ses.className||'TBA'}</div>
+        <div class="fbr-count">${booked}/15</div>
       </div>
       <div class="fill-bar"><div class="fill-bar-inner" style="width:${pct}%"></div></div>
     </div>`;
   }).join('');
 
-  const tableRows = data.map(b=>`<tr>
-    <td class="td-ref">${b.ref}</td>
-    <td>${b.name}</td>
-    <td>${b.className}</td>
-    <td>${b.day}</td>
-    <td>${b.time}</td>
-  </tr>`).join('');
+  const tableRows = data.map(b => {
+    const statusBadge = b.status === 'cancelled'
+      ? `<span style="font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase">ยกเลิก</span>`
+      : '';
+    return `<tr>
+      <td class="td-ref">${b.ref} ${statusBadge}</td>
+      <td>${b.name}</td>
+      <td style="font-size:12px">${b.className||'—'}</td>
+      <td style="font-size:12px">${b.day||'—'}</td>
+      <td style="font-size:12px">${b.time||'—'}</td>
+      <td style="font-size:12px;color:var(--g5)">${b.phone||'—'}</td>
+    </tr>`;
+  }).join('');
 
   document.getElementById('admin-page-body').innerHTML = `
     <div class="adm-h">Dashboard</div>
     <div class="adm-sub">xBloom × WOC Bangkok 2026</div>
 
     <div class="stat-grid">
-      <div class="stat-box"><div class="stat-n">${total}</div><div class="stat-l">Total Bookings</div></div>
+      <div class="stat-box"><div class="stat-n">${total}</div><div class="stat-l">Active Bookings</div></div>
+      <div class="stat-box"><div class="stat-n" style="color:var(--red)">${cancelled}</div><div class="stat-l">Cancelled</div></div>
       ${byday.map((n,i)=>`<div class="stat-box"><div class="stat-n">${n}</div><div class="stat-l">${DAYS_META[i].label}</div></div>`).join('')}
-      <div class="stat-box"><div class="stat-n">${SESSIONS.filter(s=>s.published).length}</div><div class="stat-l">Sessions Live</div></div>
-      <div class="stat-box"><div class="stat-n">${SESSIONS.filter(s=>!s.published).length}</div><div class="stat-l">Sessions TBA</div></div>
+      <div class="stat-box"><div class="stat-n">${liveSessions.length}</div><div class="stat-l">Sessions Live</div></div>
+      <div class="stat-box"><div class="stat-n" style="color:var(--amber)">${tbaSessions.length}</div><div class="stat-l">Sessions TBA</div></div>
     </div>
 
-    <div class="adm-section-label">Fill Rate per Session</div>
-    <div class="fill-rate-grid">${fillRateHtml}</div>
+    ${fillRateHtml ? `<div class="adm-section-label">Fill Rate</div><div class="fill-rate-grid">${fillRateHtml}</div>` : ''}
 
-    <button class="btn-csv" onclick="exportCSV()">⬇ Export Bookings CSV</button>
+    <button class="btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
     <div class="tbl-wrap">
       <table>
-        <thead><tr><th>Ref</th><th>Name</th><th>Workshop</th><th>Day</th><th>Time</th></tr></thead>
-        <tbody>${tableRows || '<tr><td colspan="5" style="color:var(--g5);text-align:center;padding:20px">No bookings yet</td></tr>'}</tbody>
+        <thead><tr><th>Ref</th><th>ชื่อ</th><th>Workshop</th><th>วัน</th><th>เวลา</th><th>โทร</th></tr></thead>
+        <tbody>${tableRows || '<tr><td colspan="6" style="color:var(--g5);text-align:center;padding:24px">ยังไม่มี booking</td></tr>'}</tbody>
       </table>
     </div>
-    <button class="p-signout" onclick="ST.admin=false;renderAdminPage()">Log Out</button>
+    <button class="p-signout" onclick="ST.admin=false;ST.adminData=[];renderAdminPage()">Log Out</button>
   `;
 }
 
