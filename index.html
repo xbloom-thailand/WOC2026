@@ -566,6 +566,8 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 ═══════════════════════════════════════ */
 const GAS_URL = 'https://script.google.com/macros/s/AKfycbwrVPeBvgoYpf21SDOL27BSmmJdae-6y1rXP_segAnvZHkf0AdGKUBkNXVAPwNJ5Pac3g/exec';
 const MOCK    = GAS_URL === '';
+const CLOUDINARY_CLOUD  = 'deivvwfq2';
+const CLOUDINARY_PRESET = 'vrgr8ux6';
 const ADMIN_PASS_MOCK = 'xbloom2026';
 
 /* ═══════════════════════════════════════
@@ -1570,75 +1572,36 @@ async function uploadImageToDrive(imgEl, originalName) {
   if (statusEl) statusEl.textContent  = 'กำลัง compress รูป...';
 
   try {
-    // Guard: image must have dimensions
-    if (!imgEl.naturalWidth || !imgEl.naturalHeight) {
+    if (!imgEl.naturalWidth || !imgEl.naturalHeight)
       throw new Error('ไม่สามารถอ่านขนาดรูปได้ — ลองรูปอื่น');
-    }
 
-    // Compress: target 500×227 (2.2:1) at 60% JPEG → ~10-18KB base64
-    const maxW = 500, maxH = 227;
-    let w = imgEl.naturalWidth, h = imgEl.naturalHeight;
-    const ratio = Math.min(maxW / w, maxH / h, 1);
+    // Compress to 800x364 (2.2:1) at 75% JPEG
+    const maxW = 800, maxH = 364;
+    const ratio = Math.min(maxW / imgEl.naturalWidth, maxH / imgEl.naturalHeight, 1);
     const canvas = document.createElement('canvas');
-    canvas.width  = Math.round(w * ratio);
-    canvas.height = Math.round(h * ratio);
+    canvas.width  = Math.round(imgEl.naturalWidth  * ratio);
+    canvas.height = Math.round(imgEl.naturalHeight * ratio);
     canvas.getContext('2d').drawImage(imgEl, 0, 0, canvas.width, canvas.height);
+    const base64 = canvas.toDataURL('image/jpeg', 0.75).split(',')[1];
+    if (!base64) throw new Error('Compress รูปไม่สำเร็จ');
 
-    const base64  = canvas.toDataURL('image/jpeg', 0.60).split(',')[1];
-    if (!base64)  throw new Error('Compress รูปไม่สำเร็จ');
+    if (statusEl) statusEl.textContent = 'กำลังอัปโหลด...';
 
-    const filename  = originalName.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
-    const uploadId  = 'up_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    // Upload to Cloudinary (unsigned preset — full CORS, no server needed)
+    const form = new FormData();
+    form.append('file',           'data:image/jpeg;base64,' + base64);
+    form.append('upload_preset',  CLOUDINARY_PRESET);
 
-    // Split into 3KB chunks (safe for JSONP URL + GAS parameter limits)
-    const CHUNK_SZ = 3000;
-    const chunks   = [];
-    for (let i = 0; i < base64.length; i += CHUNK_SZ) {
-      chunks.push(base64.slice(i, i + CHUNK_SZ));
-    }
+    const resp = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', {
+      method: 'POST',
+      body  : form,
+    });
 
-    if (statusEl) statusEl.textContent = `กำลังอัปโหลด... (0/${chunks.length} ส่วน)`;
+    const json = await resp.json();
+    if (json.error) throw new Error(json.error.message || 'Cloudinary error');
 
-    // Send chunks sequentially, with retry for each
-    for (let i = 0; i < chunks.length; i++) {
-      if (statusEl) statusEl.textContent = `กำลังอัปโหลด... (${i+1}/${chunks.length} ส่วน)`;
-
-      let res = null;
-      for (let attempt = 0; attempt < 3; attempt++) {
-        try {
-          res = await gasCallWithTimeout({
-            action: 'receiveChunk',
-            uploadId,
-            chunkIdx     : i,
-            totalChunks  : chunks.length,
-            data         : chunks[i],
-            filename,
-          }, 25000); // 25s — final chunk triggers Drive API
-          break; // success
-        } catch(e) {
-          if (attempt === 2) throw new Error(`Chunk ${i+1} ล้มเหลวหลัง 3 ครั้ง: ${e.message}`);
-          await new Promise(r => setTimeout(r, 1500));
-        }
-      }
-
-      if (!res.ok) throw new Error(res.error || `Chunk ${i+1} error`);
-
-      // Final chunk returns url directly if Drive save succeeded
-      if (res.done && res.url) {
-        setImageUrl(res.url, statusEl);
-        return;
-      }
-    }
-
-    // Fallback poll (shouldn't normally reach here)
-    if (statusEl) statusEl.textContent = 'กำลังบันทึกรูปใน Drive...';
-    for (let i = 0; i < 10; i++) {
-      await new Promise(r => setTimeout(r, 3000));
-      const res = await gasCall({ action: 'getUploadResult', uploadId });
-      if (res.ok && res.url)   { setImageUrl(res.url, statusEl); return; }
-      if (res.ok && res.error) throw new Error(res.error);
-    }
-    throw new Error('Drive ไม่ตอบกลับหลัง 30 วินาที');
+    const url = json.secure_url;
+    setImageUrl(url, statusEl);
 
   } catch(err) {
     if (statusEl) statusEl.textContent = '❌ ' + err.message;
@@ -1653,28 +1616,6 @@ function setImageUrl(url, statusEl) {
   if (inp) inp.value = url;
   if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
   pedLiveImg(url);
-}
-
-// POST-based call for large payloads (image chunks) — avoids JSONP URL-length limits
-async function gasCallWithTimeout(params, timeoutMs) {
-  const controller = new AbortController();
-  const timer = setTimeout(() => controller.abort(), timeoutMs);
-  try {
-    const resp = await fetch(GAS_URL, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(params),
-      signal: controller.signal,
-      redirect: 'follow',
-    });
-    if (!resp.ok) throw new Error('HTTP ' + resp.status);
-    return await resp.json();
-  } catch(e) {
-    if (e.name === 'AbortError') throw new Error('Timeout after ' + Math.round(timeoutMs/1000) + 's');
-    throw e;
-  } finally {
-    clearTimeout(timer);
-  }
 }
 
 async function pedSave() {
@@ -1881,35 +1822,27 @@ function exportCSV() {
 }
 
 /* ═══════════════════════════════════════
-   GAS — JSONP (works with GAS redirects)
+   GAS — fetch (GET for reads, POST for writes)
 ═══════════════════════════════════════ */
-function gasCall(params) {
-  return new Promise((resolve, reject) => {
-    const cb  = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
-    const qs  = new URLSearchParams({ ...params, callback: cb });
-    const url = GAS_URL + '?' + qs;
+function gasCall(params, timeoutMs = 15000) {
+  const GET_ACTIONS = ['getSessions','getBooking','getBookingByContact','getWaitlistPosition','adminData','getUploadResult'];
+  const useGet = GET_ACTIONS.includes(params.action);
 
-    window[cb] = (data) => {
-      cleanup();
-      resolve(data);
-    };
+  const fetchPromise = useGet
+    ? fetch(GAS_URL + '?' + new URLSearchParams(params), { redirect: 'follow' })
+    : fetch(GAS_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(params),
+        redirect: 'follow',
+      });
 
-    const script = document.createElement('script');
-    script.src   = url;
-    script.onerror = () => { cleanup(); reject(new Error('Script load failed')); };
-    document.head.appendChild(script);
+  const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error('Timeout after ' + Math.round(timeoutMs / 1000) + 's')), timeoutMs)
+  );
 
-    const timer = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timeout after 15s'));
-    }, 15000);
-
-    function cleanup() {
-      clearTimeout(timer);
-      delete window[cb];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-  });
+  return Promise.race([fetchPromise, timeoutPromise])
+    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
 }
 
 
