@@ -564,7 +564,7 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbwrVPeBvgoYpf21SDOL27BSmmJdae-6y1rXP_segAnvZHkf0AdGKUBkNXVAPwNJ5Pac3g/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbxYqquIi6AUc4pjusvfs1EwbMmFIgLsL4f9r1cJ2zIh1f7gUxe9e96oxAX0Vqx-blaXTA/exec';
 const MOCK    = GAS_URL === '';
 const CLOUDINARY_CLOUD  = 'deivvwfq2';
 const CLOUDINARY_PRESET = 'vrgr8ux6';
@@ -1634,18 +1634,62 @@ async function pedSave() {
   if (isNew && !company) { showToast('Please enter your company name'); return; }
   if (!cn) { showToast('Please enter a Workshop Name'); return; }
 
+  // Disable both publish buttons and show loading state
+  const btns = [document.getElementById('ped-top-pub'), document.querySelector('.ped-pub-big')];
+  btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
+
+  console.log('pedSave: isNew='+isNew+' sid='+PED_SID+' company='+company+' cn='+cn+' MOCK='+MOCK);
+
   if (!MOCK) {
     try {
       if (isNew) {
-        const res = await gasCall({ action:'claimSession', sid:PED_SID, company, className:cn, desc:ds, instructor:ins, target:tg, takeaways:tk, img, agenda:JSON.stringify(ag) });
-        if (!res.ok) { showToast(res.error || 'Could not claim slot'); return; }
-        // Store partnerRef returned by GAS so we can edit later
+        console.log('Calling claimSession for sid:', PED_SID);
+        const res = await gasCall({
+          action     : 'claimSession',
+          sid        : PED_SID,
+          company    : company.slice(0, 60),
+          className  : cn.slice(0, 80),
+          desc       : ds.slice(0, 200),
+          instructor : ins.slice(0, 60),
+          target     : tg.slice(0, 200),
+          takeaways  : tk.slice(0, 200),
+          img        : img.slice(0, 300),
+          agenda     : JSON.stringify(ag),
+        }, 30000);
+        console.log('claimSession response:', JSON.stringify(res));
+        if (!res.ok) {
+          showToast('❌ ' + (res.error || 'Could not claim slot'));
+          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Claim & Publish'; }});
+          return;
+        }
         ses.partnerRef = res.partnerRef;
       } else {
-        const res = await gasCall({ action:'updateSession', sid:PED_SID, partnerRef:ses.partnerRef, className:cn, desc:ds, instructor:ins, target:tg, takeaways:tk, img, agenda:JSON.stringify(ag) });
-        if (!res.ok) { showToast(res.error || 'Could not update'); return; }
+        console.log('Calling updateSession for sid:', PED_SID, 'partnerRef:', ses.partnerRef);
+        const res = await gasCall({
+          action     : 'updateSession',
+          sid        : PED_SID,
+          partnerRef : ses.partnerRef,
+          className  : cn.slice(0, 80),
+          desc       : ds.slice(0, 200),
+          instructor : ins.slice(0, 60),
+          target     : tg.slice(0, 200),
+          takeaways  : tk.slice(0, 200),
+          img        : img.slice(0, 300),
+          agenda     : JSON.stringify(ag),
+        }, 30000);
+        console.log('updateSession response:', JSON.stringify(res));
+        if (!res.ok) {
+          showToast('❌ ' + (res.error || 'Could not update'));
+          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Save Changes'; }});
+          return;
+        }
       }
-    } catch { showToast('Network error — please try again'); return; }
+    } catch(e) {
+      console.error('pedSave error:', e);
+      showToast('❌ Error: ' + e.message);
+      btns.forEach(b => { if(b){ b.disabled=false; b.textContent= isNew ? 'Claim & Publish' : 'Save Changes'; }});
+      return;
+    }
   }
 
   ses.partner    = company;
@@ -1654,7 +1698,6 @@ async function pedSave() {
   ses.target=tg; ses.takeaways=tk; ses.img=img; ses.agenda=ag; ses.published=true;
 
   myClaimedSids.add(PED_SID);
-  // Save partnerRef alongside sid for release/edit
   const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
   storedMap[PED_SID] = ses.partnerRef;
   sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
@@ -1824,25 +1867,75 @@ function exportCSV() {
 /* ═══════════════════════════════════════
    GAS — fetch (GET for reads, POST for writes)
 ═══════════════════════════════════════ */
+// READ actions use JSONP (follows GAS redirects, no CORS issue)
+// WRITE actions use fetch POST via no-cors (fire-and-forget) then poll for result
+const GAS_READ_ACTIONS  = ['getSessions','getBooking','getBookingByContact','getWaitlistPosition','adminData'];
+const GAS_WRITE_ACTIONS = ['claimSession','updateSession','releaseSession','book','cancelBooking','joinWaitlist'];
+
 function gasCall(params, timeoutMs = 15000) {
-  const GET_ACTIONS = ['getSessions','getBooking','getBookingByContact','getWaitlistPosition','adminData','getUploadResult'];
-  const useGet = GET_ACTIONS.includes(params.action);
+  if (GAS_WRITE_ACTIONS.includes(params.action)) {
+    return gasPost(params, timeoutMs);
+  }
+  return gasJsonp(params, timeoutMs);
+}
 
-  const fetchPromise = useGet
-    ? fetch(GAS_URL + '?' + new URLSearchParams(params), { redirect: 'follow' })
-    : fetch(GAS_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(params),
-        redirect: 'follow',
-      });
+// JSONP — for reads only
+function gasJsonp(params, timeoutMs) {
+  return new Promise((resolve, reject) => {
+    const cbName = 'gc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+    const qs = Object.entries({ ...params, callback: cbName })
+      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
+      .join('&');
+    const url = GAS_URL + '?' + qs;
 
-  const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error('Timeout after ' + Math.round(timeoutMs / 1000) + 's')), timeoutMs)
-  );
+    const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, timeoutMs);
+    window[cbName] = function(data) { cleanup(); resolve(data); };
 
-  return Promise.race([fetchPromise, timeoutPromise])
-    .then(r => { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); });
+    const script = document.createElement('script');
+    script.src = url;
+    script.onerror = function() { cleanup(); reject(new Error('Script load failed')); };
+    document.head.appendChild(script);
+
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[cbName];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+  });
+}
+
+// fetch POST — for writes, uses no-cors + polls for confirmation via JSONP
+async function gasPost(params, timeoutMs) {
+  // Generate a unique request ID so we can poll for the result
+  const reqId = 'req_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
+  const payload = { ...params, reqId };
+
+  // Send POST with no-cors (will succeed without CORS headers, but response is opaque)
+  try {
+    await fetch(GAS_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify(payload),
+    });
+  } catch(e) {
+    // no-cors fetch may throw in some envs — that's ok, GAS still receives it
+    console.warn('POST send warning (may be ok):', e.message);
+  }
+
+  // Poll via JSONP for result (GAS stores result in cache keyed by reqId)
+  const deadline = Date.now() + timeoutMs;
+  while (Date.now() < deadline) {
+    await new Promise(r => setTimeout(r, 1800));
+    try {
+      const res = await gasJsonp({ action: 'getReqResult', reqId }, 8000);
+      if (res.ok && res.pending) continue; // not ready yet
+      return res; // got a real result (ok or error)
+    } catch(e) {
+      // poll failed, try again
+    }
+  }
+  throw new Error('Timeout waiting for GAS response');
 }
 
 
