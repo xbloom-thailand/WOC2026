@@ -1639,50 +1639,25 @@ async function pedSave() {
   btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
 
   if (!MOCK) {
-    try {
-      if (isNew) {
-        const res = await gasCall({
-          action     : 'claimSession',
-          sid        : PED_SID,
-          company    : company.slice(0, 60),
-          className  : cn.slice(0, 80),
-          desc       : ds.slice(0, 200),
-          instructor : ins.slice(0, 60),
-          target     : tg.slice(0, 200),
-          takeaways  : tk.slice(0, 200),
-          img        : img.slice(0, 300),
-          agenda     : JSON.stringify(ag),
-        }, 30000);
-        if (!res.ok) {
-          showToast('❌ ' + (res.error || 'Could not claim slot'));
-          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Claim & Publish'; }});
-          return;
-        }
-        ses.partnerRef = res.partnerRef;
-      } else {
-        const res = await gasCall({
-          action     : 'updateSession',
-          sid        : PED_SID,
-          partnerRef : ses.partnerRef,
-          className  : cn.slice(0, 80),
-          desc       : ds.slice(0, 200),
-          instructor : ins.slice(0, 60),
-          target     : tg.slice(0, 200),
-          takeaways  : tk.slice(0, 200),
-          img        : img.slice(0, 300),
-          agenda     : JSON.stringify(ag),
-        }, 30000);
-        if (!res.ok) {
-          showToast('❌ ' + (res.error || 'Could not update'));
-          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Save Changes'; }});
-          return;
-        }
-      }
-    } catch(e) {
-      showToast('❌ Error: ' + e.message);
-      btns.forEach(b => { if(b){ b.disabled=false; b.textContent= isNew ? 'Claim & Publish' : 'Save Changes'; }});
-      return;
+    // Generate partnerRef locally for new claims
+    if (isNew) {
+      ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase()
+                     + Math.random().toString(36).slice(2,4).toUpperCase();
     }
+    // Fire-and-forget to GAS — no waiting for response, UI updates optimistically
+    gasWrite({
+      action     : isNew ? 'claimSession' : 'updateSession',
+      sid        : PED_SID,
+      company    : company.slice(0, 60),
+      className  : cn.slice(0, 80),
+      desc       : ds.slice(0, 200),
+      instructor : ins.slice(0, 60),
+      target     : tg.slice(0, 200),
+      takeaways  : tk.slice(0, 200),
+      img        : img.slice(0, 300),
+      agenda     : JSON.stringify(ag),
+      partnerRef : ses.partnerRef,
+    });
   }
 
   ses.partner    = company;
@@ -1861,32 +1836,25 @@ function exportCSV() {
    GAS — fetch (GET for reads, POST for writes)
 ═══════════════════════════════════════ */
 /* ═══════════════════════════════════════
-   GAS — JSONP only (only method that works through GAS redirects)
+   GAS CALLS
+   - Reads  : JSONP (getSessions etc) — no write needed
+   - Writes : fire-and-forget fetch no-cors, optimistic UI update
 ═══════════════════════════════════════ */
+
+// JSONP for read-only actions
 function gasCall(params, timeoutMs = 15000) {
   return new Promise((resolve, reject) => {
     const cbName = 'gc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
     const qs = Object.entries({ ...params, callback: cbName })
       .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
       .join('&');
-    const url = GAS_URL + '?' + qs;
 
-    const timer = setTimeout(() => {
-      cleanup();
-      reject(new Error('Timeout after ' + Math.round(timeoutMs / 1000) + 's'));
-    }, timeoutMs);
-
-    window[cbName] = function(data) {
-      cleanup();
-      resolve(data);
-    };
+    const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, timeoutMs);
+    window[cbName] = function(data) { cleanup(); resolve(data); };
 
     const script = document.createElement('script');
-    script.src = url;
-    script.onerror = function() {
-      cleanup();
-      reject(new Error('Script load failed'));
-    };
+    script.src = GAS_URL + '?' + qs;
+    script.onerror = function() { cleanup(); reject(new Error('Script load failed')); };
     document.head.appendChild(script);
 
     function cleanup() {
@@ -1895,6 +1863,19 @@ function gasCall(params, timeoutMs = 15000) {
       if (script.parentNode) script.parentNode.removeChild(script);
     }
   });
+}
+
+// Fire-and-forget write to GAS (no-cors = no response, but GAS receives it)
+function gasWrite(params) {
+  const qs = Object.entries(params)
+    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
+    .join('&');
+  // Try fetch no-cors first, fallback to image beacon
+  try {
+    fetch(GAS_URL + '?' + qs, { method: 'GET', mode: 'no-cors' }).catch(() => {});
+  } catch(e) {}
+  // Also send via Image beacon as backup (always works, no CORS)
+  try { new Image().src = GAS_URL + '?' + qs; } catch(e) {}
 }
 
 
