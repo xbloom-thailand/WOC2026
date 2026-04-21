@@ -564,7 +564,7 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxTE_tRks13dG9DhyJJhj0lHmis76CSBpwyftVBf8yYUxcervgi7e3laS9QJIKGvZAAZg/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwMT0ONY14GhgmmFdrWm-yFdKxEJrHgBo9_EPUSkiZnxXzJ73_t48pv2sWkUrla3pxtYA/exec';
 const MOCK    = GAS_URL === '';
 const ADMIN_PASS_MOCK = 'xbloom2026';
 
@@ -1453,13 +1453,41 @@ function renderPedBody(isNewClaim = false) {
         </div>
 
         <div>
-          <div class="pef" id="pef-img">
-            <label>Cover Image URL (optional)</label>
-            <input id="pef-img-i" type="url" value="${ses.img||''}"
-              placeholder="https://images.unsplash.com/..."
-              oninput="pedLiveImg()" onfocus="peff('pef-img')" onblur="pefb('pef-img')">
+          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">Cover Image</div>
+
+          <!-- Preview area — tap to pick image -->
+          <div id="ped-img-area" onclick="document.getElementById('ped-file-input').click()"
+            style="width:100%;aspect-ratio:2.2/1;border-radius:var(--rs);overflow:hidden;
+                   background:var(--s2);border:1.5px dashed var(--s4);cursor:pointer;
+                   display:flex;align-items:center;justify-content:center;position:relative;
+                   transition:border-color .2s">
+            ${ses.img
+              ? `<img id="ped-img-preview" src="${ses.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`
+              : `<div id="ped-img-placeholder" style="text-align:center;pointer-events:none">
+                   <div style="font-size:28px;margin-bottom:6px">📷</div>
+                   <div style="font-size:13px;font-weight:600;color:var(--g3)">เลือกรูปภาพ</div>
+                   <div style="font-size:11px;color:var(--g5);margin-top:2px">อัตราส่วน 2.2:1 แนะนำ</div>
+                 </div>`
+            }
+            <!-- Upload overlay / progress -->
+            <div id="ped-upload-overlay" style="display:none;position:absolute;inset:0;
+                 background:rgba(0,0,0,.7);align-items:center;justify-content:center;flex-direction:column;gap:8px">
+              <div style="font-size:22px">⏳</div>
+              <div style="font-size:13px;font-weight:600;color:#fff">กำลังอัปโหลด...</div>
+            </div>
           </div>
-          <div class="pef-hint">Recommended ratio 2.2:1. Leave blank for no image.</div>
+
+          <!-- Hidden file input -->
+          <input type="file" id="ped-file-input" accept="image/*" style="display:none"
+            onchange="handleImagePick(this)">
+
+          <!-- Status row -->
+          <div id="ped-img-status" style="font-size:12px;color:var(--g5);margin-top:6px;min-height:18px">
+            ${ses.img ? '✅ มีรูปแล้ว — กดที่รูปเพื่อเปลี่ยน' : 'รองรับ JPG / PNG · ระบบจะ compress ให้อัตโนมัติ'}
+          </div>
+
+          <!-- Hidden store for current img URL -->
+          <input type="hidden" id="ped-img-url" value="${ses.img||''}">
         </div>
 
       </div>
@@ -1497,13 +1525,134 @@ function pedLive() {
   if (ie) ie.textContent = ins || '—';
 }
 
-function pedLiveImg() {
-  const url  = document.getElementById('pef-img-i')?.value.trim() || '';
-  const wrap = document.getElementById('ppv-img-wrap');
-  const imgE = document.getElementById('ppv-img-el');
-  if (!wrap || !imgE) return;
-  if (url) { imgE.style.backgroundImage=`url('${url}')`;wrap.style.display='block'; }
-  else { wrap.style.display='none'; }
+function pedLiveImg(url) {
+  // url comes from upload callback or from hidden input
+  const imgUrl = url || document.getElementById('ped-img-url')?.value || '';
+  const wrap   = document.getElementById('ppv-img-wrap');
+  const imgEl  = document.getElementById('ppv-img-el');
+  if (!wrap || !imgEl) return;
+  if (imgUrl) { imgEl.style.backgroundImage = `url('${imgUrl}')`; wrap.style.display = 'block'; }
+  else        { wrap.style.display = 'none'; }
+}
+
+/* ── IMAGE UPLOAD ── */
+function handleImagePick(input) {
+  const file = input.files[0];
+  if (!file) return;
+
+  // Show local preview immediately while uploading
+  const reader = new FileReader();
+  reader.onload = (ev) => {
+    // Compress via canvas, then upload
+    const img = new Image();
+    img.onload = () => uploadImageToDrive(img, file.name);
+    img.src = ev.target.result;
+
+    // Show preview right away from local data
+    const area = document.getElementById('ped-img-area');
+    if (area) {
+      let preview = document.getElementById('ped-img-preview');
+      const ph    = document.getElementById('ped-img-placeholder');
+      if (ph) ph.style.display = 'none';
+      if (!preview) {
+        preview = document.createElement('img');
+        preview.id = 'ped-img-preview';
+        preview.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
+        area.appendChild(preview);
+      }
+      preview.src = ev.target.result;
+    }
+  };
+  reader.readAsDataURL(file);
+}
+
+async function uploadImageToDrive(imgEl, originalName) {
+  // Show upload overlay
+  const overlay   = document.getElementById('ped-upload-overlay');
+  const statusEl  = document.getElementById('ped-img-status');
+  if (overlay) overlay.style.display = 'flex';
+  if (statusEl) statusEl.textContent = 'กำลัง compress และอัปโหลด...';
+
+  try {
+    // Compress to max 1200×675 @ 80% JPEG
+    const maxW = 1200, maxH = 675;
+    let w = imgEl.naturalWidth, h = imgEl.naturalHeight;
+    const ratio = Math.min(maxW / w, maxH / h, 1);
+    w = Math.round(w * ratio);
+    h = Math.round(h * ratio);
+
+    const canvas = document.createElement('canvas');
+    canvas.width = w; canvas.height = h;
+    canvas.getContext('2d').drawImage(imgEl, 0, 0, w, h);
+    const base64   = canvas.toDataURL('image/jpeg', 0.80).split(',')[1];
+    const filename = originalName.replace(/[^a-zA-Z0-9._-]/g, '_').replace(/\.[^.]+$/, '') + '.jpg';
+
+    // Upload via hidden iframe form POST (bypasses CORS / redirect issues)
+    const url = await iframeFormUpload(base64, filename);
+
+    // Success — store URL and update everything
+    const urlInput = document.getElementById('ped-img-url');
+    if (urlInput) urlInput.value = url;
+    if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
+    pedLiveImg(url); // update card preview
+
+  } catch (e) {
+    if (statusEl) statusEl.textContent = '❌ อัปโหลดไม่สำเร็จ: ' + e.message;
+    showToast('อัปโหลดรูปไม่สำเร็จ — ' + e.message);
+  } finally {
+    if (overlay) overlay.style.display = 'none';
+  }
+}
+
+function iframeFormUpload(base64, filename) {
+  return new Promise((resolve, reject) => {
+    const iframeName = 'ped_upload_' + Date.now();
+    const iframe = document.createElement('iframe');
+    iframe.name  = iframeName;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const timer = setTimeout(() => {
+      cleanup(); reject(new Error('Upload timeout (30s)'));
+    }, 30000);
+
+    function onMessage(ev) {
+      try {
+        const data = JSON.parse(ev.data);
+        if (data.type === 'uploadDone')  { cleanup(); resolve(data.url); }
+        if (data.type === 'uploadError') { cleanup(); reject(new Error(data.error)); }
+      } catch {}
+    }
+
+    function cleanup() {
+      clearTimeout(timer);
+      window.removeEventListener('message', onMessage);
+      iframe.remove();
+      form.remove();
+    }
+
+    window.addEventListener('message', onMessage);
+
+    // Build hidden form
+    const form = document.createElement('form');
+    form.method   = 'POST';
+    form.action   = GAS_URL;
+    form.target   = iframeName;
+    form.style.display = 'none';
+
+    const addField = (name, value) => {
+      const inp = document.createElement('input');
+      inp.type = 'hidden'; inp.name = name; inp.value = value;
+      form.appendChild(inp);
+    };
+
+    addField('action',    'uploadImage');
+    addField('imageData', base64);
+    addField('filename',  filename);
+
+    document.body.appendChild(form);
+    form.submit();
+  });
 }
 
 async function pedSave() {
@@ -1516,7 +1665,7 @@ async function pedSave() {
   const ins = document.getElementById('pef-in-i')?.value.trim();
   const tg  = document.getElementById('pef-tg-i')?.value.trim();
   const tk  = document.getElementById('pef-tk-i')?.value.trim();
-  const img = document.getElementById('pef-img-i')?.value.trim();
+  const img = document.getElementById('ped-img-url')?.value.trim();
   const ag  = [0,1,2].map(i => document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
 
   if (isNew && !company) { showToast('Please enter your company name'); return; }
@@ -1681,32 +1830,37 @@ function exportCSV() {
 }
 
 /* ═══════════════════════════════════════
-   GAS — fetch bridge
-   GET  → getSessions, getBooking
-   POST → everything that writes data
+   GAS — JSONP (works with GAS redirects)
 ═══════════════════════════════════════ */
-const GAS_GET_ACTIONS  = new Set(['getSessions', 'getBooking']);
+function gasCall(params) {
+  return new Promise((resolve, reject) => {
+    const cb  = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2, 8);
+    const qs  = new URLSearchParams({ ...params, callback: cb });
+    const url = GAS_URL + '?' + qs;
 
-async function gasCall(params) {
-  const { action, ...rest } = params;
-  const useGet = GAS_GET_ACTIONS.has(action);
+    window[cb] = (data) => {
+      cleanup();
+      resolve(data);
+    };
 
-  if (useGet) {
-    const qs  = new URLSearchParams({ action, ...rest });
-    const res = await fetch(`${GAS_URL}?${qs}`, { redirect: 'follow' });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  } else {
-    const res = await fetch(GAS_URL, {
-      method  : 'POST',
-      redirect: 'follow',
-      headers : { 'Content-Type': 'text/plain' }, // GAS quirk: text/plain avoids preflight
-      body    : JSON.stringify({ action, ...rest }),
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    return res.json();
-  }
+    const script = document.createElement('script');
+    script.src   = url;
+    script.onerror = () => { cleanup(); reject(new Error('Script load failed')); };
+    document.head.appendChild(script);
+
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout after 15s'));
+    }, 15000);
+
+    function cleanup() {
+      clearTimeout(timer);
+      delete window[cb];
+      if (script.parentNode) script.parentNode.removeChild(script);
+    }
+  });
 }
+
 
 // Load live sessions from GAS and merge into SESSIONS array
 async function loadLiveSessions() {
