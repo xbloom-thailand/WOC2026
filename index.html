@@ -1643,7 +1643,8 @@ async function pedSave() {
       ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase()
                      + Math.random().toString(36).slice(2,4).toUpperCase();
     }
-    const res = await gasWrite({
+    // Submit to GAS via hidden form (bypasses CORS) — optimistic UI
+    gasWrite({
       action     : isNew ? 'claimSession' : 'updateSession',
       sid        : PED_SID,
       company    : company.slice(0, 60),
@@ -1656,12 +1657,6 @@ async function pedSave() {
       agenda     : JSON.stringify(ag),
       partnerRef : ses.partnerRef,
     });
-    if (res && !res.ok) {
-      showToast('❌ ' + (res.error || 'Could not save'));
-      btns.forEach(b => { if(b){ b.disabled=false; b.textContent=isNew?'Claim & Publish':'Save Changes'; }});
-      return;
-    }
-    if (res && res.partnerRef) ses.partnerRef = res.partnerRef;
   }
 
   ses.partner    = company;
@@ -1869,21 +1864,46 @@ function gasCall(params, timeoutMs = 15000) {
   });
 }
 
-// Write to GAS via fetch GET with redirect:follow
-// GAS returns JSON — we follow the redirect to googleusercontent.com which allows CORS reads
-async function gasWrite(params) {
-  const qs = Object.entries(params)
-    .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
-    .join('&');
-  const url = GAS_URL + '?' + qs;
-  try {
-    const resp = await fetch(url, { redirect: 'follow' });
-    const json = await resp.json();
-    return json;
-  } catch(e) {
-    console.warn('gasWrite error:', e.message);
-    return { ok: false, error: e.message };
-  }
+// Write to GAS via hidden iframe form POST
+// Form submits bypass CORS entirely — GAS receives the data
+function gasWrite(params) {
+  return new Promise((resolve) => {
+    // Create hidden iframe to receive the response
+    const iframeId = 'gw_iframe_' + Date.now();
+    const iframe = document.createElement('iframe');
+    iframe.name = iframeId;
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    // Create hidden form targeting the iframe
+    const form = document.createElement('form');
+    form.method = 'POST';
+    form.action = GAS_URL;
+    form.target = iframeId;
+    form.style.display = 'none';
+
+    // Add all params as hidden inputs
+    Object.entries(params).forEach(([k, v]) => {
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = k;
+      input.value = String(v);
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    // Submit and cleanup after 10s
+    const cleanup = () => {
+      if (form.parentNode) form.parentNode.removeChild(form);
+      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
+    };
+
+    setTimeout(() => { cleanup(); resolve({ ok: true }); }, 10000);
+    form.submit();
+    // Optimistic — assume success after submit
+    setTimeout(() => { cleanup(); resolve({ ok: true }); }, 500);
+  });
 }
 
 
