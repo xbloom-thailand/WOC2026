@@ -564,7 +564,7 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
 /* ═══════════════════════════════════════
    CONFIG
 ═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbxYqquIi6AUc4pjusvfs1EwbMmFIgLsL4f9r1cJ2zIh1f7gUxe9e96oxAX0Vqx-blaXTA/exec';
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbwvLNJaqwa3-1Wa0xeFtPq2JZZoeGjTl2PvzUPZiis5ikURpFkrdtzZkF-GdNM1vltvDA/exec';
 const MOCK    = GAS_URL === '';
 const CLOUDINARY_CLOUD  = 'deivvwfq2';
 const CLOUDINARY_PRESET = 'vrgr8ux6';
@@ -1638,12 +1638,9 @@ async function pedSave() {
   const btns = [document.getElementById('ped-top-pub'), document.querySelector('.ped-pub-big')];
   btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
 
-  console.log('pedSave: isNew='+isNew+' sid='+PED_SID+' company='+company+' cn='+cn+' MOCK='+MOCK);
-
   if (!MOCK) {
     try {
       if (isNew) {
-        console.log('Calling claimSession for sid:', PED_SID);
         const res = await gasCall({
           action     : 'claimSession',
           sid        : PED_SID,
@@ -1656,7 +1653,6 @@ async function pedSave() {
           img        : img.slice(0, 300),
           agenda     : JSON.stringify(ag),
         }, 30000);
-        console.log('claimSession response:', JSON.stringify(res));
         if (!res.ok) {
           showToast('❌ ' + (res.error || 'Could not claim slot'));
           btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Claim & Publish'; }});
@@ -1664,7 +1660,6 @@ async function pedSave() {
         }
         ses.partnerRef = res.partnerRef;
       } else {
-        console.log('Calling updateSession for sid:', PED_SID, 'partnerRef:', ses.partnerRef);
         const res = await gasCall({
           action     : 'updateSession',
           sid        : PED_SID,
@@ -1677,7 +1672,6 @@ async function pedSave() {
           img        : img.slice(0, 300),
           agenda     : JSON.stringify(ag),
         }, 30000);
-        console.log('updateSession response:', JSON.stringify(res));
         if (!res.ok) {
           showToast('❌ ' + (res.error || 'Could not update'));
           btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Save Changes'; }});
@@ -1685,7 +1679,6 @@ async function pedSave() {
         }
       }
     } catch(e) {
-      console.error('pedSave error:', e);
       showToast('❌ Error: ' + e.message);
       btns.forEach(b => { if(b){ b.disabled=false; b.textContent= isNew ? 'Claim & Publish' : 'Save Changes'; }});
       return;
@@ -1867,33 +1860,33 @@ function exportCSV() {
 /* ═══════════════════════════════════════
    GAS — fetch (GET for reads, POST for writes)
 ═══════════════════════════════════════ */
-// READ actions use JSONP (follows GAS redirects, no CORS issue)
-// WRITE actions use fetch POST via no-cors (fire-and-forget) then poll for result
-const GAS_READ_ACTIONS  = ['getSessions','getBooking','getBookingByContact','getWaitlistPosition','adminData'];
-const GAS_WRITE_ACTIONS = ['claimSession','updateSession','releaseSession','book','cancelBooking','joinWaitlist'];
-
+/* ═══════════════════════════════════════
+   GAS — JSONP only (only method that works through GAS redirects)
+═══════════════════════════════════════ */
 function gasCall(params, timeoutMs = 15000) {
-  if (GAS_WRITE_ACTIONS.includes(params.action)) {
-    return gasPost(params, timeoutMs);
-  }
-  return gasJsonp(params, timeoutMs);
-}
-
-// JSONP — for reads only
-function gasJsonp(params, timeoutMs) {
   return new Promise((resolve, reject) => {
     const cbName = 'gc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
     const qs = Object.entries({ ...params, callback: cbName })
-      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
+      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
       .join('&');
     const url = GAS_URL + '?' + qs;
 
-    const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, timeoutMs);
-    window[cbName] = function(data) { cleanup(); resolve(data); };
+    const timer = setTimeout(() => {
+      cleanup();
+      reject(new Error('Timeout after ' + Math.round(timeoutMs / 1000) + 's'));
+    }, timeoutMs);
+
+    window[cbName] = function(data) {
+      cleanup();
+      resolve(data);
+    };
 
     const script = document.createElement('script');
     script.src = url;
-    script.onerror = function() { cleanup(); reject(new Error('Script load failed')); };
+    script.onerror = function() {
+      cleanup();
+      reject(new Error('Script load failed'));
+    };
     document.head.appendChild(script);
 
     function cleanup() {
@@ -1902,40 +1895,6 @@ function gasJsonp(params, timeoutMs) {
       if (script.parentNode) script.parentNode.removeChild(script);
     }
   });
-}
-
-// fetch POST — for writes, uses no-cors + polls for confirmation via JSONP
-async function gasPost(params, timeoutMs) {
-  // Generate a unique request ID so we can poll for the result
-  const reqId = 'req_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-  const payload = { ...params, reqId };
-
-  // Send POST with no-cors (will succeed without CORS headers, but response is opaque)
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
-    });
-  } catch(e) {
-    // no-cors fetch may throw in some envs — that's ok, GAS still receives it
-    console.warn('POST send warning (may be ok):', e.message);
-  }
-
-  // Poll via JSONP for result (GAS stores result in cache keyed by reqId)
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    await new Promise(r => setTimeout(r, 1800));
-    try {
-      const res = await gasJsonp({ action: 'getReqResult', reqId }, 8000);
-      if (res.ok && res.pending) continue; // not ready yet
-      return res; // got a real result (ok or error)
-    } catch(e) {
-      // poll failed, try again
-    }
-  }
-  throw new Error('Timeout waiting for GAS response');
 }
 
 
