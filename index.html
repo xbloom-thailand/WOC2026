@@ -1,2199 +1,1690 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="th">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
-<title>xBloom × WOC Bangkok 2026</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="default" />
+<meta name="theme-color" content="#f5f5f5" />
+<meta name="format-detection" content="telephone=no" />
+<title>xBloom Discovery Class — WOC Bangkok 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/d162a260eb6b9b288f54503ee22aa9ff?family=Quincy+CF+Regular">
+<link rel="stylesheet" href="https://db.onlinewebfonts.com/c/8ca8f6527c36fecba5d7d807482b61f2?family=Quincy+CF+Bold">
 <style>
-:root{
-  --bg:#FFFFFF;--s1:#F5F5F7;--s2:#E5E5EA;--s3:#D1D1D6;--s4:#C7C7CC;
-  --white:#1D1D1F;--g1:#3A3A3C;--g3:#86868B;--g5:#98989D;--g7:#AEAEB2;
-  --green:#34C759;--red:#FF3B30;--amber:#FF9500;
-  --line:rgba(0,0,0,.08);--liner:rgba(0,0,0,.04);
-  --r:24px;--rs:14px;
+/* Quincy CF family alias for convenience */
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('https://db.onlinewebfonts.com/t/d162a260eb6b9b288f54503ee22aa9ff.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/d162a260eb6b9b288f54503ee22aa9ff.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
 }
-*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;background-color:var(--s1);}
-body{max-width:480px;margin:0 auto;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,'DM Sans',sans-serif;font-size:15px;letter-spacing:-0.015em;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100svh;box-shadow:0 0 40px rgba(0,0,0,0.05);position:relative;}
-button{font-family:inherit;cursor:pointer}
-input,select,textarea{font-family:inherit}
-
-/* ─── SHARED ─────────────────────────────────────── */
-.serif{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
-.page{display:none;min-height:100svh}
-.page.active{display:block}
-
-/* ─── HEADER ─────────────────────────────────────── */
-.hdr{
-  position:fixed;top:0;left:0;right:0;z-index:80;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:calc(env(safe-area-inset-top) + 16px) 24px 16px;
-  background:rgba(255,255,255,.75);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line);
-  max-width:480px;margin:0 auto;
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('https://db.onlinewebfonts.com/t/8ca8f6527c36fecba5d7d807482b61f2.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/8ca8f6527c36fecba5d7d807482b61f2.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
 }
-.hdr-logo{font-family:'Quincy CF', 'Quincy', serif;font-size:26px;font-weight:700;letter-spacing:-0.03em;}
-.hdr-tag{font-size:11px;color:var(--g3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
-.hdr-right{display:flex;align-items:center;gap:12px}
-
-/* ─── PUBLIC SCHEDULE ────────────────────────────── */
-.pub-hero{
-  position:relative;
-  padding:calc(env(safe-area-inset-top) + 110px) 24px 40px;
-  text-align:center;display:flex;flex-direction:column;align-items:center;
-  overflow:hidden;
+@font-face {
+  font-family: 'Quincy CF';
+  src: url('https://db.onlinewebfonts.com/t/7026843a2afae35145b7544bfd004217.woff2') format('woff2'),
+       url('https://db.onlinewebfonts.com/t/7026843a2afae35145b7544bfd004217.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
 }
-.pub-hero::before{
-  content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
-  width:140vw;height:400px;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0.04) 0%, rgba(255,255,255,0) 60%);
-  z-index:-1;pointer-events:none;
-}
-.pub-kicker{
-  display:inline-flex;align-items:center;padding:6px 16px;
-  background:var(--white);color:#FFF;border-radius:100px;
-  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  margin-bottom:24px;box-shadow:0 8px 16px rgba(0,0,0,0.1);
-}
-.font-logo{font-family:'Quincy CF', 'Quincy', serif;font-weight:700;letter-spacing:-0.03em;}
-.pub-h1{
-  font-family:'Playfair Display',serif;font-size:52px;font-weight:500;line-height:1.05;
-  letter-spacing:-0.03em;margin-bottom:16px;color:var(--white);
-}
-.pub-h1 em{color:var(--g3);font-style:italic;font-weight:400}
-.pub-sub{
-  font-size:16px;color:var(--g3);margin-bottom:32px;font-weight:400;
-  max-width:320px;line-height:1.5;
-}
-.pub-info-row{
-  display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;
-}
-.pub-info-item{
-  display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--g1);
-  background:var(--s1);padding:8px 16px;border-radius:100px;
+</style>
+<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+<style>
+:root {
+  --bg: #ffffff;
+  --canvas: #f5f5f5;
+  --ink: #0a0a0a;
+  --ink-soft: #4a4a4a;
+  --ink-mute: #8a8a8a;
+  --line: #e5e5e5;
+  --line-soft: #f0f0f0;
+  --cream: #f7f7f7;
+  --accent-green: #2f7a3e;
+  --accent-green-bg: #e8f3eb;
+  --accent-orange: #b85c1a;
+  --accent-orange-bg: #fbeadd;
+  --radius: 14px;
+  --radius-sm: 10px;
+  --shadow-card: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(0,0,0,.04);
+  --shadow-sheet: 0 -8px 40px rgba(0,0,0,.12);
+  --shadow-app: 0 0 0 1px rgba(0,0,0,.04), 0 2px 8px rgba(0,0,0,.03), 0 20px 60px rgba(0,0,0,.06);
+  --display: 'Quincy CF', 'Quincy CF Regular', 'Playfair Display', Georgia, serif;
+  --sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-left: env(safe-area-inset-left, 0px);
+  --safe-right: env(safe-area-inset-right, 0px);
+  --tap: 44px; /* min touch target iOS HIG */
 }
 
-/* day tabs */
-.day-tabs{display:flex;position:sticky;top:calc(env(safe-area-inset-top) + 68px);background:var(--s1);z-index:70;margin:0 24px 24px;border-radius:100px;padding:4px}
-.day-tab{flex:1;padding:10px 8px;text-align:center;cursor:pointer;border-radius:100px;transition:all .3s cubic-bezier(.25,1,.5,1)}
-.day-tab.active{background:#FFFFFF;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.day-tab .dt-n{font-size:17px;font-weight:600;color:var(--g3);transition:color .3s}
-.day-tab.active .dt-n{color:var(--white)}
-.day-tab .dt-m{font-size:10px;color:var(--g5);letter-spacing:.02em;margin-top:2px;font-weight:500}
-.day-tab .dt-d{display:none;}
-
-/* session list */
-.session-list{padding:0 0 calc(env(safe-area-inset-bottom) + 120px)}
-
-.session-card{
-  margin:0 24px 16px;
-  background:#FFFFFF;
-  border-radius:20px;
-  border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 6px 20px rgba(0,0,0,0.03);
-  overflow:hidden;
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.sc-img{
-  width:100%;
-  aspect-ratio:2.2/1;
-  background-color:var(--s2);
-  background-size:cover;
-  background-position:center;
-  border-bottom:1px solid rgba(0,0,0,0.04);
+html {
+  /* ป้องกัน overscroll bounce เห็นพื้นสีไม่ตรง */
+  background: var(--canvas);
+  /* ป้องกัน font resize เมื่อหมุนหน้าจอ iOS */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
-.sc-time-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px 12px;
-  border-bottom:1px solid rgba(0,0,0,0.04);
+html, body {
+  font-family: var(--sans);
+  background: var(--canvas);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* รองรับ dynamic viewport (iOS Safari) */
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow-x: hidden;
 }
-.sc-time{font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
-.sc-cap{
-  font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.04em;padding:4px 10px;border-radius:100px;
+
+/* iOS input focus ไม่ zoom ต้องเป็น 16px+ */
+input, textarea, select {
+  font-family: inherit;
+  color: inherit;
+  font-size: 16px;
+  -webkit-appearance: none;
+  appearance: none;
+  border-radius: 0;
 }
-.sc-cap.ok{color:var(--green);background:rgba(52, 199, 89, 0.12);}
-.sc-cap.warn{color:var(--amber);background:rgba(255, 149, 0, 0.12);}
-.sc-cap.full{color:var(--red);background:rgba(255, 59, 48, 0.12);}
 
-.sc-body{padding:16px 20px 20px}
-.sc-empty{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px 20px;text-align:center;gap:8px;
+img { max-width: 100%; display: block; }
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+  /* iOS buttons default ขอบเหลี่ยม */
+  -webkit-appearance: none;
+  appearance: none;
+  /* Touch target minimum */
+  touch-action: manipulation;
 }
-.sc-empty-label{font-size:13px;color:var(--g5);font-weight:500}
 
-.sc-partner{
-  font-size:10px;color:var(--g5);letter-spacing:.06em;
-  text-transform:uppercase;margin-bottom:8px;font-weight:600;
+/* ===== LAYOUT ===== */
+.app {
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  position: relative;
 }
-.sc-class{
-  font-family:'Playfair Display',serif;font-size:22px;font-weight:600;
-  line-height:1.2;margin-bottom:8px;letter-spacing:-0.01em;color:var(--white);
+/* Tablet+ : app เป็น card ลอยบน canvas เทา */
+@media (min-width: 600px) {
+  .app {
+    max-width: 480px;
+    margin: 0 auto;
+    box-shadow: var(--shadow-app);
+  }
 }
-.sc-desc{font-size:13px;color:var(--g3);line-height:1.45;margin-bottom:20px;}
-.sc-footer{display:flex;justify-content:space-between;align-items:flex-end;}
 
-.sc-instructor-wrap{display:flex;flex-direction:column;gap:4px;}
-.sc-instructor-label{font-size:10px;color:var(--g5);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
-.sc-instructor{font-size:13px;font-weight:600;color:var(--white);}
-
-.btn-book{
-  background:var(--white);color:#FFF;
-  border:none;padding:10px 20px;border-radius:100px;
-  font-size:13px;font-weight:600;letter-spacing:-0.01em;
-  transition:transform .2s ease, opacity .2s ease;
-  min-height:40px;display:inline-flex;align-items:center;justify-content:center;
+/* ===== HEADER ===== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  padding-top: calc(14px + var(--safe-top));
+  padding-left: calc(20px + var(--safe-left));
+  padding-right: calc(20px + var(--safe-right));
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: rgba(255,255,255,.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  z-index: 50;
 }
-.btn-book:active{transform:scale(.95);opacity:.8}
-.btn-book.full{background:var(--s2);color:var(--g5);cursor:not-allowed;transform:none;opacity:1}
-
-/* bottom actions */
-.pub-bottom{
-  position:fixed;bottom:0;left:0;right:0;
-  padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);
-  background:rgba(255,255,255,.75);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-top:1px solid var(--line);
-  display:flex;justify-content:center;gap:12px;
-  max-width:480px;margin:0 auto;
+.logo {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -.035em;
+  line-height: 1;
+  color: var(--ink);
 }
-.btn-ghost-sm{
-  background:rgba(0,0,0,0.04);border:none;border-radius:100px;
-  padding:12px 16px;font-size:13px;color:var(--white);font-weight:600;
-  transition:background .2s;
-  min-height:48px;display:inline-flex;align-items:center;justify-content:center;
-  flex:1;
+.header-meta {
+  font-size: 10px;
+  letter-spacing: .08em;
+  color: var(--ink-soft);
+  font-weight: 500;
+  text-transform: uppercase;
 }
-.btn-ghost-sm:active{background:rgba(0,0,0,0.08)}
 
-/* ─── BOOKING SHEET ──────────────────────────────── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:200;align-items:flex-end;justify-content:center;}
-.overlay.open{display:flex}
-.sheet{background:var(--bg);border-radius:32px 32px 0 0;width:100%;max-width:480px;max-height:90svh;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:shUp .4s cubic-bezier(.22,.9,.36,1);padding-bottom:calc(env(safe-area-inset-bottom) + 32px);box-shadow:0 -10px 40px rgba(0,0,0,0.15)}
-@keyframes shUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sh-handle{width:40px;height:5px;background:var(--s3);border-radius:100px;margin:16px auto 0}
-.sh-hd{display:flex;justify-content:space-between;align-items:center;padding:24px 24px 16px;position:sticky;top:0;background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10;border-bottom:1px solid rgba(0,0,0,0.03)}
-.sh-title{font-size:20px;font-weight:600;letter-spacing:-0.02em}
-.sh-close{width:32px;height:32px;border-radius:50%;background:var(--s2);border:none;color:var(--g3);font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.sh-close:active{background:var(--s3);color:var(--white)}
-.sh-body{padding:24px}
-
-/* session rich details inside sheet */
-.sh-detail-group{display:flex;flex-direction:column;gap:24px;margin-bottom:32px;}
-.sh-detail-sec{display:flex;flex-direction:column;gap:6px;}
-.sh-detail-h{font-size:11px;font-weight:700;color:var(--g5);text-transform:uppercase;letter-spacing:0.06em;}
-.sh-detail-p{font-size:15px;color:var(--white);line-height:1.5;}
-.sh-agenda-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
-.sh-agenda-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--white);line-height:1.4;}
-.ag-dot{display:inline-block;width:6px;height:6px;background:var(--g5);border-radius:50%;margin-top:8px;flex-shrink:0;}
-.sh-divider{height:1px;background:var(--line);margin:32px 0;}
-
-/* form */
-.field-stack{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
-.field{background:var(--s1);border-radius:var(--rs);border:1px solid transparent;transition:border-color .2s, background .2s}
-.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--g5);padding:12px 16px 2px}
-.field input,.field textarea,.field select{width:100%;background:none;border:none;padding:6px 16px 14px;color:var(--white);font-size:16px;-webkit-appearance:none;font-weight:500}
-.field input::placeholder,.field textarea::placeholder{color:var(--g5);font-weight:400}
-.field input:focus,.field textarea:focus,.field select:focus{outline:none}
-.field.focused{border-color:var(--white);background:var(--bg)}
-
-.btn-primary{width:100%;background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;transition:transform .2s, opacity .2s;letter-spacing:-0.01em;margin-bottom:12px;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.btn-primary:active{transform:scale(.98);opacity:.9}
-.btn-primary:disabled{background:var(--s2);color:var(--g5);cursor:not-allowed;transform:none}
-
-/* ─── CONFIRM ────────────────────────────────────── */
-.confirm-ov{display:none;position:fixed;top:0;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--s1);z-index:300;overflow-y:auto;align-items:center;justify-content:flex-start;flex-direction:column;padding:calc(env(safe-area-inset-top)+80px) 24px calc(env(safe-area-inset-bottom)+40px)}
-.confirm-ov.open{display:flex}
-.co-icon{font-size:64px;margin-bottom:24px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both}
-@keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-.co-h{font-size:28px;font-weight:600;text-align:center;margin-bottom:8px;letter-spacing:-0.02em}
-.co-sub{font-size:15px;color:var(--g3);text-align:center;margin-bottom:40px}
-.co-card{width:100%;background:var(--bg);border-radius:var(--r);padding:32px;text-align:center;margin-bottom:32px;box-shadow:0 10px 30px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)}
-.co-rl{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px}
-.co-ref{font-family:'Playfair Display',serif;font-size:40px;font-weight:600;color:var(--white);letter-spacing:0;margin-bottom:24px}
-.co-sep{height:1px;background:var(--line);margin:20px 0}
-.co-class{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:6px}
-.co-dt{font-size:14px;color:var(--g3)}
-.co-name-val{font-size:16px;font-weight:600;color:var(--white);margin-top:16px}
-.co-note-sm{font-size:12px;color:var(--g5);margin-top:8px}
-
-.promos-label{width:100%;font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--g3);margin-bottom:16px;padding-left:8px}
-.promos{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
-.promo-row{background:var(--bg);border-radius:var(--rs);padding:16px 20px;display:flex;align-items:center;gap:16px;border:1px solid rgba(0,0,0,0.04);animation:fadeUp .5s cubic-bezier(.2,0,0,1) both}
-.promo-row:nth-child(1){animation-delay:.1s}
-.promo-row:nth-child(2){animation-delay:.2s}
-.promo-row:nth-child(3){animation-delay:.3s}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.pr-ico{font-size:24px;flex-shrink:0;background:var(--s1);width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-.pr-info{flex:1}
-.pr-title{font-size:15px;font-weight:600;color:var(--white)}
-.pr-desc{font-size:13px;color:var(--g5);margin-top:2px}
-.pr-val{font-size:18px;color:var(--white);font-weight:600;white-space:nowrap}
-.co-note-email{font-size:13px;color:var(--g5);text-align:center;margin-bottom:32px}
-.btn-done{width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;transition:transform .2s;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.btn-done:active{transform:scale(.98)}
-
-/* ─── MY BOOKING ─────────────────────────────────── */
-.my-booking-content{text-align:center;padding:16px 0 16px}
-.my-booking-found{background:var(--s1);border-radius:var(--r);padding:24px;text-align:left;border:1px solid rgba(0,0,0,0.04)}
-.mbf-time{font-size:13px;color:var(--g3);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.02em}
-.mbf-class{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin-bottom:6px;color:var(--white)}
-.mbf-partner{font-size:13px;color:var(--g5);margin-bottom:16px;font-weight:500}
-.mbf-sep{height:1px;background:var(--liner);margin:16px 0}
-.mbf-ref{font-size:12px;color:var(--g5);margin-bottom:6px}
-.mbf-ref strong{font-size:18px;font-weight:600;color:var(--white);letter-spacing:0.02em}
-.mbf-name{font-size:15px;font-weight:600;color:var(--white);margin-top:12px}
-
-/* ─── PARTNER & ADMIN PAGES ─────────────────────────────── */
-.partner-page, .admin-page{padding:calc(env(safe-area-inset-top)+100px) 24px calc(env(safe-area-inset-bottom)+40px)}
-.auth-center{display:flex;flex-direction:column;align-items:center;min-height:60vh;justify-content:center;text-align:center;padding:40px 0}
-.auth-icon{font-size:48px;margin-bottom:24px}
-.auth-h{font-size:28px;font-weight:600;margin-bottom:12px;letter-spacing:-0.02em}
-.auth-sub{font-size:15px;color:var(--g3);margin-bottom:40px;line-height:1.5}
-.auth-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:16px;margin:0 auto;}
-.auth-submit{background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;margin-top:8px;transition:transform .2s;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.auth-submit:active{transform:scale(.97)}
-
-/* partner dash */
-.p-greet{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
-.p-greet-sub{font-size:15px;color:var(--g3);margin-bottom:28px}
-.p-signout{background:var(--s2);border:none;border-radius:100px;padding:12px 24px;font-size:14px;font-weight:600;color:var(--white);margin-top:32px}
-
-/* ── SLOT PICKER ─── */
-.slot-picker-section{margin-bottom:8px}
-.slot-picker-day-tabs{display:flex;background:var(--s1);border-radius:100px;padding:4px;margin-bottom:20px}
-.spdt{flex:1;text-align:center;padding:10px 6px;border-radius:100px;cursor:pointer;transition:all .25s cubic-bezier(.25,1,.5,1)}
-.spdt.active{background:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.spdt-n{font-size:17px;font-weight:600;color:var(--g5);transition:color .2s}
-.spdt.active .spdt-n{color:var(--white)}
-.spdt-m{font-size:10px;color:var(--g5);margin-top:2px;font-weight:500}
-
-.slot-grid{display:flex;flex-direction:column;gap:10px}
-.slot-item{
-  border-radius:16px;overflow:hidden;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 2px 8px rgba(0,0,0,.03);
-  transition:transform .2s,box-shadow .2s;
+/* ===== HERO ===== */
+.hero {
+  padding: 36px 20px 24px;
+  text-align: center;
 }
-.slot-item.vacant{cursor:pointer;background:var(--bg)}
-.slot-item.vacant:active{transform:scale(.98)}
-.slot-item.mine{background:var(--bg);cursor:pointer;border-color:rgba(0,122,255,.2)}
-.slot-item.mine:active{transform:scale(.98)}
-.slot-item.taken{background:var(--s1);cursor:default}
+.hero-tag {
+  display: inline-block;
+  background: var(--ink);
+  color: #fff;
+  font-size: 10.5px;
+  letter-spacing: .14em;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 52px;
+  line-height: .92;
+  letter-spacing: -.035em;
+  color: var(--ink);
+}
+.hero h1 em {
+  display: block;
+  font-style: italic;
+  font-weight: 400;
+  color: #a8a6a3;
+  margin-top: 2px;
+  font-size: 50px;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+.hero-sub {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin-top: 18px;
+  line-height: 1.55;
+}
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 22px;
+  flex-wrap: wrap;
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #ededed;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 9px 16px;
+  font-size: 12.5px;
+  color: var(--ink);
+  font-weight: 500;
+  white-space: nowrap;
+}
 
-.slot-hd{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;
+/* Larger iPhones (Pro Max, Plus) */
+@media (min-width: 414px) {
+  .hero { padding: 42px 24px 28px; }
+  .hero h1 { font-size: 58px; }
+  .hero h1 em { font-size: 56px; }
 }
-.slot-time-txt{font-size:15px;font-weight:600;color:var(--white)}
-.slot-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.02em}
-.slot-badge.vacant{background:rgba(52,199,89,.12);color:var(--green)}
-.slot-badge.mine{background:rgba(0,122,255,.12);color:#0077FF}
-.slot-badge.taken{background:rgba(0,0,0,.06);color:var(--g5)}
 
-.slot-body{padding:0 18px 16px}
-.slot-class{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.2}
-.slot-partner-name{font-size:13px;color:var(--g3);font-weight:500}
-.slot-vacant-hint{font-size:13px;color:var(--g5);padding-bottom:2px}
-.slot-mine-cta{font-size:13px;font-weight:600;color:#0077FF;margin-top:8px}
-.slot-divider{height:1px;background:var(--liner);margin:0 18px}
+/* ===== DAY TABS ===== */
+.day-tabs {
+  display: flex;
+  gap: 4px;
+  margin: 24px 16px 0;
+  background: var(--line-soft);
+  padding: 5px;
+  border-radius: 999px;
+  position: sticky;
+  top: calc(52px + var(--safe-top));
+  z-index: 20;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+.day-tab {
+  flex: 1;
+  padding: 8px 0;
+  min-height: 40px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  color: var(--ink-mute);
+  text-align: center;
+  transition: all .25s ease;
+  font-weight: 500;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+}
+.day-tab strong {
+  display: block;
+  font-family: var(--display);
+  font-size: 17px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 2px;
+  color: var(--ink-mute);
+  letter-spacing: -.02em;
+}
+.day-tab.active {
+  background: var(--bg);
+  color: var(--ink);
+  box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.day-tab.active strong { color: var(--ink); }
+.day-tab:active {
+  transform: scale(.96);
+}
 
-/* ── PARTNER EDITOR (full-screen overlay) ─── */
-.ped-overlay{
-  display:none;position:fixed;inset:0;max-width:480px;margin:0 auto;
-  background:var(--s1);z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch;
+/* ===== CLASSES LIST ===== */
+.classes {
+  padding: 20px 16px calc(100px + var(--safe-bottom));
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
-.ped-overlay.open{display:block}
-.ped-topbar{
-  position:sticky;top:0;z-index:10;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:calc(env(safe-area-inset-top)+14px) 20px 14px;
-  background:rgba(245,245,247,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);
-}
-.ped-back{background:none;border:none;font-size:15px;font-weight:600;color:#0077FF;display:flex;align-items:center;gap:4px;padding:4px 0}
-.ped-back-icon{font-size:20px;line-height:1;margin-top:-1px}
-.ped-slot-tag{font-size:13px;font-weight:600;color:var(--white)}
-.ped-pub-btn{
-  background:var(--white);color:#FFF;border:none;
-  padding:8px 18px;border-radius:100px;font-size:14px;font-weight:600;
-  transition:transform .15s,opacity .15s;min-height:36px;
-}
-.ped-pub-btn:active{transform:scale(.96);opacity:.85}
-.ped-pub-btn:disabled{background:var(--s3);color:var(--g5);cursor:not-allowed}
 
-/* preview strip */
-.ped-preview-wrap{padding:20px 20px 0}
-.ped-preview-lbl{
-  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--g5);margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
+.class-card {
+  border: 1px solid rgba(0,0,0,0.06);
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.03);
+  transition: transform .2s ease, box-shadow .3s ease;
 }
-.ped-preview-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
-.ped-live-dot{
-  display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:var(--green);flex-shrink:0;
-  box-shadow:0 0 0 0 rgba(52,199,89,.5);animation:pdot 2s infinite;
+.class-card.has-class:active {
+  transform: scale(.99);
 }
-@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(52,199,89,.4)}50%{box-shadow:0 0 0 5px rgba(52,199,89,0)}}
-/* preview card is .session-card — pointer-events off */
-.ped-card-no-touch{pointer-events:none;user-select:none;margin-bottom:4px}
+@media (hover: hover) {
+  .class-card.has-class:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 8px 28px rgba(0,0,0,0.05);
+  }
+}
 
-/* form */
-.ped-form-wrap{padding:20px 20px calc(env(safe-area-inset-bottom)+40px)}
-.ped-form-lbl{
-  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--g5);margin-bottom:16px;
-  display:flex;align-items:center;gap:8px;
+.class-image {
+  width: 100%;
+  aspect-ratio: 2.2/1;
+  background: var(--cream);
+  background-size: cover;
+  background-position: center;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
 }
-.ped-form-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
-.ped-fields{display:flex;flex-direction:column;gap:14px}
-.pef{
-  background:var(--bg);border-radius:var(--rs);border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 2px 8px rgba(0,0,0,.03);transition:border-color .2s,box-shadow .2s;
-}
-.pef label{display:block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);padding:12px 16px 2px}
-.pef input,.pef textarea{width:100%;background:none;border:none;padding:6px 16px 12px;color:var(--white);font-size:15px;font-weight:500;-webkit-appearance:none;resize:none}
-.pef input::placeholder,.pef textarea::placeholder{color:var(--g7);font-weight:400}
-.pef input:focus,.pef textarea:focus{outline:none}
-.pef.focused{border-color:rgba(0,0,0,.18);box-shadow:0 4px 16px rgba(0,0,0,.08)}
-.pef-hint{font-size:12px;color:var(--g5);margin-top:6px;padding:0 2px;line-height:1.5}
-.ped-divider{height:1px;background:var(--line);margin:20px 0}
-.ped-agenda-row{display:flex;align-items:flex-start;gap:8px}
-.ped-ag-num{
-  flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--s2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:var(--g3);margin-top:12px;
-}
-.ped-agenda-row .pef{flex:1}
-.ped-pub-big{
-  width:100%;background:var(--white);color:#FFF;border:none;
-  padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;
-  margin-top:24px;min-height:56px;display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,opacity .2s;letter-spacing:-.01em;
-}
-.ped-pub-big:active{transform:scale(.98);opacity:.85}
-.ped-release-btn{
-  width:100%;background:none;border:1px solid rgba(0,0,0,.1);border-radius:100px;
-  padding:13px;font-size:14px;font-weight:600;color:var(--red);margin-top:12px;
-  transition:background .2s;
-}
-.ped-release-btn:active{background:rgba(255,59,48,.06)}
-.ped-status-bar{
-  border-radius:var(--rs);padding:14px 16px;margin-bottom:20px;
-  display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;
-}
-.ped-status-bar.live{background:rgba(52,199,89,.1);color:#1D6B35}
-.ped-status-bar.draft{background:rgba(255,149,0,.1);color:#7A5100}
 
-/* admin dash */
-.adm-h{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
-.adm-sub{font-size:15px;color:var(--g3);margin-bottom:32px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.stat-box{background:var(--bg);border-radius:var(--rs);padding:20px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 16px rgba(0,0,0,0.03)}
-.stat-n{font-size:36px;font-weight:600;color:var(--white);line-height:1}
-.stat-l{font-size:12px;color:var(--g5);margin-top:6px;font-weight:600}
-.tbl-wrap{overflow-x:auto;margin-bottom:24px;background:var(--bg);border-radius:var(--rs);padding:1px;border:1px solid rgba(0,0,0,0.06)}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th{font-size:11px;font-weight:600;color:var(--g3);padding:14px 16px;text-align:left;border-bottom:1px solid var(--liner);text-transform:uppercase;letter-spacing:0.04em}
-td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-size:14px}
-.td-ref{color:var(--white);font-weight:600;font-size:13px}
-.btn-csv{background:var(--s2);border:none;border-radius:100px;padding:12px 20px;font-size:13px;font-weight:600;color:var(--white);margin-bottom:20px}
-.adm-section-label{font-size:13px;font-weight:600;color:var(--g3);margin:32px 0 16px;padding-left:4px;text-transform:uppercase;letter-spacing:0.04em}
-.fill-bar-row{background:var(--bg);border-radius:var(--rs);padding:16px;border:1px solid rgba(0,0,0,0.06);margin-bottom:8px}
-.fbr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-.fbr-label{font-size:13px;font-weight:600;color:var(--white)}
-.fbr-count{font-size:13px;color:var(--g5);font-weight:500}
-.fill-bar{height:6px;background:var(--s2);border-radius:100px;overflow:hidden}
-.fill-bar-inner{height:100%;border-radius:100px;background:var(--white);transition:width .8s cubic-bezier(.2,0,0,1)}
+.class-meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid rgba(0,0,0,0.04);
+  gap: 8px;
+}
+.class-time {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  white-space: nowrap;
+  letter-spacing: .01em;
+}
+.availability {
+  font-size: 10px;
+  letter-spacing: .04em;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 100px;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.availability.open {
+  background: rgba(52, 199, 89, 0.12);
+  color: #2f7a3e;
+}
+.availability.low {
+  background: rgba(255, 149, 0, 0.12);
+  color: #b85c1a;
+}
+.availability.full {
+  background: rgba(255, 59, 48, 0.12);
+  color: #993b3b;
+}
 
-/* ─── TOAST ──────────────────────────────────────── */
-.toast{position:fixed;top:calc(env(safe-area-inset-top)+16px);left:0;right:0;max-width:360px;margin:0 auto;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:100px;padding:16px 20px;font-size:14px;font-weight:600;color:var(--white);z-index:500;display:none;animation:toastIn .4s cubic-bezier(.2,0,0,1);text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.04)}
-.toast.show{display:block}
-@keyframes toastIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.class-body {
+  padding: 16px 20px 20px;
+}
+
+.class-partner-label {
+  font-size: 10px;
+  color: var(--ink-mute);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+.class-title {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -.01em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+  color: var(--ink);
+}
+.class-desc {
+  font-size: 13px;
+  color: var(--ink-soft);
+  line-height: 1.45;
+  margin-bottom: 20px;
+}
+
+.class-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 10px;
+}
+.class-footer > div:first-child {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.instructor-label {
+  font-size: 10px;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  font-weight: 600;
+}
+.instructor-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 100px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -.01em;
+  min-height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: transform .2s ease, opacity .2s ease;
+}
+.btn-primary:active { transform: scale(.95); opacity: .85; }
+.btn-primary:disabled {
+  background: var(--cream);
+  color: var(--ink-mute);
+  cursor: not-allowed;
+  transform: none;
+  opacity: 1;
+}
+
+/* Coming Soon card */
+.class-card.coming-soon {
+  padding: 0;
+  background: var(--bg);
+}
+.class-card.coming-soon .class-meta-row {
+  padding: 16px 20px 12px;
+}
+.class-card.coming-soon .coming-soon-body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 20px;
+  text-align: center;
+  gap: 8px;
+}
+.coming-soon-text {
+  font-size: 13px;
+  color: var(--ink-mute);
+  font-weight: 500;
+}
+
+/* Larger iPhones */
+@media (min-width: 414px) {
+  .classes { padding: 22px 20px calc(110px + var(--safe-bottom)); gap: 18px; }
+  .class-title { font-size: 24px; }
+}
+
+/* ===== BOTTOM BAR ===== */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 12px 16px;
+  padding-bottom: calc(12px + var(--safe-bottom));
+  padding-left: calc(16px + var(--safe-left));
+  padding-right: calc(16px + var(--safe-right));
+  background: rgba(255,255,255,.96);
+  backdrop-filter: blur(14px) saturate(180%);
+  -webkit-backdrop-filter: blur(14px) saturate(180%);
+  border-top: 1px solid var(--line);
+  z-index: 40;
+}
+@media (min-width: 600px) {
+  .bottom-bar {
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+    width: 100%;
+    max-width: 480px;
+  }
+}
+.bottom-bar button {
+  padding: 12px;
+  min-height: var(--tap);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  font-size: 13px;
+  font-weight: 600;
+  background: var(--bg);
+  color: var(--ink);
+  transition: background .15s ease, transform .15s ease;
+}
+.bottom-bar button:active {
+  background: var(--line-soft);
+  transform: scale(.98);
+}
+
+/* ===== MODAL / SHEET ===== */
+.sheet-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.45);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+.sheet-overlay.open { opacity: 1; pointer-events: auto; }
+
+.sheet {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  transform: translateY(100%);
+  max-height: 92vh;
+  max-height: 92dvh;
+  background: var(--bg);
+  border-radius: 22px 22px 0 0;
+  z-index: 101;
+  transition: transform .35s cubic-bezier(.32,.72,0,1);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  box-shadow: var(--shadow-sheet);
+  padding-bottom: var(--safe-bottom);
+}
+.sheet.open { transform: translateY(0); }
+
+@media (min-width: 600px) {
+  .sheet {
+    left: 50%;
+    right: auto;
+    width: 100%;
+    max-width: 480px;
+    transform: translate(-50%, 100%);
+  }
+  .sheet.open { transform: translate(-50%, 0); }
+}
+
+.sheet-handle {
+  width: 40px;
+  height: 4px;
+  background: var(--line);
+  border-radius: 2px;
+  margin: 10px auto 0;
+}
+
+.sheet-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px 10px;
+  padding-left: calc(20px + var(--safe-left));
+  padding-right: calc(20px + var(--safe-right));
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 2;
+}
+.sheet-title {
+  font-size: 17px;
+  font-weight: 700;
+}
+.sheet-close {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--line-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--ink-soft);
+  transition: background .15s, transform .15s;
+}
+.sheet-close:active { background: var(--line); transform: scale(.92); }
+
+.sheet-body {
+  padding: 0 20px 24px;
+  padding-left: calc(20px + var(--safe-left));
+  padding-right: calc(20px + var(--safe-right));
+}
+
+.detail-title {
+  font-family: var(--display);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -.025em;
+}
+.detail-by {
+  font-size: 13px;
+  color: var(--ink-soft);
+  margin-top: 4px;
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+
+.detail-time-box {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 13px 14px;
+  font-size: 13.5px;
+  font-weight: 600;
+  margin-bottom: 18px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.detail-section { margin-bottom: 18px; }
+.detail-section h4 {
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.detail-section p,
+.detail-section ul {
+  font-size: 13.5px;
+  color: var(--ink);
+  line-height: 1.55;
+}
+.detail-section ul {
+  list-style: none;
+}
+.detail-section ul li {
+  padding: 3px 0 3px 16px;
+  position: relative;
+}
+.detail-section ul li::before {
+  content: '•';
+  position: absolute;
+  left: 4px;
+  color: var(--ink-mute);
+}
+
+.perk-box {
+  background: var(--cream);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 13.5px;
+  line-height: 1.5;
+  border: 1px solid var(--line-soft);
+}
+.perk-box span.icon { margin-right: 6px; }
+.perk-item {
+  padding: 3px 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 4px;
+}
+.perk-item:not(:last-child) {
+  border-bottom: 1px solid var(--line-soft);
+  padding-bottom: 8px;
+  margin-bottom: 4px;
+}
+
+hr.divider {
+  border: none;
+  border-top: 1px solid var(--line);
+  margin: 22px 0;
+}
+
+.booking-label {
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+/* ===== FORM ===== */
+.form-section-label {
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin: 20px 0 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.form-section-label:first-child { margin-top: 0; }
+
+.agenda-row {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 8px;
+}
+.agenda-row .field {
+  margin-bottom: 10px;
+}
+
+.field {
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  transition: border-color .15s ease;
+  background: var(--bg);
+}
+.field:focus-within { border-color: var(--ink); }
+.field label {
+  font-size: 11px;
+  color: var(--ink-mute);
+  font-weight: 500;
+  display: block;
+  margin-bottom: 2px;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 16px; /* iOS: ต้อง >= 16px ป้องกัน zoom */
+  background: transparent;
+  padding: 0;
+  line-height: 1.4;
+}
+.field textarea { resize: vertical; min-height: 64px; }
+
+.btn-cta {
+  width: 100%;
+  background: var(--ink);
+  color: #fff;
+  padding: 15px;
+  min-height: 52px;
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-weight: 600;
+  margin-top: 12px;
+  transition: background .15s, transform .15s;
+}
+.btn-cta:active { background: #252525; transform: scale(.98); }
+.btn-cta:disabled { background: #999; cursor: not-allowed; }
+
+.error-msg {
+  color: #b03232;
+  font-size: 12.5px;
+  margin-top: 8px;
+  padding: 10px 12px;
+  background: #fbecec;
+  border-radius: var(--radius-sm);
+  display: none;
+  line-height: 1.4;
+}
+.error-msg.show { display: block; }
+
+/* ===== CONFIRMATION ===== */
+.confirm-state {
+  text-align: center;
+  padding: 20px 10px;
+}
+.confirm-check {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: var(--accent-green-bg);
+  color: var(--accent-green);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px;
+  font-size: 28px;
+}
+.confirm-title {
+  font-family: var(--display);
+  font-size: 30px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+.confirm-sub {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  margin-bottom: 22px;
+}
+.qr-box {
+  background: var(--cream);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 18px;
+}
+#qrcode { display: flex; justify-content: center; }
+#qrcode canvas { max-width: 180px; height: auto !important; }
+.booking-code {
+  font-family: 'Courier New', monospace;
+  font-size: 18px;
+  letter-spacing: .08em;
+  font-weight: 700;
+  margin-top: 14px;
+}
+.code-label {
+  font-size: 10px;
+  letter-spacing: .15em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-top: 12px;
+}
+.confirm-details {
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  margin-bottom: 14px;
+  font-size: 13.5px;
+}
+.confirm-details div { padding: 4px 0; }
+.confirm-details .k {
+  color: var(--ink-mute);
+  font-size: 11px;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+/* ===== PARTNER BACKEND ===== */
+.partner-gate {
+  max-width: 420px;
+  margin: 40px auto;
+  padding: 20px 4px;
+  text-align: center;
+}
+.partner-gate h2 {
+  font-family: var(--display);
+  font-size: 34px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -.03em;
+  line-height: 1;
+}
+.partner-gate p {
+  color: var(--ink-soft);
+  font-size: 14px;
+  margin-bottom: 22px;
+  line-height: 1.5;
+}
+
+.partner-dashboard {
+  padding: 8px 0;
+}
+.partner-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.partner-top h2 {
+  font-family: var(--display);
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -.025em;
+}
+.logout-btn {
+  font-size: 12px;
+  color: var(--ink-soft);
+  padding: 8px 14px;
+  min-height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--bg);
+  transition: background .15s;
+}
+.logout-btn:active { background: var(--line-soft); }
+
+.partner-day-sect { margin-bottom: 24px; }
+.partner-day-sect h3 {
+  font-family: var(--display);
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--line-soft);
+  letter-spacing: -.02em;
+}
+.slot-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  background: var(--bg);
+  gap: 10px;
+}
+.slot-row.has-class { background: var(--cream); }
+.slot-info-left { flex: 1; min-width: 0; }
+.slot-time {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink);
+}
+.slot-title {
+  font-size: 12.5px;
+  color: var(--ink-soft);
+  margin-top: 2px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.slot-actions { display: flex; gap: 6px; flex-shrink: 0; }
+.slot-actions button {
+  padding: 8px 12px;
+  min-height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  font-size: 12px;
+  font-weight: 600;
+  background: var(--bg);
+  white-space: nowrap;
+  transition: background .15s, transform .15s;
+}
+.slot-actions button:active { transform: scale(.95); background: var(--line-soft); }
+.slot-actions .btn-edit { background: var(--ink); color: #fff; border-color: var(--ink); }
+.slot-actions .btn-edit:active { background: #252525; }
+.slot-actions .btn-bookings { background: var(--bg); }
+
+.bookings-list {
+  margin-top: 14px;
+}
+.booking-row {
+  padding: 12px 14px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+.booking-row .bcode {
+  font-family: 'Courier New', monospace;
+  color: var(--ink-mute);
+  font-size: 11px;
+  margin-top: 4px;
+}
+
+/* ===== LOADING ===== */
+.loading {
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--ink-mute);
+  font-size: 14px;
+}
+
+/* ===== UTILITY ===== */
+.hidden { display: none !important; }
+
+/* Scrollbar in sheet */
+.sheet::-webkit-scrollbar { width: 0; }
+
+/* Safe overflow on small iPhones (SE / Mini) */
+@media (max-width: 374px) {
+  .hero { padding: 30px 16px 20px; }
+  .hero h1 { font-size: 44px; }
+  .hero h1 em { font-size: 44px; }
+  .hero-sub { font-size: 13px; }
+  .class-title { font-size: 24px; }
+  .day-tab strong { font-size: 16px; }
+  .pill { font-size: 11.5px; padding: 8px 13px; }
+  .bottom-bar button { font-size: 12px; }
+  .detail-title { font-size: 26px; }
+  .logo { font-size: 22px; }
+  .classes { padding: 18px 14px calc(100px + var(--safe-bottom)); gap: 14px; }
+  .day-tabs { margin: 22px 14px 0; }
+}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     PUBLIC SCHEDULE
-════════════════════════════════════ -->
-<div class="page active" id="page-pub">
+<div id="customerApp" class="app">
+  <!-- HEADER -->
+  <div class="header">
+    <div class="logo">xbloom</div>
+    <div class="header-meta">WOC Bangkok · May 7–9</div>
+  </div>
 
-  <header class="hdr">
-    <div class="hdr-logo">xbloom</div>
-    <div class="hdr-right">
-      <div class="hdr-tag">WOC Bangkok · May 7–9</div>
-    </div>
-  </header>
-
-  <div class="pub-hero">
-    <div class="pub-kicker">World of Coffee 2026</div>
-    <h1 class="pub-h1"><span class="font-logo">xbloom</span><br><em>Discovery Class</em></h1>
-    <p class="pub-sub">Experience the future of specialty coffee. Join our exclusive hands-on sessions.</p>
-    <div class="pub-info-row">
-      <div class="pub-info-item">📍 Booth A101, BITEC</div>
-      <div class="pub-info-item">🗓️ May 7–9</div>
+  <!-- HERO -->
+  <div class="hero">
+    <span class="hero-tag">World of Coffee 2026</span>
+    <h1>xbloom<em>Discovery Class</em></h1>
+    <p class="hero-sub">
+      Experience the future of specialty coffee.<br>
+      Join our exclusive hands-on sessions.
+    </p>
+    <div class="hero-pills">
+      <span class="pill">📍 Booth A101, BITEC</span>
+      <span class="pill">📅 May 7–9</span>
     </div>
   </div>
 
-  <div class="day-tabs" id="day-tabs">
-    <div class="day-tab active" onclick="selectDay(0)"><div class="dt-n">7</div><div class="dt-m">May</div><div class="dt-d">Thu</div></div>
-    <div class="day-tab" onclick="selectDay(1)"><div class="dt-n">8</div><div class="dt-m">May</div><div class="dt-d">Fri</div></div>
-    <div class="day-tab" onclick="selectDay(2)"><div class="dt-n">9</div><div class="dt-m">May</div><div class="dt-d">Sat</div></div>
+  <!-- DAY TABS -->
+  <div class="day-tabs" id="dayTabs"></div>
+
+  <!-- CLASSES -->
+  <div class="classes" id="classList">
+    <div class="loading">กำลังโหลด class...</div>
   </div>
 
-  <div class="session-list" id="session-list"></div>
-
-  <div class="pub-bottom">
-    <button class="btn-ghost-sm" onclick="openMyBooking()">View My Bookings</button>
-    <button class="btn-ghost-sm" onclick="openMyCoupon()">View my Coupon</button>
-  </div>
-</div>
-
-<!-- ════════════════════════════════════
-     PARTNER PAGE (?partner=1)
-════════════════════════════════════ -->
-<div class="page" id="page-partner">
-  <header class="hdr">
-    <div class="hdr-logo">xbloom</div>
-    <div class="hdr-tag">Partner Portal</div>
-  </header>
-  <div class="partner-page" id="partner-page-body"></div>
-</div>
-
-<!-- ════════════════════════════════════
-     ADMIN PAGE (?admin=1)
-════════════════════════════════════ -->
-<div class="page" id="page-admin">
-  <header class="hdr">
-    <div class="hdr-logo">xbloom</div>
-    <div class="hdr-tag">Admin</div>
-  </header>
-  <div class="admin-page" id="admin-page-body"></div>
-</div>
-
-<!-- ════════════════════════════════════
-     BOOKING SHEET
-════════════════════════════════════ -->
-<div class="overlay" id="bk-overlay">
-  <div class="sheet" id="bk-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title" id="bk-title">Class Details</div>
-      <button class="sh-close" onclick="closeBk()">✕</button>
-    </div>
-    <div class="sh-body" id="bk-body"></div>
+  <!-- BOTTOM BAR -->
+  <div class="bottom-bar">
+    <button onclick="openLookup()">View My Bookings</button>
+    <button onclick="openPartner()">Partner Login</button>
   </div>
 </div>
 
-<!-- MY BOOKING SHEET -->
-<div class="overlay" id="mb-overlay">
-  <div class="sheet" id="mb-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title">My Bookings</div>
-      <button class="sh-close" onclick="closeMb()">✕</button>
-    </div>
-    <div class="sh-body" id="mb-body"></div>
+<!-- ===== CLASS DETAIL SHEET ===== -->
+<div class="sheet-overlay" id="classOverlay" onclick="closeSheet('class')"></div>
+<div class="sheet" id="classSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Class Details</div>
+    <button class="sheet-close" onclick="closeSheet('class')">✕</button>
   </div>
+  <div class="sheet-body" id="classDetailBody"></div>
 </div>
 
-<!-- MY COUPON SHEET -->
-<div class="overlay" id="cp-overlay">
-  <div class="sheet" id="cp-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title">My Coupons</div>
-      <button class="sh-close" onclick="closeCp()">✕</button>
-    </div>
-    <div class="sh-body" id="cp-body">
-      <div style="text-align:center;padding:40px 0 20px;">
-        <div style="font-size:48px;margin-bottom:16px;">🎟️</div>
-        <div style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:8px;">No coupons yet</div>
-        <div style="font-size:15px;color:var(--g5);line-height:1.5;">Book a discovery class<br>to unlock your exclusive perks.</div>
+<!-- ===== BOOKING LOOKUP SHEET ===== -->
+<div class="sheet-overlay" id="lookupOverlay" onclick="closeSheet('lookup')"></div>
+<div class="sheet" id="lookupSheet">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">My Booking</div>
+    <button class="sheet-close" onclick="closeSheet('lookup')">✕</button>
+  </div>
+  <div class="sheet-body">
+    <div id="lookupInput">
+      <p style="color:var(--ink-soft); font-size:13.5px; margin-bottom:16px;">กรอก Booking Code เพื่อดูรายละเอียดการจอง</p>
+      <div class="field">
+        <label>Booking Code</label>
+        <input id="lookupCode" placeholder="XB-XXXXXX" style="text-transform:uppercase" />
       </div>
+      <button class="btn-cta" onclick="doLookup()">ค้นหา</button>
+      <div id="lookupError" class="error-msg"></div>
     </div>
+    <div id="lookupResult" class="hidden"></div>
   </div>
 </div>
 
-<!-- PARTNER RECOVERY SHEET (Bug #8) -->
-<div class="overlay" id="rc-overlay">
-  <div class="sheet" id="rc-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title">Recover Partner Slots</div>
-      <button class="sh-close" onclick="closeRecoveryModal()">✕</button>
-    </div>
-    <div class="sh-body" id="rc-body">
-      <div style="padding:8px 0 20px">
-        <div style="font-size:14px;color:var(--g3);line-height:1.55;margin-bottom:20px">
-          ใส่ email หรือเบอร์โทรที่คุณใช้ตอน claim slot เพื่อกู้คืนสิทธิ์แก้ไข workshop
-        </div>
-        <div class="pef focused" style="margin-bottom:14px">
-          <label>Email or Phone *</label>
-          <input id="rc-contact-i" type="text" placeholder="you@company.com หรือ 08x-xxx-xxxx"
-                 style="width:100%" autocomplete="off">
-        </div>
-        <div id="rc-result" style="font-size:13px;color:var(--g3);min-height:20px;margin:8px 0 16px"></div>
-        <button class="ped-pub-big" id="rc-submit-btn" onclick="submitRecovery()"
-                style="width:100%">Recover My Slots</button>
-      </div>
-    </div>
+<!-- ===== PARTNER SHEET ===== -->
+<div class="sheet-overlay" id="partnerOverlay" onclick="closeSheet('partner')"></div>
+<div class="sheet" id="partnerSheet" style="max-height:96vh">
+  <div class="sheet-handle"></div>
+  <div class="sheet-header">
+    <div class="sheet-title">Partner Portal</div>
+    <button class="sheet-close" onclick="closeSheet('partner')">✕</button>
   </div>
+  <div class="sheet-body" id="partnerBody"></div>
 </div>
-
-<!-- ════════════════════════════════════
-     CONFIRM OVERLAY
-════════════════════════════════════ -->
-<div class="confirm-ov" id="confirm-ov">
-  <div class="co-icon">✅</div>
-  <div class="co-h">Booking Successful!</div>
-  <div class="co-sub">Show your reference at the booth to claim your spot.</div>
-  <div class="co-card">
-    <div class="co-rl">Booking Reference</div>
-    <div class="co-ref" id="co-ref">XB-0507-XXXX</div>
-    <div class="co-sep"></div>
-    <div class="co-class" id="co-class">—</div>
-    <div class="co-dt" id="co-dt">—</div>
-    <div class="co-name-val" id="co-name">—</div>
-    <div class="co-note-sm">World of Coffee Bangkok 2026 · Booth A101, BITEC</div>
-  </div>
-  <div class="promos-label">Exclusive Perks Await</div>
-  <div class="promos">
-    <div class="promo-row"><span class="pr-ico">☕</span><div class="pr-info"><div class="pr-title">Discount on xBloom Machine</div><div class="pr-desc">Full payment via transfer/card at the booth</div></div><div class="pr-val">฿3,900</div></div>
-    <div class="promo-row"><span class="pr-ico">🫘</span><div class="pr-info"><div class="pr-title">Coffee Bean Coupon</div><div class="pr-desc">Sent via Email post-event</div></div><div class="pr-val">−10%</div></div>
-    <div class="promo-row"><span class="pr-ico">🔧</span><div class="pr-info"><div class="pr-title">Gear Coupon</div><div class="pr-desc">At booth or xbloom.co.th (30 days)</div></div><div class="pr-val">−15%</div></div>
-  </div>
-  <div class="co-note-email">📧 Details and coupons will be sent to your registered Email.</div>
-  <button class="btn-done" onclick="closeConfirm()">Done</button>
-</div>
-
-<!-- ════════════════════════════════════
-     PARTNER EDITOR OVERLAY
-════════════════════════════════════ -->
-<div class="ped-overlay" id="ped-overlay">
-  <div class="ped-topbar">
-    <button class="ped-back" onclick="closePed()"><span class="ped-back-icon">‹</span> Back</button>
-    <div class="ped-slot-tag" id="ped-slot-tag">—</div>
-    <button class="ped-pub-btn" id="ped-top-pub" onclick="pedSave()">Publish</button>
-  </div>
-  <div id="ped-body"></div>
-</div>
-
-<div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════
-   CONFIG
-═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbynsqmp_d_iSI51rrjvFUli7t4sT9I8rEe2a0EQae-02TtXnOWr7y3NmHCiHikGMYNenw/exec';
-const MOCK    = GAS_URL === '';
-const CLOUDINARY_CLOUD  = 'deivvwfq2';
-const CLOUDINARY_PRESET = 'vrgr8ux6';
-const ADMIN_PASS_MOCK = 'xbloom2026';
+// ==========================================================
+// CONFIG — แก้ URL ตรงนี้หลัง deploy GAS
+// ==========================================================
+const API_URL = 'https://script.google.com/macros/s/AKfycbxFlccYE0EP2Ocro-IU8n7NvxPPdTgFp_-AKq5VqVFp2qRMKaMHwyU1ZrV06jrT_eQR/exec';
 
-/* ═══════════════════════════════════════
-   DATA MODEL
-   Sessions = 3 days × 5 slots = 15 sessions
-   Partner fills in: className, desc, instructor
-   Admin can see all bookings
-═══════════════════════════════════════ */
-const DAYS_META = [
-  { label:'7 May', full:'7 May 2026 · Thursday', date:'2026-05-07' },
-  { label:'8 May', full:'8 May 2026 · Friday',   date:'2026-05-08' },
-  { label:'9 May', full:'9 May 2026 · Saturday',  date:'2026-05-09' },
+const DAYS = [
+  { date: '2026-05-07', label: 'May', num: '7' },
+  { date: '2026-05-08', label: 'May', num: '8' },
+  { date: '2026-05-09', label: 'May', num: '9' }
 ];
-const SLOTS_META = [
-  { id:0, t:'10:00', e:'11:30' },
-  { id:1, t:'11:30', e:'13:00' },
-  { id:2, t:'13:00', e:'14:30' },
-  { id:3, t:'14:30', e:'16:00' },
-  { id:4, t:'16:00', e:'17:30' },
-];
+const SLOTS = ['10:00-11:30','11:30-13:00','13:00-14:30','14:30-16:00','16:00-17:30'];
 
-// ── SESSIONS — Partners self-select slots. partner='' means Vacant.
-let SESSIONS = [
-  // Day 0 – 7 May
-  { 
-    sid:'S07-0', day:0, slotId:0, partner:'Roots Coffee Roaster', className:'The Art of Pour Over', 
-    desc:'Learn slow bar hand brew techniques and taste the results of your own craft.', 
-    instructor:'Mr. Somchai Chankafae', booked:8, published:true, 
-    img:'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80',
-    target:'Perfect for coffee beginners and home brewers eager to elevate their morning routine.',
-    agenda:['15m: Introduction to extraction theory', '45m: Hands-on brewing with the xBloom system', '30m: Tasting, comparison, and Q&A'],
-    takeaways:'An exclusive recipe guide, a 50g sample of Roots coffee beans, and digital discount coupons.'
-  },
-  { 
-    sid:'S07-1', day:0, slotId:1, partner:'Ristr8to Lab', className:'Espresso Decoded', 
-    desc:'Decode espresso — pressure, temperature, and ratio for the perfect shot.', 
-    instructor:'Ms. Wipa Leenaka', booked:12, published:true, 
-    img:'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=800&q=80',
-    target:'Anyone curious about the science behind a perfectly balanced espresso shot.',
-    agenda:['20m: The science of pressure and temperature', '40m: Dialing in the perfect ratio', '30m: Pulling shots and tasting differences'],
-    takeaways:'A detailed espresso dial-in cheat sheet and partner coffee discounts.'
-  },
-  { sid:'S07-2', day:0, slotId:2, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S07-3', day:0, slotId:3, partner:'Brave Roasters', className:'Natural vs Washed', 
-    desc:'Compare processing methods and their impact on flavor profiles via side-by-side cupping.', 
-    instructor:'Ms. Dao Sukjai', booked:5, published:true, 
-    img:'https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S07-4', day:0, slotId:4, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  // Day 1 – 8 May
-  { sid:'S08-0', day:1, slotId:0, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S08-1', day:1, slotId:1, partner:'Pacamara', className:'Single Origin Journey', 
-    desc:'Journey through 4 single origins from 4 continents in 90 mins — Ethiopia, Colombia, Yemen, Thailand.', 
-    instructor:'Mr. Mark Leedee', booked:10, published:true, 
-    img:'https://images.unsplash.com/photo-1495474472207-464ba5231c2b?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S08-2', day:1, slotId:2, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S08-3', day:1, slotId:3, partner:'Ristr8to Lab', className:'Milk & Microfoam', 
-    desc:'Milk steaming techniques for perfect microfoam, plus basic free pour practice.', 
-    instructor:'Ms. Wipa Leenaka', booked:7, published:true, 
-    img:'https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?auto=format&fit=crop&w=800&q=80' 
-  },
-  { 
-    sid:'S08-4', day:1, slotId:4, partner:'Roots Coffee Roaster', className:'Cold Brew Science', 
-    desc:'The science behind cold brew — extraction time, ratio, and home-brewing techniques.', 
-    instructor:'Mr. Somchai Chankafae', booked:3, published:true, 
-    img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80' 
-  },
-  // Day 2 – 9 May
-  { 
-    sid:'S09-0', day:2, slotId:0, partner:'Ristr8to Lab', className:'Latte Art: First Steps', 
-    desc:'Learn basic free pouring — rosetta, heart, and tulip for beginners.', 
-    instructor:'Ms. Wipa Leenaka', booked:15, published:true, 
-    img:'https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S09-1', day:2, slotId:1, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S09-2', day:2, slotId:2, partner:'Brave Roasters', className:'Roasting 101', 
-    desc:'Discover roast profiles, development time, and first crack — the basic theory of roasting.', 
-    instructor:'Ms. Dao Sukjai', booked:7, published:true, 
-    img:'https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S09-3', day:2, slotId:3, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S09-4', day:2, slotId:4, partner:'Pacamara', className:'Cupping Like a Pro', 
-    desc:'Learn the SCA cupping protocol — practice tasting, scoring, and writing score sheets like a pro.', 
-    instructor:'Mr. Mark Leedee', booked:9, published:true, 
-    img:'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80' 
-  },
-];
+let allClasses = [];
+let selectedDay = DAYS[0].date;
+let partnerPassword = null;
 
-let ALL_BOOKINGS = [];
-
-// Partners just need refCode+pin — they claim slots themselves
-const MOCK_PARTNERS = [
-  { refCode:'ROOTSC', company:'Roots Coffee Roaster', contact:'Somchai', email:'roots@demo.com',  pin:'1111' },
-  { refCode:'RISTR8', company:'Ristr8to Lab',         contact:'Wipa',    email:'ristr8@demo.com', pin:'2222' },
-  { refCode:'BRAVE0', company:'Brave Roasters',       contact:'Dao',     email:'brave@demo.com',  pin:'3333' },
-  { refCode:'PACAM0', company:'Pacamara',             contact:'Mark',    email:'pacam@demo.com',  pin:'4444' },
-  { refCode:'DEMO01', company:'Demo Roaster',         contact:'Test',    email:'demo@demo.com',   pin:'0000' },
-];
-
-/* ═══════════════════════════════════════
-   STATE
-═══════════════════════════════════════ */
-const ST = {
-  day: 0,
-  bk: null,
-  partner: null,
-  pDay: 0,
-  admin: false,
-  adminData: [],
-  adminSessions: [],
-  adminCoupons: [],
-};
-
-/* ═══════════════════════════════════════
-   PUBLIC SCHEDULE
-═══════════════════════════════════════ */
-let curDay = 0;
-
-function selectDay(d) {
-  curDay = d;
-  document.querySelectorAll('.day-tab').forEach((el,i) => el.classList.toggle('active', i === d));
-  renderSessionList();
+// ==========================================================
+// API
+// ==========================================================
+async function apiGet(params = {}) {
+  const url = new URL(API_URL);
+  Object.keys(params).forEach(k => url.searchParams.set(k, params[k]));
+  const r = await fetch(url.toString());
+  return r.json();
 }
-
-function renderSessionList() {
-  const el = document.getElementById('session-list');
-  el.innerHTML = '';
-  const daySessions = SESSIONS.filter(s => s.day === curDay);
-
-  daySessions.forEach(ses => {
-    const slot  = SLOTS_META[ses.slotId];
-    const rem   = 15 - ses.booked;
-    const full  = rem <= 0;
-    const empty = !ses.published;
-
-    const card = document.createElement('div');
-    card.className = 'session-card';
-
-    let capHtml = '';
-    let capCls  = '';
-    if (!empty) {
-      if (full)       { capHtml = 'Full';        capCls = 'full'; }
-      else if (rem<=4){ capHtml = `Only ${rem} left`;  capCls = 'warn'; }
-      else            { capHtml = `${rem} Available`;    capCls = 'ok'; }
-    }
-    
-    let imgHtml = '';
-    if (ses.img) {
-      imgHtml = `<div class="sc-img" style="background-image:url('${ses.img}')"></div>`;
-    }
-
-    let bodyHtml = '';
-    if (empty) {
-      bodyHtml = `<div class="sc-empty"><div class="sc-empty-label">Coming Soon — Stay Tuned</div></div>`;
-    } else {
-      bodyHtml = `
-        <div class="sc-body">
-          <div class="sc-partner">In partnership with ${ses.partner}</div>
-          <div class="sc-class">${ses.className}</div>
-          <div class="sc-desc">${ses.desc}</div>
-          <div class="sc-footer">
-            <div class="sc-instructor-wrap">
-              <div class="sc-instructor-label">Instructor</div>
-              <div class="sc-instructor">${ses.instructor}</div>
-            </div>
-            <button class="btn-book${full?' full':''}" onclick="${full?'':'openBk(\''+ses.sid+'\')'}">${full ? 'Fully Booked' : 'Details & Book'}</button>
-          </div>
-        </div>`;
-    }
-
-    card.innerHTML = `
-      ${imgHtml}
-      <div class="sc-time-bar">
-        <div class="sc-time">${slot.t} – ${slot.e}</div>
-        ${capHtml ? `<div class="sc-cap ${capCls}">${capHtml}</div>` : ''}
-      </div>
-      ${bodyHtml}`;
-    
-    el.appendChild(card);
+async function apiPost(data) {
+  const r = await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' } // หลีกเลี่ยง preflight CORS
   });
+  return r.json();
 }
 
-/* ═══════════════════════════════════════
-   BOOKING
-═══════════════════════════════════════ */
-function openBk(sid) {
-  ST.bk = SESSIONS.find(s => s.sid === sid);
-  if (!ST.bk) return;
-  document.getElementById('bk-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderBkForm();
-}
-function closeBk() {
-  document.getElementById('bk-overlay').classList.remove('open');
-  document.body.style.overflow = '';
+// ==========================================================
+// INIT
+// ==========================================================
+async function init() {
+  renderDayTabs();
+  await loadClasses();
 }
 
-function renderBkForm() {
-  const s    = ST.bk;
-  const slot = SLOTS_META[s.slotId];
-  const day  = DAYS_META[s.day];
-  const rem  = 15 - (s.booked || 0);
-  const full = rem <= 0;
+function renderDayTabs() {
+  const el = document.getElementById('dayTabs');
+  el.innerHTML = DAYS.map(d => `
+    <button class="day-tab ${d.date === selectedDay ? 'active' : ''}"
+            onclick="switchDay('${d.date}')">
+      <strong>${d.num}</strong>${d.label}
+    </button>
+  `).join('');
+}
 
-  // Fallback texts if the partner hasn't filled them out yet
-  const targetText = s.target || 'Coffee beginners, home brewers, and anyone curious about exploring specialty coffee in a hands-on environment.';
-  const agendaItems = s.agenda || ['15m: Introduction & Brewing Theory', '45m: Hands-on Experience with the xBloom system', '30m: Guided Tasting & Open Q&A'];
-  const takeawaysText = s.takeaways || 'An exclusive recipe card, a sample bag of partner coffee beans, and digital discount coupons for xBloom.';
+async function loadClasses() {
+  try {
+    const data = await apiGet({ action: 'getClasses' });
+    allClasses = data.classes || [];
+    renderClasses();
+  } catch (err) {
+    document.getElementById('classList').innerHTML =
+      `<div class="loading">โหลดข้อมูลไม่สำเร็จ กรุณาลองใหม่<br><small style="opacity:.6">${err.message || err}</small></div>`;
+  }
+}
 
-  const detailsHtml = `
-    <div class="sh-detail-group">
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">About the Class</div>
-        <div class="sh-detail-p">${s.desc}</div>
+function switchDay(date) {
+  selectedDay = date;
+  renderDayTabs();
+  renderClasses();
+}
+
+function renderClasses() {
+  const list = document.getElementById('classList');
+  const dayClasses = allClasses
+    .filter(c => c.date === selectedDay)
+    .sort((a,b) => a.slot.localeCompare(b.slot));
+
+  if (dayClasses.length === 0) {
+    list.innerHTML = '<div class="loading">ยังไม่มีข้อมูล class</div>';
+    return;
+  }
+
+  list.innerHTML = dayClasses.map(c => renderClassCard(c)).join('');
+}
+
+function renderClassCard(c) {
+  const hasClass = c.status === 'open' && c.title;
+
+  let availClass = 'open', availText = `${c.available} Available`;
+  if (c.available === 0) { availClass = 'full'; availText = 'Fully Booked'; }
+  else if (c.available <= 3) { availClass = 'low'; availText = `Only ${c.available} Left`; }
+
+  if (!hasClass) {
+    return `
+      <div class="class-card coming-soon">
+        <div class="class-meta-row">
+          <span class="class-time">${c.slot.replace('-', ' – ')}</span>
+        </div>
+        <div class="coming-soon-body">
+          <div class="coming-soon-text">Coming Soon — Stay Tuned</div>
+        </div>
       </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">Who is this for?</div>
-        <div class="sh-detail-p">${targetText}</div>
+    `;
+  }
+
+  const img = c.image_url
+    ? `<div class="class-image" style="background-image:url('${escapeAttr(c.image_url)}')"></div>`
+    : '';
+
+  return `
+    <div class="class-card has-class">
+      ${img}
+      <div class="class-meta-row">
+        <span class="class-time">${c.slot.replace('-', ' – ')}</span>
+        <span class="availability ${availClass}">${availText}</span>
       </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">90-Minute Agenda</div>
-        <ul class="sh-agenda-list">
-          ${agendaItems.map(item => `<li><span class="ag-dot"></span>${item}</li>`).join('')}
+      <div class="class-body">
+        ${c.partner ? `<div class="class-partner-label">In partnership with ${escapeHtml(c.partner)}</div>` : ''}
+        <div class="class-title">${escapeHtml(c.title)}</div>
+        ${c.description ? `<div class="class-desc">${escapeHtml(c.description)}</div>` : ''}
+        <div class="class-footer">
+          <div>
+            ${c.instructor ? `<div class="instructor-label">Instructor</div><div class="instructor-name">${escapeHtml(c.instructor)}</div>` : ''}
+          </div>
+          <button class="btn-primary" onclick="openClassDetail('${c.class_id}')"
+            ${c.available === 0 ? 'disabled' : ''}>
+            ${c.available === 0 ? 'Fully Booked' : 'Details & Book'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+// ==========================================================
+// CLASS DETAIL + BOOKING
+// ==========================================================
+function openClassDetail(classId) {
+  const c = allClasses.find(x => x.class_id === classId);
+  if (!c) return;
+
+  // สร้าง agenda items จาก fields
+  const agendaItems = [
+    { time: c.agenda_1_time, title: c.agenda_1_title },
+    { time: c.agenda_2_time, title: c.agenda_2_title },
+    { time: c.agenda_3_time, title: c.agenda_3_title }
+  ].filter(a => a.title);
+
+  // Perks: split by newline
+  const perkItems = (c.perks || '').split('\n').map(s => s.trim()).filter(Boolean);
+
+  const body = document.getElementById('classDetailBody');
+  body.innerHTML = `
+    <div class="detail-title">${escapeHtml(c.title)}</div>
+    <div class="detail-by">
+      ${c.partner ? `By ${escapeHtml(c.partner)}` : ''}
+      ${c.instructor ? ` · Led by ${escapeHtml(c.instructor)}` : ''}
+    </div>
+
+    <div class="detail-time-box">
+      📅 ${formatDate(c.date)} · ${c.slot.replace('-', ' – ')}
+    </div>
+
+    ${c.description ? `
+      <div class="detail-section">
+        <h4>About the Class</h4>
+        <p>${escapeHtml(c.description)}</p>
+      </div>
+    ` : ''}
+
+    ${c.who_is_for ? `
+      <div class="detail-section">
+        <h4>Who is this for?</h4>
+        <p>${escapeHtml(c.who_is_for)}</p>
+      </div>
+    ` : ''}
+
+    ${agendaItems.length ? `
+      <div class="detail-section">
+        <h4>90-minute Agenda</h4>
+        <ul>
+          ${agendaItems.map(a => `<li>${a.time ? `<strong>${escapeHtml(a.time)}:</strong> ` : ''}${escapeHtml(a.title)}</li>`).join('')}
         </ul>
       </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">What You'll Get</div>
-        <div class="sh-detail-p">🎁 ${takeawaysText}</div>
+    ` : ''}
+
+    ${perkItems.length ? `
+      <div class="detail-section">
+        <h4>What You'll Get</h4>
+        <div class="perk-box">
+          ${perkItems.map(p => `<div class="perk-item"><span class="icon">☕</span>${escapeHtml(p)}</div>`).join('')}
+        </div>
       </div>
-    </div>
+    ` : ''}
+
+    <hr class="divider" />
+
+    <div class="booking-label">Reserve Your Seat · ${c.available} เหลือ</div>
+    <div class="field"><label>ชื่อ-นามสกุล *</label><input id="bName" placeholder="กรอกชื่อ-นามสกุล" /></div>
+    <div class="field"><label>โทรศัพท์ *</label><input id="bPhone" placeholder="08X-XXX-XXXX" /></div>
+    <div class="field"><label>อีเมล *</label><input id="bEmail" type="email" placeholder="your@email.com" /></div>
+    <div id="bookError" class="error-msg"></div>
+    <button class="btn-cta" id="bookBtn" onclick="submitBooking('${c.class_id}')">ยืนยันการจอง</button>
   `;
 
-  document.getElementById('bk-body').innerHTML = `
-    <div style="font-size:24px;font-family:'Playfair Display',serif;font-weight:600;color:var(--white);line-height:1.15;margin-bottom:8px;">${s.className}</div>
-    <div style="font-size:13px;color:var(--g3);font-weight:500;margin-bottom:24px;">By ${s.partner} · Led by ${s.instructor}</div>
-    
-    <div class="sh-session" style="border:none;background:var(--s1);padding:16px;margin-bottom:32px;">
-      <div class="sh-ses-time" style="margin:0;">🗓️ ${day.label} · ${slot.t} – ${slot.e}</div>
-    </div>
-    
-    ${detailsHtml}
-    
-    <div class="sh-divider"></div>
-
-    ${full ? `
-      <div style="text-align:center;padding:20px;background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);border-radius:var(--rs);margin-bottom:24px">
-        <div style="font-size:28px;margin-bottom:8px">⏳</div>
-        <div style="font-weight:600;color:var(--white);margin-bottom:4px">Session เต็มแล้ว</div>
-        <div style="font-size:13px;color:var(--g5);margin-bottom:0">ลงชื่อสำรองไว้ — ถ้ามีคนยกเลิกจะได้ที่นั่งทันที</div>
-      </div>
-      <div class="sh-detail-h" style="margin-bottom:16px">เข้าคิวสำรอง</div>
-      <div class="field-stack">
-        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
-        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
-        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
-      </div>
-      <button class="btn-primary" style="background:var(--amber)" onclick="submitWaitlist()">เข้าคิวสำรอง</button>
-    ` : `
-      <div class="sh-detail-h" style="margin-bottom:16px">จองที่นั่ง</div>
-      <div class="field-stack">
-        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
-        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
-        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
-      </div>
-      <button class="btn-primary" onclick="submitBk()">ยืนยันการจอง</button>
-    `}
-  `;
+  openSheet('class');
 }
 
-function ff(id){document.getElementById(id)?.classList.add('focused')}
-function fb(id){document.getElementById(id)?.classList.remove('focused')}
+async function submitBooking(classId) {
+  const name = document.getElementById('bName').value.trim();
+  const phone = document.getElementById('bPhone').value.trim();
+  const email = document.getElementById('bEmail').value.trim();
+  const errEl = document.getElementById('bookError');
+  const btn = document.getElementById('bookBtn');
 
-async function submitWaitlist() {
-  const name  = document.getElementById('f-name')?.value.trim();
-  const phone = document.getElementById('f-phone')?.value.trim();
-  const email = document.getElementById('f-email')?.value.trim();
-  if (!name || !phone || !email) { showToast('กรุณากรอกข้อมูลให้ครบ'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('รูปแบบอีเมลไม่ถูกต้อง'); return; }
+  errEl.classList.remove('show');
 
-  const s = ST.bk;
-  let position = 1;
-
-  if (!MOCK) {
-    try {
-      const res = await gasCall({ action:'joinWaitlist', sid:s.sid, name, phone, email });
-      if (!res.ok) { showToast(res.error || 'เกิดข้อผิดพลาด'); return; }
-      position = res.position;
-    } catch { showToast('เกิดข้อผิดพลาด กรุณาลองใหม่'); return; }
+  if (!name || !phone || !email) {
+    errEl.textContent = 'กรุณากรอกข้อมูลให้ครบทุกช่อง';
+    errEl.classList.add('show');
+    return;
+  }
+  if (!/^\S+@\S+\.\S+$/.test(email)) {
+    errEl.textContent = 'รูปแบบอีเมลไม่ถูกต้อง';
+    errEl.classList.add('show');
+    return;
   }
 
-  closeBk();
-  // Show waitlist confirmation
-  showWaitlistConfirm(s, position, name);
-}
+  btn.disabled = true;
+  btn.textContent = 'กำลังจอง...';
 
-function showWaitlistConfirm(ses, position, name) {
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
+  try {
+    const res = await apiPost({
+      action: 'book', class_id: classId, name, phone, email
+    });
 
-  // Inject a full-screen confirm similar to booking confirm
-  const el = document.getElementById('confirm-ov');
-  el.innerHTML = `
-    <div style="font-size:52px;margin-bottom:18px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both">🎟️</div>
-    <div style="font-size:28px;font-weight:600;text-align:center;margin-bottom:6px;letter-spacing:-.02em">อยู่ในคิวสำรองแล้ว!</div>
-    <div style="font-size:14px;color:var(--g3);text-align:center;margin-bottom:32px">เราจะแจ้งทันทีถ้ามีที่นั่งว่าง</div>
+    if (res.error) {
+      errEl.textContent = res.error;
+      errEl.classList.add('show');
+      btn.disabled = false;
+      btn.textContent = 'ยืนยันการจอง';
+      return;
+    }
 
-    <div style="width:100%;background:var(--bg);border-radius:var(--r);padding:28px;text-align:center;margin-bottom:28px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px">คิวของคุณ</div>
-      <div style="font-family:'Playfair Display',serif;font-size:72px;font-weight:700;color:var(--amber);line-height:1">${position}</div>
-      <div style="height:1px;background:var(--liner);margin:20px 0"></div>
-      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px">${ses.className}</div>
-      <div style="font-size:13px;color:var(--g3)">${day.label} · ${slot.t}–${slot.e} · ${ses.partner}</div>
-      <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:14px">${name}</div>
-    </div>
-
-    <div style="width:100%;background:var(--bg);border-radius:var(--rs);padding:16px 20px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(0,0,0,.04)">
-      <div style="font-size:20px;flex-shrink:0">ℹ️</div>
-      <div style="font-size:13px;color:var(--g5);line-height:1.6">
-        ถ้ามีคนยกเลิก ระบบจะโปรโมตคุณอัตโนมัติ และส่งรายละเอียดทาง <strong style="color:var(--white)">Email</strong> 
-        ที่ลงทะเบียนไว้ กลับมาเช็คสถานะได้ที่ "ดูการจองของฉัน"
-      </div>
-    </div>
-
-    <button style="width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;font-family:inherit;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:center"
-      onclick="closeConfirm()">เข้าใจแล้ว</button>
-  `;
-  el.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-async function submitBk() {
-  const name  = document.getElementById('f-name')?.value.trim();
-  const phone = document.getElementById('f-phone')?.value.trim();
-  const email = document.getElementById('f-email')?.value.trim();
-  if (!name || !phone || !email) { showToast('Please fill in all fields'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email format'); return; }
-
-  const s    = ST.bk;
-  const slot = SLOTS_META[s.slotId];
-  const day  = DAYS_META[s.day];
-  const ref  = `XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
-
-  if (!MOCK) {
-    try { await gasCall({ action:'book', sid:s.sid, name, phone, email, ref }); }
-    catch { showToast('An error occurred, please try again'); return; }
+    showConfirmation(res);
+    await loadClasses();
+  } catch (err) {
+    errEl.textContent = 'จองไม่สำเร็จ กรุณาลองใหม่';
+    errEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'ยืนยันการจอง';
   }
-
-  // Update local state
-  s.booked = (s.booked || 0) + 1;
-  ALL_BOOKINGS.push({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, name, phone, email, className:s.className, partner:s.partner });
-  sessionStorage.setItem('lastBooking', JSON.stringify({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, className:s.className, partner:s.partner, name }));
-
-  closeBk();
-  document.getElementById('co-ref').textContent   = ref;
-  document.getElementById('co-class').textContent = s.className;
-  document.getElementById('co-dt').textContent    = `${day.label} · ${slot.t}–${slot.e} · ${s.partner}`;
-  document.getElementById('co-name').textContent  = name;
-  document.getElementById('confirm-ov').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderSessionList();
 }
 
-function closeConfirm() {
-  document.getElementById('confirm-ov').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-/* ═══════════════════════════════════════
-   MY BOOKING
-═══════════════════════════════════════ */
-function openMyBooking() {
-  document.getElementById('mb-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderMyBooking();
-}
-function closeMb() {
-  document.getElementById('mb-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function openMyCoupon() {
-  document.getElementById('cp-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeCp() {
-  document.getElementById('cp-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderMyBooking(bookings, waitlist = []) {
-  const body = document.getElementById('mb-body');
-
-  let cardsHtml = '';
-
-  // Booking cards
-  if (Array.isArray(bookings) && bookings.length) {
-    cardsHtml += bookings.map(b => renderBookingCard(b)).join('');
-  }
-
-  // Waitlist cards
-  if (Array.isArray(waitlist) && waitlist.length) {
-    cardsHtml += waitlist.map(w => renderWaitlistCard(w)).join('');
-  }
-
-  if (!cardsHtml && bookings === 'not_found') {
-    cardsHtml = `<div style="text-align:center;padding:28px 0 8px">
-      <div style="font-size:40px;margin-bottom:12px">🔍</div>
-      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px">ไม่พบการจอง</div>
-      <div style="font-size:13px;color:var(--g5)">ลองตรวจสอบเบอร์โทรหรืออีเมลอีกครั้ง</div>
-    </div>`;
-  }
-
-  const hasResults = (Array.isArray(bookings) && bookings.length) || (Array.isArray(waitlist) && waitlist.length);
-
+function showConfirmation(res) {
+  const body = document.getElementById('classDetailBody');
   body.innerHTML = `
-    <div style="padding:8px 0 20px">
-      ${cardsHtml}
-      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">
-        ${hasResults ? 'ค้นหาด้วยข้อมูลอื่น' : 'ค้นหาการจองของคุณ'}
+    <div class="confirm-state">
+      <div class="confirm-check">✓</div>
+      <div class="confirm-title">การจองสำเร็จ</div>
+      <div class="confirm-sub">โปรดบันทึกหน้านี้หรือ screenshot เพื่อ check-in ที่บูท</div>
+
+      <div class="qr-box">
+        <div id="qrcode"></div>
+        <div class="code-label">Booking Code</div>
+        <div class="booking-code">${res.booking_code}</div>
       </div>
-      <div class="field focused" id="mb-contact-w" style="margin-bottom:12px">
-        <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
-        <input id="mb-contact-i" type="text" inputmode="tel"
-          placeholder="08X-XXX-XXXX หรือ your@email.com"
-          onfocus="ff('mb-contact-w')" onblur="fb('mb-contact-w')"
-          onkeyup="if(event.key==='Enter')lookupBooking()">
+
+      <div class="confirm-details">
+        <div><div class="k">Class</div>${escapeHtml(res.class.title)}</div>
+        <div><div class="k">Date & Time</div>${formatDate(res.class.date)} · ${res.class.slot.replace('-', ' – ')}</div>
+        ${res.class.instructor ? `<div><div class="k">Instructor</div>${escapeHtml(res.class.instructor)}</div>` : ''}
       </div>
-      <button class="btn-primary" id="mb-search-btn" onclick="lookupBooking()">ค้นหาการจอง</button>
-      <div style="text-align:center;margin-top:14px">
-        <button onclick="renderMyBookingByRef()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
-          มี Booking Ref อยู่แล้ว →
-        </button>
-      </div>
+
+      <button class="btn-cta" onclick="closeSheet('class')">เรียบร้อย</button>
     </div>
   `;
 
-  document.getElementById('mb-contact-i')?.focus();
+  QRCode.toCanvas(document.createElement('canvas'), res.booking_code, { width: 180, margin: 1 }, (err, canvas) => {
+    if (!err) document.getElementById('qrcode').appendChild(canvas);
+  });
 }
 
-function renderWaitlistCard(w) {
-  const ahead = w.aheadOf ?? (w.position - 1);
-  return `<div style="background:rgba(255,149,0,.06);border:1px solid rgba(255,149,0,.25);border-radius:var(--r);padding:20px;margin-bottom:20px">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-                  background:rgba(255,149,0,.2);color:var(--amber);padding:4px 10px;border-radius:100px">
-        🎟️ คิวสำรอง
-      </div>
-    </div>
-    <div style="font-size:13px;color:var(--g3);margin-bottom:4px">${w.day} · ${w.time}</div>
-    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:4px">${w.className}</div>
-    <div style="font-size:13px;color:var(--g5);margin-bottom:16px">${w.partner}</div>
-    <div style="display:flex;align-items:center;gap:16px;padding:14px;background:var(--bg);border-radius:var(--rs)">
-      <div style="text-align:center;flex:1;border-right:1px solid var(--liner)">
-        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--amber);line-height:1">${w.position}</div>
-        <div style="font-size:11px;color:var(--g5);margin-top:2px">คิวของคุณ</div>
-      </div>
-      <div style="text-align:center;flex:1">
-        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--white);line-height:1">${ahead}</div>
-        <div style="font-size:11px;color:var(--g5);margin-top:2px">คนอยู่ข้างหน้า</div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:12px">${w.name}</div>
-  </div>`;
+// ==========================================================
+// BOOKING LOOKUP
+// ==========================================================
+function openLookup() {
+  document.getElementById('lookupInput').classList.remove('hidden');
+  document.getElementById('lookupResult').classList.add('hidden');
+  document.getElementById('lookupCode').value = '';
+  document.getElementById('lookupError').classList.remove('show');
+  openSheet('lookup');
 }
 
-function renderMyBookingByRef() {
-  document.getElementById('mb-body').innerHTML = `
-    <div style="padding:8px 0 20px">
-      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">ค้นหาด้วย Booking Reference</div>
-      <div class="field focused" id="mb-ref-w" style="margin-bottom:12px">
-        <label>Booking Reference</label>
-        <input id="mb-ref-i" type="text" placeholder="เช่น XB-0507-AB12"
-          style="text-transform:uppercase"
-          onfocus="ff('mb-ref-w')" onblur="fb('mb-ref-w')"
-          onkeyup="if(event.key==='Enter')lookupByRef()">
-      </div>
-      <button class="btn-primary" onclick="lookupByRef()">ค้นหา</button>
-      <div style="text-align:center;margin-top:14px">
-        <button onclick="renderMyBooking()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
-          ← กลับ
-        </button>
-      </div>
-    </div>
-  `;
-  document.getElementById('mb-ref-i')?.focus();
-}
-
-function renderBookingCard(b) {
-  const couponsHtml = b.coupons && b.coupons.length
-    ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--liner)">
-        <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">สิทธิ์พิเศษของคุณ</div>
-        ${b.coupons.map(c => `
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--liner)">
-            <div style="font-size:18px">${{machine:'☕',beans:'🫘',gear:'🔧'}[c.type]||'🎁'}</div>
-            <div style="flex:1;font-size:12px;color:var(--g3)">${c.desc}</div>
-            <div style="font-size:15px;font-weight:700;color:var(--white)">${c.value}</div>
-          </div>`).join('')}
-      </div>` : '';
-
-  const isCancelled = b.status === 'cancelled';
-
-  return `<div class="my-booking-found" style="margin-bottom:20px;${isCancelled ? 'opacity:.5' : ''}">
-    ${isCancelled ? `<div style="background:rgba(255,59,48,.1);color:var(--red);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:100px;display:inline-block;margin-bottom:12px">ยกเลิกแล้ว</div>` : ''}
-    <div class="mbf-time">${b.day || ''} ${b.time ? '· ' + b.time : ''}</div>
-    <div class="mbf-class">${b.className}</div>
-    <div class="mbf-partner">${b.partner}</div>
-    <div class="mbf-sep"></div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">Booking Reference</div>
-    <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--white);letter-spacing:.02em">${b.ref}</div>
-    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:10px">${b.name}</div>
-    ${couponsHtml}
-    ${!isCancelled ? `
-    <button onclick="showCancelConfirm('${b.ref}')"
-      style="margin-top:16px;width:100%;background:none;border:1px solid rgba(255,59,48,.3);
-             border-radius:var(--rs);padding:12px;font-size:13px;font-weight:600;
-             color:var(--red);font-family:inherit;cursor:pointer;transition:background .2s"
-      onmouseover="this.style.background='rgba(255,59,48,.06)'"
-      onmouseout="this.style.background='none'">
-      ยกเลิกการจอง
-    </button>` : ''}
-  </div>`;
-}
-
-/* ── CANCEL FLOW ── */
-function showCancelConfirm(ref) {
-  // Inject a confirm panel below the booking card
-  const body = document.getElementById('mb-body');
-
-  // Find last lookup contact (stored when searching)
-  const lastContact = sessionStorage.getItem('mbLastContact') || '';
-
-  // Insert confirmation box
-  const existing = document.getElementById('cancel-confirm-box');
-  if (existing) existing.remove();
-
-  const box = document.createElement('div');
-  box.id = 'cancel-confirm-box';
-  box.style.cssText = `
-    background:var(--bg);border:1px solid rgba(255,59,48,.3);border-radius:var(--r);
-    padding:20px;margin-bottom:16px;
-  `;
-  box.innerHTML = `
-    <div style="font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px">ยืนยันการยกเลิก?</div>
-    <div style="font-size:13px;color:var(--g3);margin-bottom:16px;line-height:1.6">
-      การยกเลิกจะ<strong style="color:var(--white)">ไม่สามารถย้อนกลับได้</strong>
-      และคูปองทั้งหมดจะถูกยกเลิกด้วย
-    </div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">
-      ยืนยันด้วยเบอร์โทรหรืออีเมล
-    </div>
-    <div class="field focused" id="cc-contact-w" style="margin-bottom:12px">
-      <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
-      <input id="cc-contact-i" type="text" value="${lastContact}"
-        placeholder="ใส่ข้อมูลที่ลงทะเบียนไว้"
-        onfocus="ff('cc-contact-w')" onblur="fb('cc-contact-w')">
-    </div>
-    <div style="display:flex;gap:10px">
-      <button onclick="document.getElementById('cancel-confirm-box').remove()"
-        style="flex:1;background:var(--s2);border:none;border-radius:var(--rs);padding:14px;
-               font-size:14px;font-weight:600;color:var(--white);font-family:inherit;cursor:pointer">
-        ไม่ยกเลิก
-      </button>
-      <button onclick="confirmCancel('${ref}')"
-        id="cc-confirm-btn"
-        style="flex:1;background:var(--red);border:none;border-radius:var(--rs);padding:14px;
-               font-size:14px;font-weight:600;color:#fff;font-family:inherit;cursor:pointer">
-        ยืนยันยกเลิก
-      </button>
-    </div>
-  `;
-
-  // Insert at top of mb-body
-  body.insertBefore(box, body.firstChild);
-  body.scrollTop = 0;
-  document.getElementById('cc-contact-i')?.focus();
-}
-
-async function confirmCancel(ref) {
-  const contact = document.getElementById('cc-contact-i')?.value.trim();
-  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
-
-  const btn = document.getElementById('cc-confirm-btn');
-  if (btn) { btn.textContent = 'กำลังยกเลิก...'; btn.disabled = true; }
-
-  if (MOCK) {
-    // Mock: mark cancelled locally
-    const bk = ALL_BOOKINGS.find(b => b.ref === ref);
-    if (bk) bk.status = 'cancelled';
-    showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
-    document.getElementById('cancel-confirm-box')?.remove();
-    // Re-render with updated status
-    const contact2 = sessionStorage.getItem('mbLastContact') || '';
-    if (contact2) await lookupBooking();
+async function doLookup() {
+  const code = document.getElementById('lookupCode').value.trim().toUpperCase();
+  const errEl = document.getElementById('lookupError');
+  if (!code) {
+    errEl.textContent = 'กรุณากรอก Booking Code';
+    errEl.classList.add('show');
     return;
   }
+  errEl.classList.remove('show');
 
   try {
-    const res = await gasCall({ action: 'cancelBooking', ref, contact });
-    if (res.ok) {
-      showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
-      document.getElementById('cancel-confirm-box')?.remove();
-      // Reload bookings to show updated status
-      setTimeout(() => lookupBooking(), 600);
-    } else {
-      showToast(res.error || 'ไม่สามารถยกเลิกได้');
-      if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
-    }
-  } catch {
-    showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
-    if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
-  }
-}
-
-async function lookupBooking() {
-  const contact = document.getElementById('mb-contact-i')?.value.trim();
-  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
-
-  const btn = document.getElementById('mb-search-btn');
-  if (btn) { btn.textContent = 'กำลังค้นหา...'; btn.disabled = true; }
-
-  sessionStorage.setItem('mbLastContact', contact);
-
-  if (MOCK) {
-    const q = contact.toLowerCase();
-    const isEmail = q.includes('@');
-    const found = ALL_BOOKINGS.filter(b =>
-      isEmail ? (b.email||'').toLowerCase() === q
-               : (b.phone||'').replace(/\D/g,'') === q.replace(/\D/g,'')
-    );
-    renderMyBooking(found.length ? found : 'not_found', []);
-    return;
-  }
-
-  try {
-    const [bkRes, wlRes] = await Promise.all([
-      gasCall({ action:'getBookingByContact', contact }),
-      gasCall({ action:'getWaitlistPosition', contact }),
-    ]);
-    const bookings = (bkRes.ok && bkRes.bookings) ? bkRes.bookings : [];
-    const waitlist = (wlRes.ok && wlRes.waitlist)  ? wlRes.waitlist  : [];
-    if (!bookings.length && !waitlist.length) renderMyBooking('not_found', []);
-    else renderMyBooking(bookings, waitlist);
-  } catch {
-    renderMyBooking('not_found', []);
-  }
-}
-
-async function lookupByRef() {
-  const ref = document.getElementById('mb-ref-i')?.value.trim().toUpperCase();
-  if (!ref) { showToast('กรุณาใส่ Booking Reference'); return; }
-
-  if (MOCK) {
-    const found = ALL_BOOKINGS.filter(b => b.ref === ref);
-    renderMyBooking(found.length ? found : 'not_found');
-    return;
-  }
-
-  try {
-    const res = await gasCall({ action:'getBooking', ref });
-    if (res.ok && res.bookings) renderMyBooking(res.bookings);
-    else renderMyBooking('not_found');
-  } catch { renderMyBooking('not_found'); }
-}
-
-/* ═══════════════════════════════════════
-   PARTNER PORTAL — no login
-   Anyone opens ?partner=1, sees slot grid,
-   taps Vacant → fills details → slot locks.
-   Claims tracked in sessionStorage.
-═══════════════════════════════════════ */
-
-const myClaimedSids = new Set(
-  JSON.parse(sessionStorage.getItem('xbMySlots') || '[]')
-);
-function saveMyClaims() {
-  sessionStorage.setItem('xbMySlots', JSON.stringify([...myClaimedSids]));
-}
-
-function renderPartnerPage() {
-  ST.pDay = ST.pDay ?? 0;
-  renderPartnerDash();
-}
-
-function renderPartnerDash() {
-  const day      = ST.pDay ?? 0;
-  const daySlots = SESSIONS.filter(s => s.day === day);
-  const totalMine = [...myClaimedSids].filter(sid => SESSIONS.find(s => s.sid === sid)).length;
-
-  const slotRows = daySlots.map(ses => {
-    const slot    = SLOTS_META[ses.slotId];
-    const isMine  = myClaimedSids.has(ses.sid);
-    const isTaken = ses.partnerRef && !isMine;
-    const isVacant= !ses.partnerRef;
-    let cls, badge, body, onclick;
-
-    if (isMine) {
-      cls    = 'mine';
-      badge  = `<span class="slot-badge mine">${ses.published ? '● My Session' : '● Draft'}</span>`;
-      body   = ses.published
-        ? `<div class="slot-class">${ses.className}</div>
-           <div class="slot-partner-name">${ses.partner}${ses.instructor ? ' · '+ses.instructor : ''}</div>
-           <div class="slot-mine-cta">Edit details →</div>`
-        : `<div class="slot-vacant-hint" style="color:var(--amber)">Claimed — add workshop details →</div>`;
-      onclick = `openPed('${ses.sid}')`;
-    } else if (isTaken) {
-      cls    = 'taken';
-      badge  = `<span class="slot-badge taken">Taken</span>`;
-      body   = ses.published
-        ? `<div class="slot-class">${ses.className}</div><div class="slot-partner-name">by ${ses.partner}</div>`
-        : `<div class="slot-vacant-hint">Reserved by ${ses.partner}</div>`;
-      onclick = '';
-    } else {
-      cls    = 'vacant';
-      badge  = `<span class="slot-badge vacant">Vacant</span>`;
-      body   = `<div class="slot-vacant-hint">Tap to claim this slot</div>`;
-      onclick = `openPed('${ses.sid}')`;
-    }
-
-    return `<div class="slot-item ${cls}" ${onclick ? `onclick="${onclick}"` : ''}>
-      <div class="slot-hd">
-        <div class="slot-time-txt">${slot.t} – ${slot.e}</div>
-        ${badge}
-      </div>
-      <div class="slot-divider"></div>
-      <div class="slot-body">${body}</div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('partner-page-body').innerHTML = `
-    <div class="p-greet">Partner Slot Booking</div>
-    <div class="p-greet-sub">${totalMine > 0
-      ? `You've claimed ${totalMine} slot${totalMine > 1 ? 's' : ''} this session`
-      : 'Tap any <span style="color:var(--green)">Vacant</span> slot to claim it'}</div>
-    <div style="text-align:center;margin:-4px 0 16px">
-      <a href="javascript:void(0)" onclick="openRecoveryModal()"
-         style="font-size:13px;color:var(--g3);text-decoration:underline;text-underline-offset:3px">
-        🔑 Recover my slots (lost browser / new device)
-      </a>
-    </div>
-    <div class="slot-picker-section">
-      <div class="slot-picker-day-tabs">
-        ${DAYS_META.map((d, i) => `
-          <div class="spdt${i === day ? ' active' : ''}" onclick="pSelectDay(${i})">
-            <div class="spdt-n">${d.label.split(' ')[0]}</div>
-            <div class="spdt-m">${d.label.split(' ')[1]}</div>
-          </div>`).join('')}
-      </div>
-      <div class="slot-grid">${slotRows}</div>
-    </div>
-  `;
-}
-
-function pSelectDay(d) { ST.pDay = d; renderPartnerDash(); }
-
-/* ── RECOVERY (Bug #8) ── */
-function openRecoveryModal() {
-  const ov = document.getElementById('rc-overlay');
-  if (!ov) return;
-  document.getElementById('rc-contact-i').value = '';
-  document.getElementById('rc-result').innerHTML = '';
-  const btn = document.getElementById('rc-submit-btn');
-  if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
-  ov.classList.add('open');
-  setTimeout(() => document.getElementById('rc-contact-i')?.focus(), 100);
-}
-
-function closeRecoveryModal() {
-  document.getElementById('rc-overlay')?.classList.remove('open');
-}
-
-async function submitRecovery() {
-  const contact = document.getElementById('rc-contact-i')?.value.trim() || '';
-  const resultEl = document.getElementById('rc-result');
-  const btn = document.getElementById('rc-submit-btn');
-
-  if (!contact) {
-    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">กรุณากรอก email หรือเบอร์โทร</span>';
-    return;
-  }
-
-  // Basic validation: either valid email OR ≥6 digits
-  const isEmail = contact.includes('@');
-  const phoneDigits = contact.replace(/\D/g,'');
-  if (isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
-    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">รูปแบบ email ไม่ถูกต้อง</span>';
-    return;
-  }
-  if (!isEmail && phoneDigits.length < 6) {
-    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">เบอร์โทรสั้นเกินไป</span>';
-    return;
-  }
-
-  if (btn) { btn.disabled = true; btn.textContent = 'กำลังค้นหา...'; }
-  if (resultEl) resultEl.innerHTML = '<span style="color:var(--g5)">กำลังค้นหา slots ของคุณ...</span>';
-
-  if (MOCK) {
-    // In MOCK mode, just show a helpful message
-    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">Recovery ใช้ได้เฉพาะใน live mode (ต้องเชื่อม Google Apps Script)</span>';
-    if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
-    return;
-  }
-
-  try {
-    const res = await gasCall({ action: 'recoverPartnerSlots', contact }, 15000);
-    if (!res.ok) {
-      if (resultEl) resultEl.innerHTML = `<span style="color:var(--amber)">❌ ${res.error || 'Recovery failed'}</span>`;
-      if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
-      return;
-    }
-    const slots = res.slots || [];
-    if (slots.length === 0) {
-      if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">ไม่พบ slot ที่ลงทะเบียนด้วย contact นี้</span>';
-      if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+    const res = await apiGet({ action: 'getBooking', code });
+    if (res.error) {
+      errEl.textContent = 'ไม่พบการจองนี้';
+      errEl.classList.add('show');
       return;
     }
 
-    // Restore into sessionStorage + memory state
-    const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
-    slots.forEach(s => {
-      myClaimedSids.add(s.sid);
-      storedMap[s.sid] = s.partnerRef;
-      // Also sync the in-memory SESSIONS array so UI reflects correctly
-      const ses = SESSIONS.find(x => x.sid === s.sid);
-      if (ses) {
-        ses.partnerRef = s.partnerRef;
-        ses.partner    = s.partner || ses.partner;
-        ses.className  = s.className || ses.className;
-        ses.published  = !!s.published;
-      }
+    document.getElementById('lookupInput').classList.add('hidden');
+    const resultEl = document.getElementById('lookupResult');
+    resultEl.classList.remove('hidden');
+    resultEl.innerHTML = `
+      <div class="confirm-state">
+        <div class="qr-box">
+          <div id="qrcode2"></div>
+          <div class="code-label">Booking Code</div>
+          <div class="booking-code">${res.booking_code}</div>
+        </div>
+        <div class="confirm-details">
+          <div><div class="k">Name</div>${escapeHtml(res.name)}</div>
+          <div><div class="k">Date & Time</div>${formatDate(res.date)} · ${res.slot.replace('-', ' – ')}</div>
+          <div><div class="k">Phone</div>${escapeHtml(res.phone)}</div>
+          <div><div class="k">Email</div>${escapeHtml(res.email)}</div>
+        </div>
+        <button class="btn-cta" onclick="closeSheet('lookup')">ปิด</button>
+      </div>
+    `;
+    QRCode.toCanvas(document.createElement('canvas'), res.booking_code, { width: 180, margin: 1 }, (err, canvas) => {
+      if (!err) document.getElementById('qrcode2').appendChild(canvas);
     });
-    sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
-    saveMyClaims();
-
-    if (resultEl) {
-      const list = slots.map(s =>
-        `<div style="padding:6px 0;color:var(--white)">✓ ${s.day} · ${s.time} — ${s.className || '(draft)'}</div>`
-      ).join('');
-      resultEl.innerHTML =
-        `<div style="color:var(--green);font-weight:600;margin-bottom:8px">✅ พบ ${slots.length} slot</div>${list}`;
-    }
-    setTimeout(() => {
-      closeRecoveryModal();
-      renderPartnerDash();
-      showToast(`✅ Recovered ${slots.length} slot${slots.length>1?'s':''}`);
-    }, 1400);
-
-  } catch(e) {
-    console.error('Recovery error:', e);
-    if (resultEl) resultEl.innerHTML = `<span style="color:var(--amber)">❌ ${e.message}</span>`;
-    if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+  } catch (err) {
+    errEl.textContent = 'เกิดข้อผิดพลาด กรุณาลองใหม่';
+    errEl.classList.add('show');
   }
 }
 
-/* ── EDITOR ── */
-let PED_SID = null;
+// ==========================================================
+// PARTNER BACKEND
+// ==========================================================
+function openPartner() {
+  renderPartnerGate();
+  openSheet('partner');
+}
 
-function openPed(sid) {
-  const ses = SESSIONS.find(s => s.sid === sid);
-  if (!ses) return;
-  // Block if taken by someone else
-  if (ses.partnerRef && !myClaimedSids.has(sid)) return;
+function renderPartnerGate() {
+  document.getElementById('partnerBody').innerHTML = `
+    <div class="partner-gate">
+      <h2>Partner Login</h2>
+      <p>เข้าสู่ระบบเพื่อจัดการ class และดู booking</p>
+      <div class="field"><label>Password</label>
+        <input id="ppwd" type="password" placeholder="••••••••"
+               onkeydown="if(event.key==='Enter') doPartnerLogin()" />
+      </div>
+      <button class="btn-cta" onclick="doPartnerLogin()">เข้าสู่ระบบ</button>
+      <div id="pwdError" class="error-msg"></div>
+    </div>
+  `;
+}
 
-  PED_SID = sid;
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
-  const isNew = !ses.partnerRef;
+async function doPartnerLogin() {
+  const pwd = document.getElementById('ppwd').value;
+  const errEl = document.getElementById('pwdError');
+  if (!pwd) return;
 
-  document.getElementById('ped-slot-tag').textContent = `${day.label} · ${slot.t}–${slot.e}`;
-  document.getElementById('ped-top-pub').textContent  = ses.published ? 'Save' : 'Publish';
-  renderPedBody(isNew);
-  document.getElementById('ped-overlay').classList.add('open');
+  try {
+    const res = await apiPost({ action: 'partnerLogin', password: pwd });
+    if (res.error) {
+      errEl.textContent = 'Password ไม่ถูกต้อง';
+      errEl.classList.add('show');
+      return;
+    }
+    partnerPassword = pwd;
+    await loadClasses();
+    renderPartnerDashboard();
+  } catch (err) {
+    errEl.textContent = 'เกิดข้อผิดพลาด';
+    errEl.classList.add('show');
+  }
+}
+
+function renderPartnerDashboard() {
+  const body = document.getElementById('partnerBody');
+  let html = `
+    <div class="partner-dashboard">
+      <div class="partner-top">
+        <h2>Partner Dashboard</h2>
+        <button class="logout-btn" onclick="partnerLogout()">Logout</button>
+      </div>
+  `;
+
+  for (const day of DAYS) {
+    const dayClasses = allClasses.filter(c => c.date === day.date)
+      .sort((a,b) => a.slot.localeCompare(b.slot));
+    html += `<div class="partner-day-sect">
+      <h3>${formatDate(day.date)}</h3>`;
+    for (const c of dayClasses) {
+      const hasClass = c.title;
+      html += `
+        <div class="slot-row ${hasClass ? 'has-class' : ''}">
+          <div class="slot-info-left">
+            <div class="slot-time">${c.slot.replace('-', ' – ')}</div>
+            <div class="slot-title">${hasClass ? escapeHtml(c.title) + (c.partner ? ' · ' + escapeHtml(c.partner) : '') : '— empty slot —'}</div>
+          </div>
+          <div class="slot-actions">
+            ${hasClass ? `<button class="btn-bookings" onclick="viewBookings('${c.class_id}')">👥 ${c.booked}/${c.capacity}</button>` : ''}
+            <button class="btn-edit" onclick="editClass('${c.class_id}')">${hasClass ? 'Edit' : 'Add'}</button>
+          </div>
+        </div>
+      `;
+    }
+    html += `</div>`;
+  }
+  html += `</div>`;
+  body.innerHTML = html;
+}
+
+function partnerLogout() {
+  partnerPassword = null;
+  renderPartnerGate();
+}
+
+function editClass(classId) {
+  const c = allClasses.find(x => x.class_id === classId);
+  if (!c) return;
+  document.getElementById('partnerBody').innerHTML = `
+    <div class="partner-dashboard">
+      <div class="partner-top">
+        <h2>${c.title ? 'Edit Class' : 'Add Class'}</h2>
+        <button class="logout-btn" onclick="renderPartnerDashboard()">← Back</button>
+      </div>
+      <p style="color:var(--ink-soft); font-size:13px; margin-bottom:16px;">
+        ${formatDate(c.date)} · ${c.slot.replace('-', ' – ')}
+      </p>
+
+      <div class="form-section-label">Basic Info</div>
+      <div class="field"><label>Class Title *</label><input id="eTitle" value="${escapeAttr(c.title || '')}" placeholder="เช่น The Art of Pour Over" /></div>
+      <div class="field"><label>Partner / Brand *</label><input id="ePartner" value="${escapeAttr(c.partner || '')}" placeholder="เช่น Roots Coffee Roaster" /></div>
+      <div class="field"><label>Instructor</label><input id="eInstructor" value="${escapeAttr(c.instructor || '')}" placeholder="เช่น Mr. Somchai Chankafae" /></div>
+      <div class="field"><label>Description (About the Class)</label><textarea id="eDesc" placeholder="อธิบาย class สั้นๆ">${escapeHtml(c.description || '')}</textarea></div>
+      <div class="field"><label>Who is this for?</label><textarea id="eWhoFor" placeholder="เช่น Perfect for coffee beginners and home brewers eager to elevate their morning routine.">${escapeHtml(c.who_is_for || '')}</textarea></div>
+
+      <div class="form-section-label">90-minute Agenda</div>
+      <div class="agenda-row">
+        <div class="field agenda-time"><label>Part 1 Time</label><input id="eA1Time" value="${escapeAttr(c.agenda_1_time || '')}" placeholder="15m" /></div>
+        <div class="field agenda-title"><label>Part 1 Title</label><input id="eA1Title" value="${escapeAttr(c.agenda_1_title || '')}" placeholder="Introduction to extraction theory" /></div>
+      </div>
+      <div class="agenda-row">
+        <div class="field agenda-time"><label>Part 2 Time</label><input id="eA2Time" value="${escapeAttr(c.agenda_2_time || '')}" placeholder="45m" /></div>
+        <div class="field agenda-title"><label>Part 2 Title</label><input id="eA2Title" value="${escapeAttr(c.agenda_2_title || '')}" placeholder="Hands-on brewing" /></div>
+      </div>
+      <div class="agenda-row">
+        <div class="field agenda-time"><label>Part 3 Time</label><input id="eA3Time" value="${escapeAttr(c.agenda_3_time || '')}" placeholder="30m" /></div>
+        <div class="field agenda-title"><label>Part 3 Title</label><input id="eA3Title" value="${escapeAttr(c.agenda_3_title || '')}" placeholder="Tasting, comparison, and Q&A" /></div>
+      </div>
+
+      <div class="form-section-label">What You'll Get</div>
+      <div class="field"><label>Perks (บรรทัดละ 1 รายการ)</label><textarea id="ePerks" rows="4" placeholder="An exclusive recipe guide&#10;50g sample of Roots coffee beans&#10;Digital discount coupon">${escapeHtml(c.perks || '')}</textarea></div>
+
+      <div class="form-section-label">Media & Capacity</div>
+      <div class="field"><label>Image URL (optional)</label><input id="eImage" value="${escapeAttr(c.image_url || '')}" placeholder="https://..." /></div>
+      <div class="field"><label>Capacity (จำนวนที่รับ)</label><input id="eCap" type="number" min="1" value="${c.capacity || 10}" /></div>
+
+      <button class="btn-cta" id="saveBtn" onclick="saveClass('${c.class_id}')">บันทึก</button>
+      ${c.title ? `<button class="btn-cta" style="background:#b03232; margin-top:8px" onclick="clearClass('${c.class_id}')">ลบ class นี้</button>` : ''}
+      <div id="editError" class="error-msg"></div>
+    </div>
+  `;
+}
+
+async function saveClass(classId) {
+  const title = document.getElementById('eTitle').value.trim();
+  const partner = document.getElementById('ePartner').value.trim();
+  const errEl = document.getElementById('editError');
+
+  if (!title || !partner) {
+    errEl.textContent = 'กรุณากรอก Title และ Partner';
+    errEl.classList.add('show');
+    return;
+  }
+
+  const btn = document.getElementById('saveBtn');
+  btn.disabled = true;
+  btn.textContent = 'กำลังบันทึก...';
+
+  try {
+    const res = await apiPost({
+      action: 'updateClass',
+      password: partnerPassword,
+      class_id: classId,
+      title,
+      partner,
+      instructor: document.getElementById('eInstructor').value.trim(),
+      description: document.getElementById('eDesc').value.trim(),
+      who_is_for: document.getElementById('eWhoFor').value.trim(),
+      agenda_1_time: document.getElementById('eA1Time').value.trim(),
+      agenda_1_title: document.getElementById('eA1Title').value.trim(),
+      agenda_2_time: document.getElementById('eA2Time').value.trim(),
+      agenda_2_title: document.getElementById('eA2Title').value.trim(),
+      agenda_3_time: document.getElementById('eA3Time').value.trim(),
+      agenda_3_title: document.getElementById('eA3Title').value.trim(),
+      perks: document.getElementById('ePerks').value.trim(),
+      image_url: document.getElementById('eImage').value.trim(),
+      capacity: parseInt(document.getElementById('eCap').value) || 10
+    });
+    if (res.error) throw new Error(res.error);
+    await loadClasses();
+    renderPartnerDashboard();
+  } catch (err) {
+    errEl.textContent = err.message || 'บันทึกไม่สำเร็จ';
+    errEl.classList.add('show');
+    btn.disabled = false;
+    btn.textContent = 'บันทึก';
+  }
+}
+
+async function clearClass(classId) {
+  if (!confirm('ต้องการลบ class นี้ใช่หรือไม่?')) return;
+  try {
+    await apiPost({
+      action: 'updateClass',
+      password: partnerPassword,
+      class_id: classId,
+      title: '', partner: '', instructor: '',
+      description: '', who_is_for: '',
+      agenda_1_time: '', agenda_1_title: '',
+      agenda_2_time: '', agenda_2_title: '',
+      agenda_3_time: '', agenda_3_title: '',
+      perks: '', image_url: '', capacity: 10
+    });
+    await loadClasses();
+    renderPartnerDashboard();
+  } catch (err) {
+    alert('ลบไม่สำเร็จ');
+  }
+}
+
+async function viewBookings(classId) {
+  const c = allClasses.find(x => x.class_id === classId);
+  document.getElementById('partnerBody').innerHTML = `
+    <div class="partner-dashboard">
+      <div class="partner-top">
+        <h2>Bookings</h2>
+        <button class="logout-btn" onclick="renderPartnerDashboard()">← Back</button>
+      </div>
+      <p style="font-size:14px; margin-bottom:4px;"><strong>${escapeHtml(c.title)}</strong></p>
+      <p style="color:var(--ink-soft); font-size:13px; margin-bottom:16px;">
+        ${formatDate(c.date)} · ${c.slot.replace('-', ' – ')} · ${c.booked}/${c.capacity} จอง
+      </p>
+      <div id="bList" class="loading">กำลังโหลด...</div>
+    </div>
+  `;
+
+  try {
+    const res = await apiPost({
+      action: 'getBookingsForClass',
+      password: partnerPassword,
+      class_id: classId
+    });
+    const list = document.getElementById('bList');
+    if (res.error) { list.innerHTML = `<div class="loading">${res.error}</div>`; return; }
+    if (!res.bookings.length) { list.innerHTML = `<div class="loading">ยังไม่มีการจอง</div>`; return; }
+
+    list.className = 'bookings-list';
+    list.innerHTML = res.bookings.map(b => `
+      <div class="booking-row">
+        <div style="font-weight:600">${escapeHtml(b.name)}</div>
+        <div style="color:var(--ink-soft); font-size:12.5px">${escapeHtml(b.phone)} · ${escapeHtml(b.email)}</div>
+        <div class="bcode">${b.booking_code}</div>
+      </div>
+    `).join('');
+  } catch (err) {
+    document.getElementById('bList').innerHTML = `<div class="loading">โหลดไม่สำเร็จ</div>`;
+  }
+}
+
+// ==========================================================
+// SHEET / MODAL HELPERS
+// ==========================================================
+function openSheet(name) {
+  document.getElementById(name + 'Overlay').classList.add('open');
+  document.getElementById(name + 'Sheet').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
-
-function closePed() {
-  document.getElementById('ped-overlay').classList.remove('open');
+function closeSheet(name) {
+  document.getElementById(name + 'Overlay').classList.remove('open');
+  document.getElementById(name + 'Sheet').classList.remove('open');
   document.body.style.overflow = '';
-  PED_SID = null;
-  renderPartnerDash();
 }
 
-function renderPedBody(isNewClaim = false) {
-  const ses  = SESSIONS.find(s => s.sid === PED_SID);
-  const slot = SLOTS_META[ses.slotId];
-  const ag   = (ses.agenda && ses.agenda.length === 3) ? ses.agenda : ['', '', ''];
-
-  document.getElementById('ped-body').innerHTML = `
-    <div class="ped-preview-wrap">
-      <div class="ped-preview-lbl"><span class="ped-live-dot"></span> Live Preview</div>
-      <div class="ped-card-no-touch">
-        <div class="session-card" style="margin:0;box-shadow:0 8px 28px rgba(0,0,0,.08)">
-          <div id="ppv-img-wrap" style="display:${ses.img?'block':'none'}">
-            <div class="sc-img" id="ppv-img-el" style="background-image:url('${ses.img||''}')"></div>
-          </div>
-          <div class="sc-time-bar">
-            <div class="sc-time">${slot.t} – ${slot.e}</div>
-            <div class="sc-cap ok">15 Available</div>
-          </div>
-          <div class="sc-body">
-            <div class="sc-partner" id="ppv-partner">In partnership with ${ses.partner||'—'}</div>
-            <div class="sc-class" id="ppv-class">${ses.className||'<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>'}</div>
-            <div class="sc-desc"  id="ppv-desc">${ses.desc||'<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>'}</div>
-            <div class="sc-footer">
-              <div class="sc-instructor-wrap">
-                <div class="sc-instructor-label">Instructor</div>
-                <div class="sc-instructor" id="ppv-inst">${ses.instructor||'—'}</div>
-              </div>
-              <button class="btn-book" style="pointer-events:none">Details & Book</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="ped-form-wrap">
-      ${ses.published
-        ? `<div class="ped-status-bar live">✅ Published — visitors can see and book</div>`
-        : `<div class="ped-status-bar draft">${isNewClaim ? 'Fill in your details and publish to go live' : '⚠️ Draft — not visible yet'}</div>`}
-
-      <div class="ped-form-lbl">${isNewClaim ? 'Claim This Slot' : 'Workshop Details'}</div>
-      <div class="ped-fields">
-
-        ${isNewClaim ? `
-          <div class="pef focused" id="pef-co">
-            <label>Your Company / Roastery Name *</label>
-            <input id="pef-co-i" type="text" value=""
-              placeholder="e.g., Roots Coffee Roaster"
-              oninput="pedLive()" onfocus="peff('pef-co')" onblur="pefb('pef-co')">
-          </div>
-          <div class="pef" id="pef-em">
-            <label>Contact Email *</label>
-            <input id="pef-em-i" type="email" value=""
-              placeholder="you@company.com — ใช้กู้คืน slot ได้"
-              onfocus="peff('pef-em')" onblur="pefb('pef-em')">
-          </div>
-          <div class="pef" id="pef-ph">
-            <label>Contact Phone</label>
-            <input id="pef-ph-i" type="tel" value=""
-              placeholder="08x-xxx-xxxx (ทางเลือก)"
-              onfocus="peff('pef-ph')" onblur="pefb('pef-ph')">
-          </div>` : `
-          <div style="background:var(--s1);border-radius:var(--rs);padding:12px 16px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:4px">Company</div>
-            <div style="font-size:15px;font-weight:600;color:var(--white)">${ses.partner}</div>
-          </div>`}
-
-        <div class="pef" id="pef-cn">
-          <label>Workshop Name *</label>
-          <input id="pef-cn-i" type="text" value="${ses.className}"
-            placeholder="e.g., The Art of Pour Over"
-            oninput="pedLive()" onfocus="peff('pef-cn')" onblur="pefb('pef-cn')">
-        </div>
-
-        <div class="pef" id="pef-ds">
-          <label>Short Description</label>
-          <textarea id="pef-ds-i" rows="3"
-            placeholder="1–2 sentences about what this session covers."
-            oninput="pedLive()" onfocus="peff('pef-ds')" onblur="pefb('pef-ds')">${ses.desc}</textarea>
-        </div>
-
-        <div class="pef" id="pef-in">
-          <label>Instructor Name</label>
-          <input id="pef-in-i" type="text" value="${ses.instructor}"
-            placeholder="e.g., Ms. Wipa Leenaka"
-            oninput="pedLive()" onfocus="peff('pef-in')" onblur="pefb('pef-in')">
-        </div>
-
-        <div class="ped-divider"></div>
-
-        <div class="pef" id="pef-tg">
-          <label>Who is this for?</label>
-          <textarea id="pef-tg-i" rows="2"
-            placeholder="e.g., Home brewers and beginners."
-            onfocus="peff('pef-tg')" onblur="pefb('pef-tg')">${ses.target||''}</textarea>
-        </div>
-
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">90-Min Agenda</div>
-          <div style="display:flex;flex-direction:column;gap:8px">
-            ${[0,1,2].map(i=>`
-              <div class="ped-agenda-row">
-                <div class="ped-ag-num">${i+1}</div>
-                <div class="pef" id="pef-ag${i}" style="flex:1">
-                  <label>${['Opening','Main Activity','Closing'][i]}</label>
-                  <input id="pef-ag${i}-i" type="text" value="${ag[i]||''}"
-                    placeholder="${['15m: Introduction & theory','45m: Hands-on brewing','30m: Tasting & Q&A'][i]}"
-                    onfocus="peff('pef-ag${i}')" onblur="pefb('pef-ag${i}')">
-                </div>
-              </div>`).join('')}
-          </div>
-        </div>
-
-        <div class="pef" id="pef-tk">
-          <label>What participants will take home</label>
-          <textarea id="pef-tk-i" rows="2"
-            placeholder="e.g., Recipe card, 50g coffee sample, coupons."
-            onfocus="peff('pef-tk')" onblur="pefb('pef-tk')">${ses.takeaways||''}</textarea>
-        </div>
-
-        <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">Cover Image</div>
-
-          <!-- Preview area — tap to pick image -->
-          <div id="ped-img-area" onclick="document.getElementById('ped-file-input').click()"
-            style="width:100%;aspect-ratio:2.2/1;border-radius:var(--rs);overflow:hidden;
-                   background:var(--s2);border:1.5px dashed var(--s4);cursor:pointer;
-                   display:flex;align-items:center;justify-content:center;position:relative;
-                   transition:border-color .2s">
-            ${ses.img
-              ? `<img id="ped-img-preview" src="${ses.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`
-              : `<div id="ped-img-placeholder" style="text-align:center;pointer-events:none">
-                   <div style="font-size:28px;margin-bottom:6px">📷</div>
-                   <div style="font-size:13px;font-weight:600;color:var(--g3)">เลือกรูปภาพ</div>
-                   <div style="font-size:11px;color:var(--g5);margin-top:2px">อัตราส่วน 2.2:1 แนะนำ</div>
-                 </div>`
-            }
-            <!-- Upload overlay / progress -->
-            <div id="ped-upload-overlay" style="display:none;position:absolute;inset:0;
-                 background:rgba(0,0,0,.7);align-items:center;justify-content:center;flex-direction:column;gap:8px">
-              <div style="font-size:22px">⏳</div>
-              <div style="font-size:13px;font-weight:600;color:#fff">กำลังอัปโหลด...</div>
-            </div>
-          </div>
-
-          <!-- Hidden file input -->
-          <input type="file" id="ped-file-input" accept="image/*" style="display:none"
-            onchange="handleImagePick(this)">
-
-          <!-- Status row -->
-          <div id="ped-img-status" style="font-size:12px;color:var(--g5);margin-top:6px;min-height:18px">
-            ${ses.img ? '✅ มีรูปแล้ว — กดที่รูปเพื่อเปลี่ยน' : 'รองรับ JPG / PNG · ระบบจะ compress ให้อัตโนมัติ'}
-          </div>
-
-          <!-- Hidden store for current img URL -->
-          <input type="hidden" id="ped-img-url" value="${ses.img||''}">
-        </div>
-
-      </div>
-
-      <button class="ped-pub-big" onclick="pedSave()">
-        ${ses.published ? 'Save Changes' : isNewClaim ? 'Claim & Publish' : 'Publish Workshop'}
-      </button>
-      ${myClaimedSids.has(PED_SID)
-        ? `<button class="ped-release-btn" onclick="pedRelease()">Release this slot</button>`
-        : ''}
-    </div>
-  `;
-  setTimeout(() => {
-    (document.getElementById('pef-co-i') || document.getElementById('pef-cn-i'))?.focus();
-  }, 350);
+// ==========================================================
+// UTILS
+// ==========================================================
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+function escapeAttr(s) { return escapeHtml(s); }
+function formatDate(dateStr) {
+  if (!dateStr) return '';
+  const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const d = new Date(dateStr);
+  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
 }
 
-function peff(id){ document.getElementById(id)?.classList.add('focused'); }
-function pefb(id){ document.getElementById(id)?.classList.remove('focused'); }
-
-function pedLive() {
-  const co  = document.getElementById('pef-co-i')?.value || '';
-  const cn  = document.getElementById('pef-cn-i')?.value || '';
-  const ds  = document.getElementById('pef-ds-i')?.value || '';
-  const ins = document.getElementById('pef-in-i')?.value || '';
-  const ses = SESSIONS.find(s => s.sid === PED_SID);
-  const partner = co || ses?.partner || '';
-  const pe = document.getElementById('ppv-partner');
-  const ce = document.getElementById('ppv-class');
-  const de = document.getElementById('ppv-desc');
-  const ie = document.getElementById('ppv-inst');
-  if (pe) pe.textContent = `In partnership with ${partner||'—'}`;
-  if (ce) ce.innerHTML  = cn  || '<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>';
-  if (de) de.innerHTML  = ds  || '<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>';
-  if (ie) ie.textContent = ins || '—';
-}
-
-function pedLiveImg(url) {
-  // url comes from upload callback or from hidden input
-  const imgUrl = url || document.getElementById('ped-img-url')?.value || '';
-  const wrap   = document.getElementById('ppv-img-wrap');
-  const imgEl  = document.getElementById('ppv-img-el');
-  if (!wrap || !imgEl) return;
-  if (imgUrl) { imgEl.style.backgroundImage = `url('${imgUrl}')`; wrap.style.display = 'block'; }
-  else        { wrap.style.display = 'none'; }
-}
-
-/* ── IMAGE UPLOAD ── */
-function handleImagePick(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    // Show local preview immediately
-    const area = document.getElementById('ped-img-area');
-    let preview = document.getElementById('ped-img-preview');
-    const ph = document.getElementById('ped-img-placeholder');
-    if (ph) ph.style.display = 'none';
-    if (!preview) {
-      preview = document.createElement('img');
-      preview.id = 'ped-img-preview';
-      preview.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
-      area.appendChild(preview);
-    }
-    preview.src = ev.target.result;
-    // Compress and upload
-    const img = new Image();
-    img.onload = () => uploadImageToDrive(img, file.name);
-    img.src = ev.target.result;
-  };
-  reader.readAsDataURL(file);
-}
-
-async function uploadImageToDrive(imgEl, originalName) {
-  const overlay  = document.getElementById('ped-upload-overlay');
-  const statusEl = document.getElementById('ped-img-status');
-  if (overlay)  overlay.style.display = 'flex';
-  if (statusEl) statusEl.textContent  = 'กำลัง compress รูป...';
-
-  try {
-    if (!imgEl.naturalWidth || !imgEl.naturalHeight)
-      throw new Error('ไม่สามารถอ่านขนาดรูปได้ — ลองรูปอื่น');
-
-    // Compress to 800x364 (2.2:1) at 75% JPEG
-    const maxW = 800, maxH = 364;
-    const ratio = Math.min(maxW / imgEl.naturalWidth, maxH / imgEl.naturalHeight, 1);
-    const canvas = document.createElement('canvas');
-    canvas.width  = Math.round(imgEl.naturalWidth  * ratio);
-    canvas.height = Math.round(imgEl.naturalHeight * ratio);
-    canvas.getContext('2d').drawImage(imgEl, 0, 0, canvas.width, canvas.height);
-    const base64 = canvas.toDataURL('image/jpeg', 0.75).split(',')[1];
-    if (!base64) throw new Error('Compress รูปไม่สำเร็จ');
-
-    if (statusEl) statusEl.textContent = 'กำลังอัปโหลด...';
-
-    // Upload to Cloudinary (unsigned preset — full CORS, no server needed)
-    const form = new FormData();
-    form.append('file',           'data:image/jpeg;base64,' + base64);
-    form.append('upload_preset',  CLOUDINARY_PRESET);
-
-    const resp = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', {
-      method: 'POST',
-      body  : form,
-    });
-
-    const json = await resp.json();
-    if (json.error) throw new Error(json.error.message || 'Cloudinary error');
-
-    const url = json.secure_url;
-    setImageUrl(url, statusEl);
-
-  } catch(err) {
-    if (statusEl) statusEl.textContent = '❌ ' + err.message;
-    showToast('อัปโหลดไม่สำเร็จ: ' + err.message);
-  } finally {
-    if (overlay) overlay.style.display = 'none';
-  }
-}
-
-function setImageUrl(url, statusEl) {
-  const inp = document.getElementById('ped-img-url');
-  if (inp) inp.value = url;
-  if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
-  pedLiveImg(url);
-}
-
-async function pedSave() {
-  const ses    = SESSIONS.find(s => s.sid === PED_SID);
-  const isNew  = !ses.partnerRef;
-  const coEl   = document.getElementById('pef-co-i');
-  const company= coEl ? coEl.value.trim() : ses.partner;
-  const cn  = document.getElementById('pef-cn-i')?.value.trim();
-  const ds  = document.getElementById('pef-ds-i')?.value.trim();
-  const ins = document.getElementById('pef-in-i')?.value.trim();
-  const tg  = document.getElementById('pef-tg-i')?.value.trim();
-  const tk  = document.getElementById('pef-tk-i')?.value.trim();
-  const img = document.getElementById('ped-img-url')?.value.trim();
-  const ag  = [0,1,2].map(i => document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
-  // Bug #8: contact info for recovery — required on new claim, optional on edit
-  const em  = document.getElementById('pef-em-i')?.value.trim() || '';
-  const ph  = document.getElementById('pef-ph-i')?.value.trim() || '';
-
-  if (isNew && !company) { showToast('Please enter your company name'); return; }
-  if (!cn) { showToast('Please enter a Workshop Name'); return; }
-  if (isNew && !em) { showToast('Please enter a contact email (for slot recovery)'); return; }
-  if (isNew && em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
-    showToast('Please enter a valid email address'); return;
-  }
-
-  // Disable both publish buttons and show loading state
-  const btns = [document.getElementById('ped-top-pub'), document.querySelector('.ped-pub-big')];
-  btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
-
-  console.log('pedSave: isNew='+isNew+' sid='+PED_SID+' company='+company+' cn='+cn+' MOCK='+MOCK);
-
-  if (!MOCK) {
-    try {
-      if (isNew) {
-        console.log('Calling claimSession for sid:', PED_SID);
-        const res = await gasCall({
-          action       : 'claimSession',
-          sid          : PED_SID,
-          company      : company.slice(0, 60),
-          className    : cn.slice(0, 80),
-          desc         : ds.slice(0, 200),
-          instructor   : ins.slice(0, 60),
-          target       : tg.slice(0, 200),
-          takeaways    : tk.slice(0, 200),
-          img          : img.slice(0, 300),
-          agenda       : JSON.stringify(ag),
-          partnerEmail : em.slice(0, 120),
-          partnerPhone : ph.slice(0, 20),
-        }, 30000);
-        console.log('claimSession response:', JSON.stringify(res));
-        if (!res.ok) {
-          showToast('❌ ' + (res.error || 'Could not claim slot'));
-          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Claim & Publish'; }});
-          return;
-        }
-        ses.partnerRef = res.partnerRef;
-      } else {
-        console.log('Calling updateSession for sid:', PED_SID, 'partnerRef:', ses.partnerRef);
-        const res = await gasCall({
-          action     : 'updateSession',
-          sid        : PED_SID,
-          partnerRef : ses.partnerRef,
-          company    : company.slice(0, 60),
-          className  : cn.slice(0, 80),
-          desc       : ds.slice(0, 200),
-          instructor : ins.slice(0, 60),
-          target     : tg.slice(0, 200),
-          takeaways  : tk.slice(0, 200),
-          img        : img.slice(0, 300),
-          agenda     : JSON.stringify(ag),
-        }, 30000);
-        console.log('updateSession response:', JSON.stringify(res));
-        if (!res.ok) {
-          showToast('❌ ' + (res.error || 'Could not update'));
-          btns.forEach(b => { if(b){ b.disabled=false; b.textContent='Save Changes'; }});
-          return;
-        }
-      }
-    } catch(e) {
-      console.error('pedSave error:', e);
-      showToast('❌ Error: ' + e.message);
-      btns.forEach(b => { if(b){ b.disabled=false; b.textContent= isNew ? 'Claim & Publish' : 'Save Changes'; }});
-      return;
-    }
-  }
-
-  ses.partner    = company;
-  if (!ses.partnerRef) ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase();
-  ses.className  = cn; ses.desc=ds; ses.instructor=ins;
-  ses.target=tg; ses.takeaways=tk; ses.img=img; ses.agenda=ag; ses.published=true;
-
-  myClaimedSids.add(PED_SID);
-  const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
-  storedMap[PED_SID] = ses.partnerRef;
-  sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
-  saveMyClaims();
-
-  showToast('✅ Published — your workshop is now live');
-  closePed();
-  renderPartnerDash();
-}
-
-async function pedRelease() {
-  const ses = SESSIONS.find(s => s.sid === PED_SID);
-  if (!ses) return;
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
-  if (!confirm(`Release ${day.label} ${slot.t}–${slot.e}? This slot will become Vacant again.`)) return;
-
-  // Call backend first — only update UI if the server confirms the release.
-  // Otherwise UI and sheet drift apart (slot shows Vacant locally, still Taken for everyone else).
-  if (!MOCK && ses.partnerRef) {
-    const btn = document.querySelector('.ped-release-btn');
-    if (btn) { btn.disabled = true; btn.textContent = 'กำลังปล่อย...'; }
-    try {
-      const res = await gasCall({
-        action     : 'releaseSession',
-        sid        : PED_SID,
-        partnerRef : ses.partnerRef,
-      }, 30000);
-      if (!res.ok) {
-        showToast('❌ ' + (res.error || 'Could not release slot'));
-        if (btn) { btn.disabled = false; btn.textContent = 'Release Slot'; }
-        return;
-      }
-    } catch(e) {
-      console.error('pedRelease error:', e);
-      showToast('❌ Error: ' + e.message);
-      if (btn) { btn.disabled = false; btn.textContent = 'Release Slot'; }
-      return;
-    }
-  }
-
-  ses.partner=''; ses.partnerRef=''; ses.className=''; ses.desc='';
-  ses.instructor=''; ses.target=''; ses.takeaways='';
-  ses.img=''; ses.agenda=['','','']; ses.published=false; ses.booked=0;
-  myClaimedSids.delete(PED_SID);
-  // Also clean up the stored ref map so we don't leak stale partnerRefs
-  const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
-  delete storedMap[PED_SID];
-  sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
-  saveMyClaims();
-  showToast('Slot released — now Vacant');
-  closePed();
-  renderPartnerDash();
-}
-
-
-/* ═══════════════════════════════════════
-   ADMIN
-═══════════════════════════════════════ */
-function renderAdminPage() {
-  if (ST.admin) renderAdminDash();
-  else renderAdminAuth();
-}
-
-function renderAdminAuth() {
-  document.getElementById('admin-page-body').innerHTML = `
-    <div class="auth-center">
-      <div class="auth-icon">🔐</div>
-      <div class="auth-h">Admin Dashboard</div>
-      <div class="auth-sub">Enter password to view bookings and session status</div>
-      <div class="auth-form">
-        <div class="field" id="af-pw"><label>Password</label><input id="a-pw" type="password" onfocus="ff('af-pw')" onblur="fb('af-pw')" onkeyup="if(event.key==='Enter')adminLogin()"></div>
-        <button class="auth-submit" onclick="adminLogin()">Log In</button>
-      </div>
-    </div>
-  `;
-}
-
-async function adminLogin() {
-  const pass = document.getElementById('a-pw')?.value;
-  if (MOCK) {
-    if (pass === ADMIN_PASS_MOCK) {
-      ST.admin = true; ST.adminData = generateMockBookings();
-      renderAdminDash();
-    } else showToast('Invalid password');
-    return;
-  }
-  try {
-    const res = await gasCall({ action:'adminData', pass });
-    if (res.ok) {
-      ST.admin = true;
-      ST.adminData  = res.bookings  || [];
-      ST.adminSessions = res.sessions || [];
-      ST.adminCoupons  = res.coupons  || [];
-      renderAdminDash();
-    } else {
-      showToast(res.error || 'รหัสผ่านไม่ถูกต้อง');
-    }
-  } catch (e) {
-    showToast('เกิดข้อผิดพลาด: ' + e.message);
-  }
-}
-
-function generateMockBookings() {
-  const names = ['Somchai Meesuk','Wipa Deejai','John Smith','Dao Suksom','Mark Lee','Kafae Rakchong'];
-  return SESSIONS.filter(s=>s.published).flatMap(ses => {
-    const day=DAYS_META[ses.day]; const slot=SLOTS_META[ses.slotId];
-    return Array.from({length:ses.booked},(_,i)=>({
-      ref:`XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`,
-      name:names[Math.floor(Math.random()*names.length)],
-      email:'demo@email.com', phone:'081-234-5678',
-      className:ses.className, partner:ses.partner,
-      day:day.label, time:`${slot.t}–${slot.e}`
-    }));
-  });
-}
-
-function renderAdminDash() {
-  // Use live GAS data (ST.adminData) merged with any local session bookings
-  const data     = ST.adminData || [];
-  const sessions = ST.adminSessions || SESSIONS;
-  const total    = data.filter(b => b.status !== 'cancelled').length;
-  const cancelled= data.filter(b => b.status === 'cancelled').length;
-
-  // Bookings per day — match on day label OR date string
-  const byday = DAYS_META.map(d =>
-    data.filter(b => b.status !== 'cancelled' &&
-      (b.day === d.label || String(b.day||'').includes(d.label))).length
-  );
-
-  // Sessions live / TBA
-  const liveSessions = sessions.filter(s => s.published);
-  const tbaSessions  = sessions.filter(s => !s.published);
-
-  const fillRateHtml = liveSessions.map(ses => {
-    const day = DAYS_META[ses.day] || {};
-    const slot = SLOTS_META[ses.slotId] || {};
-    const booked = data.filter(b => b.sid === ses.sid && b.status !== 'cancelled').length;
-    const pct    = Math.round((booked / 15) * 100);
-    return `<div class="fill-bar-row">
-      <div class="fbr-top">
-        <div class="fbr-label">${day.label||''} ${slot.t||''} · ${ses.className||'TBA'}</div>
-        <div class="fbr-count">${booked}/15</div>
-      </div>
-      <div class="fill-bar"><div class="fill-bar-inner" style="width:${pct}%"></div></div>
-    </div>`;
-  }).join('');
-
-  const tableRows = data.map(b => {
-    const statusBadge = b.status === 'cancelled'
-      ? `<span style="font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase">ยกเลิก</span>`
-      : '';
-    return `<tr>
-      <td class="td-ref">${b.ref} ${statusBadge}</td>
-      <td>${b.name}</td>
-      <td style="font-size:12px">${b.className||'—'}</td>
-      <td style="font-size:12px">${b.day||'—'}</td>
-      <td style="font-size:12px">${b.time||'—'}</td>
-      <td style="font-size:12px;color:var(--g5)">${b.phone||'—'}</td>
-    </tr>`;
-  }).join('');
-
-  document.getElementById('admin-page-body').innerHTML = `
-    <div class="adm-h">Dashboard</div>
-    <div class="adm-sub">xBloom × WOC Bangkok 2026</div>
-
-    <div class="stat-grid">
-      <div class="stat-box"><div class="stat-n">${total}</div><div class="stat-l">Active Bookings</div></div>
-      <div class="stat-box"><div class="stat-n" style="color:var(--red)">${cancelled}</div><div class="stat-l">Cancelled</div></div>
-      ${byday.map((n,i)=>`<div class="stat-box"><div class="stat-n">${n}</div><div class="stat-l">${DAYS_META[i].label}</div></div>`).join('')}
-      <div class="stat-box"><div class="stat-n">${liveSessions.length}</div><div class="stat-l">Sessions Live</div></div>
-      <div class="stat-box"><div class="stat-n" style="color:var(--amber)">${tbaSessions.length}</div><div class="stat-l">Sessions TBA</div></div>
-    </div>
-
-    ${fillRateHtml ? `<div class="adm-section-label">Fill Rate</div><div class="fill-rate-grid">${fillRateHtml}</div>` : ''}
-
-    <button class="btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Ref</th><th>ชื่อ</th><th>Workshop</th><th>วัน</th><th>เวลา</th><th>โทร</th></tr></thead>
-        <tbody>${tableRows || '<tr><td colspan="6" style="color:var(--g5);text-align:center;padding:24px">ยังไม่มี booking</td></tr>'}</tbody>
-      </table>
-    </div>
-    <button class="p-signout" onclick="ST.admin=false;ST.adminData=[];renderAdminPage()">Log Out</button>
-  `;
-}
-
-function exportCSV() {
-  const data = [...ST.adminData, ...ALL_BOOKINGS];
-  const rows = [['Ref','Name','Email','Phone','Workshop','Partner','Date','Time']];
-  data.forEach(b=>rows.push([b.ref, b.name, b.email||'', b.phone||'', b.className, b.partner, b.day, b.time]));
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n')],{type:'text/csv'}));
-  a.download = `xbloom-woc-${new Date().toISOString().slice(0,10)}.csv`;
-  a.click();
-}
-
-/* ═══════════════════════════════════════
-   GAS — fetch (GET for reads, POST for writes)
-═══════════════════════════════════════ */
-// READ actions use JSONP (follows GAS redirects, no CORS issue)
-// WRITE actions use fetch POST via no-cors (fire-and-forget) then poll for result
-const GAS_READ_ACTIONS  = ['getSessions','getBooking','getBookingByContact','getWaitlistPosition','adminData'];
-const GAS_WRITE_ACTIONS = ['claimSession','updateSession','releaseSession','book','cancelBooking','joinWaitlist'];
-
-function gasCall(params, timeoutMs = 15000) {
-  if (GAS_WRITE_ACTIONS.includes(params.action)) {
-    return gasPost(params, timeoutMs);
-  }
-  return gasJsonp(params, timeoutMs);
-}
-
-// JSONP — for reads only
-function gasJsonp(params, timeoutMs) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'gc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-    const qs = Object.entries({ ...params, callback: cbName })
-      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(v))
-      .join('&');
-    const url = GAS_URL + '?' + qs;
-
-    const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, timeoutMs);
-    window[cbName] = function(data) { cleanup(); resolve(data); };
-
-    const script = document.createElement('script');
-    script.src = url;
-    script.onerror = function() { cleanup(); reject(new Error('Script load failed')); };
-    document.head.appendChild(script);
-
-    function cleanup() {
-      clearTimeout(timer);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-  });
-}
-
-// fetch POST — for writes, uses no-cors + polls for confirmation via JSONP
-async function gasPost(params, timeoutMs) {
-  // Generate a unique request ID so we can poll for the result
-  const reqId = 'req_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-  const payload = { ...params, reqId };
-
-  // Send POST with no-cors (will succeed without CORS headers, but response is opaque)
-  try {
-    await fetch(GAS_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body: JSON.stringify(payload),
-    });
-  } catch(e) {
-    // no-cors fetch may throw in some envs — that's ok, GAS still receives it
-    console.warn('POST send warning (may be ok):', e.message);
-  }
-
-  // Poll via JSONP for result (GAS stores result in cache keyed by reqId)
-  const deadline = Date.now() + timeoutMs;
-  while (Date.now() < deadline) {
-    await new Promise(r => setTimeout(r, 1800));
-    try {
-      const res = await gasJsonp({ action: 'getReqResult', reqId }, 8000);
-      if (res.ok && res.pending) continue; // not ready yet
-      return res; // got a real result (ok or error)
-    } catch(e) {
-      // poll failed, try again
-    }
-  }
-  throw new Error('Timeout waiting for GAS response');
-}
-
-
-// Load live sessions from GAS and merge into SESSIONS array
-async function loadLiveSessions() {
-  if (MOCK) return;
-  try {
-    const res = await gasCall({ action: 'getSessions' });
-    if (res.ok && res.sessions) {
-      // Replace SESSIONS with live data
-      SESSIONS.length = 0;
-      res.sessions.forEach(s => SESSIONS.push(s));
-    }
-  } catch (e) {
-    console.warn('Could not load sessions from GAS:', e.message);
-  }
-}
-
-/* ═══════════════════════════════════════
-   UTILS
-═══════════════════════════════════════ */
-let toastT;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3500);
-}
-
-/* ═══════════════════════════════════════
-   INIT — URL routing
-═══════════════════════════════════════ */
-async function init() {
-  const params = new URLSearchParams(location.search);
-
-  // Load live data first (if GAS is configured)
-  await loadLiveSessions();
-
-  if (params.get('partner') === '1') {
-    document.getElementById('page-pub').classList.remove('active');
-    document.getElementById('page-partner').classList.add('active');
-    renderPartnerPage();
-
-    // Auto-recovery: ?partner=1&recover=<email-or-phone>
-    const recoverContact = params.get('recover');
-    if (recoverContact) {
-      setTimeout(() => {
-        openRecoveryModal();
-        const inp = document.getElementById('rc-contact-i');
-        if (inp) {
-          inp.value = recoverContact;
-          submitRecovery();
-        }
-      }, 300);
-    }
-    return;
-  }
-  if (params.get('admin') === '1') {
-    document.getElementById('page-pub').classList.remove('active');
-    document.getElementById('page-admin').classList.add('active');
-    renderAdminPage();
-    return;
-  }
-
-  // Default: public schedule
-  const ref = params.get('ref');
-  if (ref) { sessionStorage.setItem('partnerRef', ref); showToast(`🤝 From Partner: ${ref}`); }
-  renderSessionList();
-}
-
-document.getElementById('bk-overlay').addEventListener('click', e => { if (e.target === document.getElementById('bk-overlay')) closeBk(); });
-document.getElementById('mb-overlay').addEventListener('click', e => { if (e.target === document.getElementById('mb-overlay')) closeMb(); });
-document.getElementById('cp-overlay').addEventListener('click', e => { if (e.target === document.getElementById('cp-overlay')) closeCp(); });
-document.getElementById('rc-overlay')?.addEventListener('click', e => { if (e.target === document.getElementById('rc-overlay')) closeRecoveryModal(); });
-
+// Boot
 init();
 </script>
 </body>
