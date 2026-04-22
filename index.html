@@ -2,1967 +2,1289 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover">
 <title>xBloom × WOC Bangkok 2026</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FFFFFF;--s1:#F5F5F7;--s2:#E5E5EA;--s3:#D1D1D6;--s4:#C7C7CC;
-  --white:#1D1D1F;--g1:#3A3A3C;--g3:#86868B;--g5:#98989D;--g7:#AEAEB2;
-  --green:#34C759;--red:#FF3B30;--amber:#FF9500;
-  --line:rgba(0,0,0,.08);--liner:rgba(0,0,0,.04);
-  --r:24px;--rs:14px;
+  --bg:#fff;--s1:#F5F5F7;--s2:#E8E8ED;--s3:#D1D1D6;
+  --ink:#1D1D1F;--ink2:#3A3A3C;--muted:#86868B;--faint:#AEAEB2;
+  --green:#34C759;--red:#FF3B30;--amber:#FF9500;--blue:#007AFF;
+  --line:rgba(0,0,0,.07);--r:20px;--rs:14px;
 }
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;background-color:var(--s1);}
-body{max-width:480px;margin:0 auto;background:var(--bg);color:var(--white);font-family:-apple-system,BlinkMacSystemFont,'DM Sans',sans-serif;font-size:15px;letter-spacing:-0.015em;-webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100svh;box-shadow:0 0 40px rgba(0,0,0,0.05);position:relative;}
-button{font-family:inherit;cursor:pointer}
-input,select,textarea{font-family:inherit}
+html{background:var(--s1)}
+body{max-width:480px;margin:0 auto;background:var(--bg);color:var(--ink);
+  font-family:'DM Sans',-apple-system,sans-serif;font-size:15px;letter-spacing:-.015em;
+  -webkit-font-smoothing:antialiased;overflow-x:hidden;min-height:100svh;
+  box-shadow:0 0 60px rgba(0,0,0,.06)}
+button{font-family:inherit;cursor:pointer;border:none}
+input,textarea,select{font-family:inherit}
 
-/* ─── SHARED ─────────────────────────────────────── */
-.serif{font-family:'Playfair Display',serif;letter-spacing:-0.02em}
-.page{display:none;min-height:100svh}
-.page.active{display:block}
+/* PAGES */
+.page{display:none;min-height:100svh}.page.active{display:block}
 
-/* ─── HEADER ─────────────────────────────────────── */
-.hdr{
-  position:fixed;top:0;left:0;right:0;z-index:80;
-  display:flex;justify-content:space-between;align-items:center;
-  padding:calc(env(safe-area-inset-top) + 16px) 24px 16px;
-  background:rgba(255,255,255,.75);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid var(--line);
-  max-width:480px;margin:0 auto;
-}
-.hdr-logo{font-family:'Quincy CF', 'Quincy', serif;font-size:26px;font-weight:700;letter-spacing:-0.03em;}
-.hdr-tag{font-size:11px;color:var(--g3);letter-spacing:.04em;text-transform:uppercase;font-weight:600}
-.hdr-right{display:flex;align-items:center;gap:12px}
-
-/* ─── PUBLIC SCHEDULE ────────────────────────────── */
-.pub-hero{
-  position:relative;
-  padding:calc(env(safe-area-inset-top) + 110px) 24px 40px;
-  text-align:center;display:flex;flex-direction:column;align-items:center;
-  overflow:hidden;
-}
-.pub-hero::before{
-  content:'';position:absolute;top:-20px;left:50%;transform:translateX(-50%);
-  width:140vw;height:400px;
-  background:radial-gradient(ellipse at center, rgba(0,0,0,0.04) 0%, rgba(255,255,255,0) 60%);
-  z-index:-1;pointer-events:none;
-}
-.pub-kicker{
-  display:inline-flex;align-items:center;padding:6px 16px;
-  background:var(--white);color:#FFF;border-radius:100px;
-  font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;
-  margin-bottom:24px;box-shadow:0 8px 16px rgba(0,0,0,0.1);
-}
-.font-logo{font-family:'Quincy CF', 'Quincy', serif;font-weight:700;letter-spacing:-0.03em;}
-.pub-h1{
-  font-family:'Playfair Display',serif;font-size:52px;font-weight:500;line-height:1.05;
-  letter-spacing:-0.03em;margin-bottom:16px;color:var(--white);
-}
-.pub-h1 em{color:var(--g3);font-style:italic;font-weight:400}
-.pub-sub{
-  font-size:16px;color:var(--g3);margin-bottom:32px;font-weight:400;
-  max-width:320px;line-height:1.5;
-}
-.pub-info-row{
-  display:flex;align-items:center;gap:12px;justify-content:center;flex-wrap:wrap;
-}
-.pub-info-item{
-  display:flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--g1);
-  background:var(--s1);padding:8px 16px;border-radius:100px;
-}
-
-/* day tabs */
-.day-tabs{display:flex;position:sticky;top:calc(env(safe-area-inset-top) + 68px);background:var(--s1);z-index:70;margin:0 24px 24px;border-radius:100px;padding:4px}
-.day-tab{flex:1;padding:10px 8px;text-align:center;cursor:pointer;border-radius:100px;transition:all .3s cubic-bezier(.25,1,.5,1)}
-.day-tab.active{background:#FFFFFF;box-shadow:0 2px 10px rgba(0,0,0,.06)}
-.day-tab .dt-n{font-size:17px;font-weight:600;color:var(--g3);transition:color .3s}
-.day-tab.active .dt-n{color:var(--white)}
-.day-tab .dt-m{font-size:10px;color:var(--g5);letter-spacing:.02em;margin-top:2px;font-weight:500}
-.day-tab .dt-d{display:none;}
-
-/* session list */
-.session-list{padding:0 0 calc(env(safe-area-inset-bottom) + 120px)}
-
-.session-card{
-  margin:0 24px 16px;
-  background:#FFFFFF;
-  border-radius:20px;
-  border:1px solid rgba(0,0,0,0.06);
-  box-shadow:0 6px 20px rgba(0,0,0,0.03);
-  overflow:hidden;
-}
-
-.sc-img{
-  width:100%;
-  aspect-ratio:2.2/1;
-  background-color:var(--s2);
-  background-size:cover;
-  background-position:center;
-  border-bottom:1px solid rgba(0,0,0,0.04);
-}
-
-.sc-time-bar{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:16px 20px 12px;
-  border-bottom:1px solid rgba(0,0,0,0.04);
-}
-.sc-time{font-size:13px;font-weight:600;color:var(--white);letter-spacing:.01em}
-.sc-cap{
-  font-size:10px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.04em;padding:4px 10px;border-radius:100px;
-}
-.sc-cap.ok{color:var(--green);background:rgba(52, 199, 89, 0.12);}
-.sc-cap.warn{color:var(--amber);background:rgba(255, 149, 0, 0.12);}
-.sc-cap.full{color:var(--red);background:rgba(255, 59, 48, 0.12);}
-
-.sc-body{padding:16px 20px 20px}
-.sc-empty{
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:24px 20px;text-align:center;gap:8px;
-}
-.sc-empty-label{font-size:13px;color:var(--g5);font-weight:500}
-
-.sc-partner{
-  font-size:10px;color:var(--g5);letter-spacing:.06em;
-  text-transform:uppercase;margin-bottom:8px;font-weight:600;
-}
-.sc-class{
-  font-family:'Playfair Display',serif;font-size:22px;font-weight:600;
-  line-height:1.2;margin-bottom:8px;letter-spacing:-0.01em;color:var(--white);
-}
-.sc-desc{font-size:13px;color:var(--g3);line-height:1.45;margin-bottom:20px;}
-.sc-footer{display:flex;justify-content:space-between;align-items:flex-end;}
-
-.sc-instructor-wrap{display:flex;flex-direction:column;gap:4px;}
-.sc-instructor-label{font-size:10px;color:var(--g5);text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
-.sc-instructor{font-size:13px;font-weight:600;color:var(--white);}
-
-.btn-book{
-  background:var(--white);color:#FFF;
-  border:none;padding:10px 20px;border-radius:100px;
-  font-size:13px;font-weight:600;letter-spacing:-0.01em;
-  transition:transform .2s ease, opacity .2s ease;
-  min-height:40px;display:inline-flex;align-items:center;justify-content:center;
-}
-.btn-book:active{transform:scale(.95);opacity:.8}
-.btn-book.full{background:var(--s2);color:var(--g5);cursor:not-allowed;transform:none;opacity:1}
-
-/* bottom actions */
-.pub-bottom{
-  position:fixed;bottom:0;left:0;right:0;
-  padding:16px 24px calc(env(safe-area-inset-bottom) + 16px);
-  background:rgba(255,255,255,.75);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-top:1px solid var(--line);
-  display:flex;justify-content:center;gap:12px;
-  max-width:480px;margin:0 auto;
-}
-.btn-ghost-sm{
-  background:rgba(0,0,0,0.04);border:none;border-radius:100px;
-  padding:12px 16px;font-size:13px;color:var(--white);font-weight:600;
-  transition:background .2s;
-  min-height:48px;display:inline-flex;align-items:center;justify-content:center;
-  flex:1;
-}
-.btn-ghost-sm:active{background:rgba(0,0,0,0.08)}
-
-/* ─── BOOKING SHEET ──────────────────────────────── */
-.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);z-index:200;align-items:flex-end;justify-content:center;}
-.overlay.open{display:flex}
-.sheet{background:var(--bg);border-radius:32px 32px 0 0;width:100%;max-width:480px;max-height:90svh;overflow-y:auto;-webkit-overflow-scrolling:touch;animation:shUp .4s cubic-bezier(.22,.9,.36,1);padding-bottom:calc(env(safe-area-inset-bottom) + 32px);box-shadow:0 -10px 40px rgba(0,0,0,0.15)}
-@keyframes shUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sh-handle{width:40px;height:5px;background:var(--s3);border-radius:100px;margin:16px auto 0}
-.sh-hd{display:flex;justify-content:space-between;align-items:center;padding:24px 24px 16px;position:sticky;top:0;background:rgba(255,255,255,0.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);z-index:10;border-bottom:1px solid rgba(0,0,0,0.03)}
-.sh-title{font-size:20px;font-weight:600;letter-spacing:-0.02em}
-.sh-close{width:32px;height:32px;border-radius:50%;background:var(--s2);border:none;color:var(--g3);font-size:13px;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.sh-close:active{background:var(--s3);color:var(--white)}
-.sh-body{padding:24px}
-
-/* session rich details inside sheet */
-.sh-detail-group{display:flex;flex-direction:column;gap:24px;margin-bottom:32px;}
-.sh-detail-sec{display:flex;flex-direction:column;gap:6px;}
-.sh-detail-h{font-size:11px;font-weight:700;color:var(--g5);text-transform:uppercase;letter-spacing:0.06em;}
-.sh-detail-p{font-size:15px;color:var(--white);line-height:1.5;}
-.sh-agenda-list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:10px;}
-.sh-agenda-list li{display:flex;align-items:flex-start;gap:12px;font-size:15px;color:var(--white);line-height:1.4;}
-.ag-dot{display:inline-block;width:6px;height:6px;background:var(--g5);border-radius:50%;margin-top:8px;flex-shrink:0;}
-.sh-divider{height:1px;background:var(--line);margin:32px 0;}
-
-/* form */
-.field-stack{display:flex;flex-direction:column;gap:16px;margin-bottom:32px}
-.field{background:var(--s1);border-radius:var(--rs);border:1px solid transparent;transition:border-color .2s, background .2s}
-.field label{display:block;font-size:11px;font-weight:600;letter-spacing:.02em;color:var(--g5);padding:12px 16px 2px}
-.field input,.field textarea,.field select{width:100%;background:none;border:none;padding:6px 16px 14px;color:var(--white);font-size:16px;-webkit-appearance:none;font-weight:500}
-.field input::placeholder,.field textarea::placeholder{color:var(--g5);font-weight:400}
-.field input:focus,.field textarea:focus,.field select:focus{outline:none}
-.field.focused{border-color:var(--white);background:var(--bg)}
-
-.btn-primary{width:100%;background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;transition:transform .2s, opacity .2s;letter-spacing:-0.01em;margin-bottom:12px;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.btn-primary:active{transform:scale(.98);opacity:.9}
-.btn-primary:disabled{background:var(--s2);color:var(--g5);cursor:not-allowed;transform:none}
-
-/* ─── CONFIRM ────────────────────────────────────── */
-.confirm-ov{display:none;position:fixed;top:0;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;background:var(--s1);z-index:300;overflow-y:auto;align-items:center;justify-content:flex-start;flex-direction:column;padding:calc(env(safe-area-inset-top)+80px) 24px calc(env(safe-area-inset-bottom)+40px)}
-.confirm-ov.open{display:flex}
-.co-icon{font-size:64px;margin-bottom:24px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both}
-@keyframes popIn{from{transform:scale(0.8);opacity:0}to{transform:scale(1);opacity:1}}
-.co-h{font-size:28px;font-weight:600;text-align:center;margin-bottom:8px;letter-spacing:-0.02em}
-.co-sub{font-size:15px;color:var(--g3);text-align:center;margin-bottom:40px}
-.co-card{width:100%;background:var(--bg);border-radius:var(--r);padding:32px;text-align:center;margin-bottom:32px;box-shadow:0 10px 30px rgba(0,0,0,0.06);border:1px solid rgba(0,0,0,0.04)}
-.co-rl{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px}
-.co-ref{font-family:'Playfair Display',serif;font-size:40px;font-weight:600;color:var(--white);letter-spacing:0;margin-bottom:24px}
-.co-sep{height:1px;background:var(--line);margin:20px 0}
-.co-class{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:6px}
-.co-dt{font-size:14px;color:var(--g3)}
-.co-name-val{font-size:16px;font-weight:600;color:var(--white);margin-top:16px}
-.co-note-sm{font-size:12px;color:var(--g5);margin-top:8px}
-
-.promos-label{width:100%;font-size:12px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;color:var(--g3);margin-bottom:16px;padding-left:8px}
-.promos{width:100%;display:flex;flex-direction:column;gap:12px;margin-bottom:40px}
-.promo-row{background:var(--bg);border-radius:var(--rs);padding:16px 20px;display:flex;align-items:center;gap:16px;border:1px solid rgba(0,0,0,0.04);animation:fadeUp .5s cubic-bezier(.2,0,0,1) both}
-.promo-row:nth-child(1){animation-delay:.1s}
-.promo-row:nth-child(2){animation-delay:.2s}
-.promo-row:nth-child(3){animation-delay:.3s}
-@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-.pr-ico{font-size:24px;flex-shrink:0;background:var(--s1);width:48px;height:48px;display:flex;align-items:center;justify-content:center;border-radius:50%}
-.pr-info{flex:1}
-.pr-title{font-size:15px;font-weight:600;color:var(--white)}
-.pr-desc{font-size:13px;color:var(--g5);margin-top:2px}
-.pr-val{font-size:18px;color:var(--white);font-weight:600;white-space:nowrap}
-.co-note-email{font-size:13px;color:var(--g5);text-align:center;margin-bottom:32px}
-.btn-done{width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;transition:transform .2s;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.btn-done:active{transform:scale(.98)}
-
-/* ─── MY BOOKING ─────────────────────────────────── */
-.my-booking-content{text-align:center;padding:16px 0 16px}
-.my-booking-found{background:var(--s1);border-radius:var(--r);padding:24px;text-align:left;border:1px solid rgba(0,0,0,0.04)}
-.mbf-time{font-size:13px;color:var(--g3);font-weight:600;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.02em}
-.mbf-class{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;margin-bottom:6px;color:var(--white)}
-.mbf-partner{font-size:13px;color:var(--g5);margin-bottom:16px;font-weight:500}
-.mbf-sep{height:1px;background:var(--liner);margin:16px 0}
-.mbf-ref{font-size:12px;color:var(--g5);margin-bottom:6px}
-.mbf-ref strong{font-size:18px;font-weight:600;color:var(--white);letter-spacing:0.02em}
-.mbf-name{font-size:15px;font-weight:600;color:var(--white);margin-top:12px}
-
-/* ─── PARTNER & ADMIN PAGES ─────────────────────────────── */
-.partner-page, .admin-page{padding:calc(env(safe-area-inset-top)+100px) 24px calc(env(safe-area-inset-bottom)+40px)}
-.auth-center{display:flex;flex-direction:column;align-items:center;min-height:60vh;justify-content:center;text-align:center;padding:40px 0}
-.auth-icon{font-size:48px;margin-bottom:24px}
-.auth-h{font-size:28px;font-weight:600;margin-bottom:12px;letter-spacing:-0.02em}
-.auth-sub{font-size:15px;color:var(--g3);margin-bottom:40px;line-height:1.5}
-.auth-form{width:100%;max-width:340px;display:flex;flex-direction:column;gap:16px;margin:0 auto;}
-.auth-submit{background:var(--white);color:#FFF;border:none;padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;margin-top:8px;transition:transform .2s;min-height:56px;display:flex;align-items:center;justify-content:center;}
-.auth-submit:active{transform:scale(.97)}
-
-/* partner dash */
-.p-greet{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
-.p-greet-sub{font-size:15px;color:var(--g3);margin-bottom:28px}
-.p-signout{background:var(--s2);border:none;border-radius:100px;padding:12px 24px;font-size:14px;font-weight:600;color:var(--white);margin-top:32px}
-
-/* ── SLOT PICKER ─── */
-.slot-picker-section{margin-bottom:8px}
-.slot-picker-day-tabs{display:flex;background:var(--s1);border-radius:100px;padding:4px;margin-bottom:20px}
-.spdt{flex:1;text-align:center;padding:10px 6px;border-radius:100px;cursor:pointer;transition:all .25s cubic-bezier(.25,1,.5,1)}
-.spdt.active{background:var(--bg);box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.spdt-n{font-size:17px;font-weight:600;color:var(--g5);transition:color .2s}
-.spdt.active .spdt-n{color:var(--white)}
-.spdt-m{font-size:10px;color:var(--g5);margin-top:2px;font-weight:500}
-
-.slot-grid{display:flex;flex-direction:column;gap:10px}
-.slot-item{
-  border-radius:16px;overflow:hidden;
-  border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 2px 8px rgba(0,0,0,.03);
-  transition:transform .2s,box-shadow .2s;
-}
-.slot-item.vacant{cursor:pointer;background:var(--bg)}
-.slot-item.vacant:active{transform:scale(.98)}
-.slot-item.mine{background:var(--bg);cursor:pointer;border-color:rgba(0,122,255,.2)}
-.slot-item.mine:active{transform:scale(.98)}
-.slot-item.taken{background:var(--s1);cursor:default}
-
-.slot-hd{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:14px 18px;
-}
-.slot-time-txt{font-size:15px;font-weight:600;color:var(--white)}
-.slot-badge{font-size:11px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.02em}
-.slot-badge.vacant{background:rgba(52,199,89,.12);color:var(--green)}
-.slot-badge.mine{background:rgba(0,122,255,.12);color:#0077FF}
-.slot-badge.taken{background:rgba(0,0,0,.06);color:var(--g5)}
-
-.slot-body{padding:0 18px 16px}
-.slot-class{font-family:'Playfair Display',serif;font-size:19px;font-weight:600;color:var(--white);margin-bottom:4px;line-height:1.2}
-.slot-partner-name{font-size:13px;color:var(--g3);font-weight:500}
-.slot-vacant-hint{font-size:13px;color:var(--g5);padding-bottom:2px}
-.slot-mine-cta{font-size:13px;font-weight:600;color:#0077FF;margin-top:8px}
-.slot-divider{height:1px;background:var(--liner);margin:0 18px}
-
-/* ── PARTNER EDITOR (full-screen overlay) ─── */
-.ped-overlay{
-  display:none;position:fixed;inset:0;max-width:480px;margin:0 auto;
-  background:var(--s1);z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch;
-}
-.ped-overlay.open{display:block}
-.ped-topbar{
-  position:sticky;top:0;z-index:10;
+/* HEADER */
+.hdr{position:fixed;top:0;left:0;right:0;z-index:80;max-width:480px;margin:0 auto;
   display:flex;align-items:center;justify-content:space-between;
   padding:calc(env(safe-area-inset-top)+14px) 20px 14px;
+  background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid var(--line)}
+.hdr-logo{font-family:'Playfair Display',serif;font-size:22px;font-weight:700;letter-spacing:-.03em}
+.hdr-tag{font-size:11px;color:var(--muted);font-weight:600;letter-spacing:.05em;text-transform:uppercase}
+
+/* PUBLIC HERO */
+.pub-hero{padding:calc(env(safe-area-inset-top)+90px) 20px 28px;text-align:center}
+.pub-kicker{display:inline-block;padding:5px 14px;background:var(--ink);color:#fff;
+  border-radius:100px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:20px}
+.pub-h1{font-family:'Playfair Display',serif;font-size:clamp(38px,10vw,52px);
+  font-weight:500;line-height:1.05;letter-spacing:-.03em;margin-bottom:12px}
+.pub-h1 em{font-style:italic;font-weight:400;color:var(--muted)}
+.pub-sub{font-size:14px;color:var(--muted);line-height:1.5;margin-bottom:20px}
+.pub-pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap}
+.pub-pill{display:flex;align-items:center;gap:5px;background:var(--s1);border-radius:100px;
+  padding:6px 12px;font-size:12px;font-weight:500;color:var(--ink2)}
+
+/* DAY TABS */
+.day-tabs{display:flex;margin:20px 20px 18px;background:var(--s1);border-radius:100px;padding:4px;
+  position:sticky;top:calc(env(safe-area-inset-top)+58px);z-index:70}
+.day-tab{flex:1;text-align:center;padding:9px 6px;border-radius:100px;cursor:pointer;transition:all .25s}
+.day-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.dt-n{font-size:16px;font-weight:600;color:var(--muted);transition:color .2s}
+.day-tab.active .dt-n{color:var(--ink)}
+.dt-m{font-size:10px;color:var(--faint);font-weight:500;margin-top:1px}
+
+/* SESSION CARDS */
+.session-list{padding:0 0 calc(env(safe-area-inset-bottom)+110px)}
+.scard{margin:0 20px 14px;background:#fff;border-radius:var(--r);
+  border:1px solid var(--line);box-shadow:0 4px 16px rgba(0,0,0,.04);overflow:hidden}
+.scard-img{width:100%;aspect-ratio:2.2/1;background:var(--s2);
+  background-size:cover;background-position:center;border-bottom:1px solid var(--line)}
+.scard-timebar{display:flex;align-items:center;justify-content:space-between;
+  padding:12px 16px 10px;border-bottom:1px solid var(--line)}
+.scard-time{font-size:13px;font-weight:600}
+.scard-badge{font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px}
+.badge-ok{color:var(--green);background:rgba(52,199,89,.12)}
+.badge-warn{color:var(--amber);background:rgba(255,149,0,.12)}
+.badge-full{color:var(--red);background:rgba(255,59,48,.12)}
+.scard-body{padding:14px 16px 16px}
+.scard-empty{padding:20px 16px;text-align:center}
+.scard-empty-lbl{font-size:13px;color:var(--faint);font-weight:500}
+.scard-partner{font-size:10px;color:var(--faint);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px}
+.scard-class{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;line-height:1.2;margin-bottom:6px}
+.scard-desc{font-size:13px;color:var(--ink2);line-height:1.45;margin-bottom:16px}
+.scard-footer{display:flex;justify-content:space-between;align-items:flex-end}
+.scard-inst-lbl{font-size:10px;color:var(--faint);text-transform:uppercase;font-weight:600;letter-spacing:.05em}
+.scard-inst{font-size:13px;font-weight:600;margin-top:2px}
+.btn-book{background:var(--ink);color:#fff;padding:9px 18px;border-radius:100px;
+  font-size:13px;font-weight:600;transition:transform .15s,opacity .15s}
+.btn-book:active{transform:scale(.95);opacity:.8}
+.btn-book.full{background:var(--s2);color:var(--muted);cursor:not-allowed}
+
+/* BOTTOM BAR */
+.pub-bottom{position:fixed;bottom:0;left:0;right:0;max-width:480px;margin:0 auto;
+  padding:10px 20px calc(env(safe-area-inset-bottom)+10px);
+  background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);
+  -webkit-backdrop-filter:saturate(180%) blur(20px);border-top:1px solid var(--line);
+  display:flex;gap:8px}
+.btn-ghost{flex:1;background:var(--s1);border:none;border-radius:100px;
+  padding:11px 8px;font-size:12px;font-weight:600;color:var(--ink);
+  min-height:44px;transition:background .15s}
+.btn-ghost:active{background:var(--s2)}
+
+/* OVERLAY + SHEET */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.3);
+  backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:200;
+  align-items:flex-end;justify-content:center}
+.overlay.open{display:flex}
+.sheet{background:var(--bg);border-radius:28px 28px 0 0;width:100%;max-width:480px;
+  max-height:92svh;overflow-y:auto;-webkit-overflow-scrolling:touch;
+  animation:slideUp .38s cubic-bezier(.22,.9,.36,1);
+  padding-bottom:calc(env(safe-area-inset-bottom)+28px)}
+@keyframes slideUp{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sh-handle{width:36px;height:4px;background:var(--s3);border-radius:100px;margin:14px auto 0}
+.sh-hd{display:flex;justify-content:space-between;align-items:center;padding:18px 20px 14px;
+  position:sticky;top:0;background:rgba(255,255,255,.92);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  z-index:10;border-bottom:1px solid rgba(0,0,0,.04)}
+.sh-title{font-size:18px;font-weight:600;letter-spacing:-.02em}
+.sh-close{width:30px;height:30px;border-radius:50%;background:var(--s2);color:var(--muted);
+  font-size:12px;display:flex;align-items:center;justify-content:center;transition:background .15s}
+.sh-close:active{background:var(--s3)}
+.sh-body{padding:20px}
+
+/* BOOKING DETAIL */
+.bk-img{width:100%;aspect-ratio:2.2/1;border-radius:var(--rs);background:var(--s2);
+  background-size:cover;background-position:center;margin-bottom:16px}
+.bk-partner{font-size:10px;color:var(--faint);font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:5px}
+.bk-class{font-family:'Playfair Display',serif;font-size:24px;font-weight:600;line-height:1.15;margin-bottom:7px}
+.bk-time{font-size:13px;font-weight:600;color:var(--muted);margin-bottom:18px}
+.detail-sec{margin-bottom:18px}
+.detail-h{font-size:10px;font-weight:700;color:var(--faint);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px}
+.detail-p{font-size:14px;color:var(--ink2);line-height:1.5}
+.agenda-list{list-style:none;display:flex;flex-direction:column;gap:8px}
+.agenda-list li{display:flex;align-items:flex-start;gap:10px;font-size:14px;line-height:1.4}
+.ag-dot{width:6px;height:6px;background:var(--faint);border-radius:50%;margin-top:7px;flex-shrink:0}
+.sh-divider{height:1px;background:var(--line);margin:18px 0}
+
+/* FORM */
+.field-stack{display:flex;flex-direction:column;gap:12px;margin-bottom:22px}
+.fld{background:var(--s1);border-radius:var(--rs);border:1.5px solid transparent;transition:border-color .2s,background .2s}
+.fld label{display:block;font-size:10px;font-weight:700;letter-spacing:.04em;color:var(--muted);padding:10px 14px 2px;text-transform:uppercase}
+.fld input,.fld textarea,.fld select{width:100%;background:none;border:none;padding:4px 14px 10px;
+  color:var(--ink);font-size:15px;font-weight:500;-webkit-appearance:none;resize:none}
+.fld input:focus,.fld textarea:focus,.fld select:focus{outline:none}
+.fld input::placeholder,.fld textarea::placeholder{color:var(--faint);font-weight:400}
+.fld.focused{border-color:var(--ink);background:var(--bg)}
+.btn-primary{width:100%;background:var(--ink);color:#fff;padding:15px;border-radius:var(--rs);
+  font-size:15px;font-weight:600;min-height:50px;display:flex;align-items:center;justify-content:center;
+  transition:transform .15s,opacity .15s;margin-bottom:10px;letter-spacing:-.01em}
+.btn-primary:active{transform:scale(.98);opacity:.9}
+.btn-primary:disabled{background:var(--s2);color:var(--muted);cursor:not-allowed;transform:none}
+
+/* CONFIRM */
+.confirm-ov{display:none;position:fixed;inset:0;max-width:480px;margin:0 auto;
+  background:var(--s1);z-index:300;overflow-y:auto;flex-direction:column;align-items:center;
+  padding:calc(env(safe-area-inset-top)+80px) 20px calc(env(safe-area-inset-bottom)+32px)}
+.confirm-ov.open{display:flex}
+.co-icon{font-size:56px;margin-bottom:18px;animation:popIn .5s cubic-bezier(.34,1.56,.64,1) both}
+@keyframes popIn{from{transform:scale(.7);opacity:0}to{transform:scale(1);opacity:1}}
+.co-h{font-size:26px;font-weight:600;text-align:center;letter-spacing:-.02em;margin-bottom:5px}
+.co-sub{font-size:14px;color:var(--muted);text-align:center;margin-bottom:28px}
+.co-card{width:100%;background:#fff;border-radius:var(--r);padding:24px;text-align:center;
+  margin-bottom:24px;box-shadow:0 8px 28px rgba(0,0,0,.06);border:1px solid var(--line)}
+.co-rl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--faint);margin-bottom:5px}
+.co-ref{font-family:'Playfair Display',serif;font-size:34px;font-weight:600;margin-bottom:18px}
+.co-sep{height:1px;background:var(--line);margin:14px 0}
+.co-class{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:3px}
+.co-dt{font-size:13px;color:var(--muted)}
+.co-name{font-size:14px;font-weight:600;margin-top:12px}
+.co-note{font-size:11px;color:var(--faint);margin-top:4px}
+.perks-lbl{width:100%;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+.perks{width:100%;display:flex;flex-direction:column;gap:8px;margin-bottom:28px}
+.perk-row{background:#fff;border-radius:var(--rs);padding:12px 14px;display:flex;align-items:center;gap:12px;border:1px solid var(--line)}
+.perk-ico{font-size:20px;width:40px;height:40px;background:var(--s1);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.perk-title{font-size:13px;font-weight:600}
+.perk-desc{font-size:11px;color:var(--muted);margin-top:1px}
+.perk-val{font-size:15px;font-weight:600;white-space:nowrap;margin-left:auto}
+.btn-done{width:100%;background:var(--ink);color:#fff;padding:15px;border-radius:var(--rs);
+  font-size:15px;font-weight:600;min-height:50px;display:flex;align-items:center;justify-content:center;transition:transform .15s}
+.btn-done:active{transform:scale(.98)}
+
+/* MY BOOKING */
+.mb-found{background:var(--s1);border-radius:var(--r);padding:18px;border:1px solid var(--line);margin-bottom:10px}
+.mb-status-badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:10px;font-weight:700;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px}
+.mb-status-badge.active{background:rgba(52,199,89,.12);color:var(--green)}
+.mb-status-badge.cancelled{background:rgba(255,59,48,.12);color:var(--red)}
+.mb-time{font-size:12px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.03em;margin-bottom:5px}
+.mb-class{font-family:'Playfair Display',serif;font-size:20px;font-weight:600;margin-bottom:3px}
+.mb-partner{font-size:13px;color:var(--muted);margin-bottom:12px}
+.mb-sep{height:1px;background:rgba(0,0,0,.06);margin:12px 0}
+.mb-ref{font-size:11px;color:var(--muted)}
+.mb-ref strong{font-size:16px;font-weight:700;color:var(--ink);display:block;margin-top:2px}
+.mb-name{font-size:13px;font-weight:600;margin-top:8px}
+.btn-cancel{width:100%;border:1px solid var(--line);border-radius:var(--rs);padding:11px;
+  font-size:13px;font-weight:600;color:var(--red);background:none;margin-top:8px;transition:background .15s}
+.btn-cancel:active{background:rgba(255,59,48,.06)}
+
+/* WAITLIST */
+.wl-item{background:var(--s1);border-radius:var(--rs);padding:14px;border:1px solid var(--line);margin-bottom:8px}
+.wl-pos{font-size:11px;font-weight:700;color:var(--amber);margin-bottom:4px}
+.wl-class{font-size:14px;font-weight:600}
+.wl-detail{font-size:12px;color:var(--muted);margin-top:2px}
+
+/* MY COUPON */
+.coupon-card{background:var(--ink);border-radius:var(--r);padding:22px;margin-bottom:10px;position:relative;overflow:hidden}
+.coupon-card::before{content:'';position:absolute;right:-30px;top:50%;transform:translateY(-50%);
+  width:60px;height:60px;background:rgba(255,255,255,.06);border-radius:50%}
+.coupon-type{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px}
+.coupon-val{font-family:'Playfair Display',serif;font-size:36px;font-weight:600;color:#fff;margin-bottom:4px}
+.coupon-desc{font-size:13px;color:rgba(255,255,255,.7);margin-bottom:14px}
+.coupon-code-row{display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,255,255,.1);border-radius:var(--rs);padding:10px 14px}
+.coupon-code{font-size:16px;font-weight:700;color:#fff;letter-spacing:.08em}
+.coupon-exp{font-size:11px;color:rgba(255,255,255,.5)}
+.coupon-used{opacity:.5}
+
+/* PARTNER */
+.partner-page{padding:calc(env(safe-area-inset-top)+80px) 20px calc(env(safe-area-inset-bottom)+40px)}
+.p-title{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:5px}
+.p-sub{font-size:14px;color:var(--muted);margin-bottom:22px}
+.sp-tabs{display:flex;background:var(--s1);border-radius:100px;padding:4px;margin-bottom:16px}
+.sp-tab{flex:1;text-align:center;padding:9px 6px;border-radius:100px;cursor:pointer;transition:all .25s}
+.sp-tab.active{background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.07)}
+.spn{font-size:16px;font-weight:600;color:var(--muted);transition:color .2s}
+.sp-tab.active .spn{color:var(--ink)}
+.spm{font-size:10px;color:var(--faint);font-weight:500;margin-top:1px}
+.slot-grid{display:flex;flex-direction:column;gap:10px}
+.slot-item{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);
+  box-shadow:0 2px 8px rgba(0,0,0,.03);transition:transform .15s}
+.slot-item.vacant{cursor:pointer;background:#fff}
+.slot-item.vacant:active{transform:scale(.99)}
+.slot-item.mine{cursor:pointer;background:#fff;border-color:rgba(0,122,255,.22)}
+.slot-item.mine:active{transform:scale(.99)}
+.slot-item.taken{background:var(--s1)}
+.slot-hd{display:flex;align-items:center;justify-content:space-between;padding:13px 16px}
+.slot-time{font-size:14px;font-weight:600}
+.slot-badge{font-size:10px;font-weight:700;padding:4px 11px;border-radius:100px;letter-spacing:.03em}
+.slot-badge.vacant{background:rgba(52,199,89,.12);color:var(--green)}
+.slot-badge.mine{background:rgba(0,122,255,.1);color:#007AFF}
+.slot-badge.taken{background:rgba(0,0,0,.05);color:var(--muted)}
+.slot-body{padding:0 16px 14px}
+.slot-class{font-family:'Playfair Display',serif;font-size:17px;font-weight:600;margin-bottom:2px;line-height:1.2}
+.slot-who{font-size:12px;color:var(--ink2)}
+.slot-hint{font-size:13px;color:var(--muted)}
+.slot-cta{font-size:13px;font-weight:600;color:#007AFF;margin-top:5px}
+.slot-div{height:1px;background:var(--line);margin:0 16px}
+
+/* PARTNER EDITOR */
+.ped-ov{display:none;position:fixed;inset:0;max-width:480px;margin:0 auto;
+  background:var(--s1);z-index:150;overflow-y:auto;-webkit-overflow-scrolling:touch}
+.ped-ov.open{display:block}
+.ped-topbar{position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;
+  padding:calc(env(safe-area-inset-top)+12px) 16px 12px;
   background:rgba(245,245,247,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--line);
-}
-.ped-back{background:none;border:none;font-size:15px;font-weight:600;color:#0077FF;display:flex;align-items:center;gap:4px;padding:4px 0}
-.ped-back-icon{font-size:20px;line-height:1;margin-top:-1px}
-.ped-slot-tag{font-size:13px;font-weight:600;color:var(--white)}
-.ped-pub-btn{
-  background:var(--white);color:#FFF;border:none;
-  padding:8px 18px;border-radius:100px;font-size:14px;font-weight:600;
-  transition:transform .15s,opacity .15s;min-height:36px;
-}
-.ped-pub-btn:active{transform:scale(.96);opacity:.85}
-.ped-pub-btn:disabled{background:var(--s3);color:var(--g5);cursor:not-allowed}
-
-/* preview strip */
-.ped-preview-wrap{padding:20px 20px 0}
-.ped-preview-lbl{
-  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--g5);margin-bottom:12px;
-  display:flex;align-items:center;gap:8px;
-}
+  border-bottom:1px solid var(--line)}
+.ped-back{background:none;font-size:15px;font-weight:600;color:#007AFF;display:flex;align-items:center;gap:2px;padding:4px 0}
+.ped-slot-tag{font-size:13px;font-weight:600;color:var(--ink)}
+.ped-pub-btn{background:var(--ink);color:#fff;padding:7px 16px;border-radius:100px;
+  font-size:13px;font-weight:600;transition:opacity .15s}
+.ped-pub-btn:disabled{background:var(--s3);color:var(--muted);cursor:not-allowed}
+.ped-preview{padding:16px 16px 0}
+.ped-preview-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .ped-preview-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
-.ped-live-dot{
-  display:inline-block;width:7px;height:7px;border-radius:50%;
-  background:var(--green);flex-shrink:0;
-  box-shadow:0 0 0 0 rgba(52,199,89,.5);animation:pdot 2s infinite;
-}
-@keyframes pdot{0%,100%{box-shadow:0 0 0 0 rgba(52,199,89,.4)}50%{box-shadow:0 0 0 5px rgba(52,199,89,0)}}
-/* preview card is .session-card — pointer-events off */
-.ped-card-no-touch{pointer-events:none;user-select:none;margin-bottom:4px}
-
-/* form */
-.ped-form-wrap{padding:20px 20px calc(env(safe-area-inset-bottom)+40px)}
-.ped-form-lbl{
-  font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-  color:var(--g5);margin-bottom:16px;
-  display:flex;align-items:center;gap:8px;
-}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(52,199,89,.4)}50%{box-shadow:0 0 0 5px rgba(52,199,89,0)}}
+.ped-card-wrap{pointer-events:none;user-select:none;margin-bottom:4px}
+.ped-form{padding:16px 16px calc(env(safe-area-inset-bottom)+48px)}
+.ped-form-lbl{font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
+  color:var(--muted);margin-bottom:14px;display:flex;align-items:center;gap:8px}
 .ped-form-lbl::after{content:'';flex:1;height:1px;background:var(--line)}
-.ped-fields{display:flex;flex-direction:column;gap:14px}
-.pef{
-  background:var(--bg);border-radius:var(--rs);border:1px solid rgba(0,0,0,.06);
-  box-shadow:0 2px 8px rgba(0,0,0,.03);transition:border-color .2s,box-shadow .2s;
-}
-.pef label{display:block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);padding:12px 16px 2px}
-.pef input,.pef textarea{width:100%;background:none;border:none;padding:6px 16px 12px;color:var(--white);font-size:15px;font-weight:500;-webkit-appearance:none;resize:none}
-.pef input::placeholder,.pef textarea::placeholder{color:var(--g7);font-weight:400}
+.ped-fields{display:flex;flex-direction:column;gap:12px}
+.pef{background:#fff;border-radius:var(--rs);border:1.5px solid var(--line);
+  box-shadow:0 1px 4px rgba(0,0,0,.04);transition:border-color .2s,box-shadow .2s}
+.pef label{display:block;font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--muted);padding:10px 14px 2px}
+.pef input,.pef textarea{width:100%;background:none;border:none;padding:4px 14px 10px;
+  color:var(--ink);font-size:14px;font-weight:500;-webkit-appearance:none;resize:none}
+.pef input::placeholder,.pef textarea::placeholder{color:var(--faint);font-weight:400}
 .pef input:focus,.pef textarea:focus{outline:none}
-.pef.focused{border-color:rgba(0,0,0,.18);box-shadow:0 4px 16px rgba(0,0,0,.08)}
-.pef-hint{font-size:12px;color:var(--g5);margin-top:6px;padding:0 2px;line-height:1.5}
-.ped-divider{height:1px;background:var(--line);margin:20px 0}
-.ped-agenda-row{display:flex;align-items:flex-start;gap:8px}
-.ped-ag-num{
-  flex-shrink:0;width:28px;height:28px;border-radius:50%;background:var(--s2);
-  display:flex;align-items:center;justify-content:center;
-  font-size:12px;font-weight:700;color:var(--g3);margin-top:12px;
-}
-.ped-agenda-row .pef{flex:1}
-.ped-pub-big{
-  width:100%;background:var(--white);color:#FFF;border:none;
-  padding:18px;border-radius:var(--rs);font-size:16px;font-weight:600;
-  margin-top:24px;min-height:56px;display:flex;align-items:center;justify-content:center;
-  transition:transform .2s,opacity .2s;letter-spacing:-.01em;
-}
-.ped-pub-big:active{transform:scale(.98);opacity:.85}
-.ped-release-btn{
-  width:100%;background:none;border:1px solid rgba(0,0,0,.1);border-radius:100px;
-  padding:13px;font-size:14px;font-weight:600;color:var(--red);margin-top:12px;
-  transition:background .2s;
-}
-.ped-release-btn:active{background:rgba(255,59,48,.06)}
-.ped-status-bar{
-  border-radius:var(--rs);padding:14px 16px;margin-bottom:20px;
-  display:flex;align-items:center;gap:10px;font-size:14px;font-weight:500;
-}
-.ped-status-bar.live{background:rgba(52,199,89,.1);color:#1D6B35}
-.ped-status-bar.draft{background:rgba(255,149,0,.1);color:#7A5100}
+.pef.focused{border-color:var(--ink);box-shadow:0 3px 12px rgba(0,0,0,.08)}
+.ped-divider{height:1px;background:var(--line);margin:14px 0}
+.agenda-row{display:flex;align-items:flex-start;gap:8px}
+.ag-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--s2);
+  display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;
+  color:var(--ink2);margin-top:12px}
+.agenda-row .pef{flex:1}
+.img-area{width:100%;aspect-ratio:2.2/1;border-radius:var(--rs);overflow:hidden;
+  background:var(--s1);border:1.5px dashed var(--s3);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;position:relative;transition:border-color .2s}
+.img-area:active{border-color:var(--ink)}
+.img-placeholder{text-align:center;pointer-events:none}
+.img-ph-icon{font-size:26px;margin-bottom:6px}
+.img-ph-txt{font-size:12px;font-weight:600;color:var(--muted)}
+.img-upload-overlay{display:none;position:absolute;inset:0;background:rgba(0,0,0,.65);
+  align-items:center;justify-content:center;flex-direction:column;gap:6px}
+.img-status{font-size:11px;color:var(--muted);margin-top:6px;min-height:16px}
+.ped-status{border-radius:var(--rs);padding:12px 14px;margin-bottom:16px;
+  display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500}
+.ped-status.live{background:rgba(52,199,89,.1);color:#1D6B35}
+.ped-status.draft{background:rgba(255,149,0,.1);color:#7A5100}
+.btn-pub-big{width:100%;background:var(--ink);color:#fff;padding:15px;border-radius:var(--rs);
+  font-size:15px;font-weight:600;margin-top:18px;min-height:50px;display:flex;align-items:center;
+  justify-content:center;transition:transform .15s,opacity .15s;letter-spacing:-.01em}
+.btn-pub-big:active{transform:scale(.98);opacity:.9}
+.btn-pub-big:disabled{background:var(--s2);color:var(--muted);cursor:not-allowed;transform:none}
+.btn-release{width:100%;border:1px solid var(--line);border-radius:var(--rs);padding:12px;
+  font-size:13px;font-weight:600;color:var(--red);background:none;margin-top:8px;transition:background .15s}
+.btn-release:active{background:rgba(255,59,48,.06)}
 
-/* admin dash */
-.adm-h{font-size:28px;font-weight:600;margin-bottom:8px;letter-spacing:-0.02em}
-.adm-sub{font-size:15px;color:var(--g3);margin-bottom:32px}
-.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:32px}
-.stat-box{background:var(--bg);border-radius:var(--rs);padding:20px;border:1px solid rgba(0,0,0,0.06);box-shadow:0 4px 16px rgba(0,0,0,0.03)}
-.stat-n{font-size:36px;font-weight:600;color:var(--white);line-height:1}
-.stat-l{font-size:12px;color:var(--g5);margin-top:6px;font-weight:600}
-.tbl-wrap{overflow-x:auto;margin-bottom:24px;background:var(--bg);border-radius:var(--rs);padding:1px;border:1px solid rgba(0,0,0,0.06)}
-table{width:100%;border-collapse:collapse;min-width:560px}
-th{font-size:11px;font-weight:600;color:var(--g3);padding:14px 16px;text-align:left;border-bottom:1px solid var(--liner);text-transform:uppercase;letter-spacing:0.04em}
-td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-size:14px}
-.td-ref{color:var(--white);font-weight:600;font-size:13px}
-.btn-csv{background:var(--s2);border:none;border-radius:100px;padding:12px 20px;font-size:13px;font-weight:600;color:var(--white);margin-bottom:20px}
-.adm-section-label{font-size:13px;font-weight:600;color:var(--g3);margin:32px 0 16px;padding-left:4px;text-transform:uppercase;letter-spacing:0.04em}
-.fill-bar-row{background:var(--bg);border-radius:var(--rs);padding:16px;border:1px solid rgba(0,0,0,0.06);margin-bottom:8px}
-.fbr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
-.fbr-label{font-size:13px;font-weight:600;color:var(--white)}
-.fbr-count{font-size:13px;color:var(--g5);font-weight:500}
-.fill-bar{height:6px;background:var(--s2);border-radius:100px;overflow:hidden}
-.fill-bar-inner{height:100%;border-radius:100px;background:var(--white);transition:width .8s cubic-bezier(.2,0,0,1)}
+/* ADMIN */
+.admin-page{padding:calc(env(safe-area-inset-top)+80px) 20px calc(env(safe-area-inset-bottom)+40px)}
+.adm-h{font-size:26px;font-weight:600;letter-spacing:-.02em;margin-bottom:5px}
+.adm-sub{font-size:14px;color:var(--muted);margin-bottom:22px}
+.stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:22px}
+.stat-box{background:#fff;border-radius:var(--rs);padding:16px;border:1px solid var(--line);box-shadow:0 2px 8px rgba(0,0,0,.03)}
+.stat-n{font-size:30px;font-weight:700;line-height:1}
+.stat-l{font-size:11px;color:var(--muted);margin-top:4px;font-weight:600}
+.tbl-wrap{overflow-x:auto;background:#fff;border-radius:var(--rs);border:1px solid var(--line);margin-bottom:18px}
+table{width:100%;border-collapse:collapse;min-width:480px}
+th{font-size:10px;font-weight:700;color:var(--muted);padding:11px 13px;text-align:left;
+  border-bottom:1px solid var(--line);text-transform:uppercase;letter-spacing:.05em}
+td{padding:11px 13px;border-bottom:1px solid rgba(0,0,0,.04);font-size:12px;color:var(--ink2)}
+tr:last-child td{border-bottom:none}
+.td-ref{color:var(--ink);font-weight:700;font-size:12px}
+.btn-csv{background:var(--s2);border:none;border-radius:100px;padding:9px 16px;
+  font-size:12px;font-weight:600;color:var(--ink);margin-bottom:14px}
+.fill-row{background:#fff;border-radius:var(--rs);padding:13px;border:1px solid var(--line);margin-bottom:8px}
+.fill-row-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:9px}
+.fill-lbl{font-size:12px;font-weight:600}
+.fill-cnt{font-size:11px;color:var(--muted)}
+.fill-bar{height:5px;background:var(--s2);border-radius:100px;overflow:hidden}
+.fill-bar-inner{height:100%;border-radius:100px;background:var(--ink);transition:width .8s}
+.adm-sec-lbl{font-size:11px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;margin:20px 0 10px}
+.btn-signout{background:var(--s2);border:none;border-radius:100px;padding:10px 20px;
+  font-size:13px;font-weight:600;color:var(--ink);margin-top:20px}
 
-/* ─── TOAST ──────────────────────────────────────── */
-.toast{position:fixed;top:calc(env(safe-area-inset-top)+16px);left:0;right:0;max-width:360px;margin:0 auto;background:rgba(255,255,255,0.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-radius:100px;padding:16px 20px;font-size:14px;font-weight:600;color:var(--white);z-index:500;display:none;animation:toastIn .4s cubic-bezier(.2,0,0,1);text-align:center;box-shadow:0 8px 30px rgba(0,0,0,0.12);border:1px solid rgba(0,0,0,0.04)}
-.toast.show{display:block}
-@keyframes toastIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+/* AUTH */
+.auth-wrap{display:flex;flex-direction:column;align-items:center;min-height:60vh;justify-content:center;text-align:center;padding:40px 0}
+.auth-icon{font-size:44px;margin-bottom:18px}
+.auth-h{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px}
+.auth-sub{font-size:14px;color:var(--muted);margin-bottom:28px;line-height:1.5}
+.auth-form{width:100%;max-width:320px;display:flex;flex-direction:column;gap:12px}
+
+/* TOAST */
+.toast{position:fixed;top:calc(env(safe-area-inset-top)+12px);left:50%;transform:translateX(-50%);
+  background:rgba(29,29,31,.92);color:#fff;border-radius:100px;padding:11px 20px;
+  font-size:13px;font-weight:600;z-index:999;white-space:nowrap;display:none;
+  backdrop-filter:blur(12px);box-shadow:0 8px 24px rgba(0,0,0,.2)}
+.toast.show{display:block;animation:toastIn .35s cubic-bezier(.2,0,0,1)}
+@keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(-10px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
 </style>
 </head>
 <body>
 
-<!-- ════════════════════════════════════
-     PUBLIC SCHEDULE
-════════════════════════════════════ -->
+<!-- ═══ PUBLIC PAGE ═══ -->
 <div class="page active" id="page-pub">
-
   <header class="hdr">
     <div class="hdr-logo">xbloom</div>
-    <div class="hdr-right">
-      <div class="hdr-tag">WOC Bangkok · May 7–9</div>
-    </div>
+    <div class="hdr-tag">WOC Bangkok · May 7–9</div>
   </header>
-
   <div class="pub-hero">
     <div class="pub-kicker">World of Coffee 2026</div>
-    <h1 class="pub-h1"><span class="font-logo">xbloom</span><br><em>Discovery Class</em></h1>
-    <p class="pub-sub">Experience the future of specialty coffee. Join our exclusive hands-on sessions.</p>
-    <div class="pub-info-row">
-      <div class="pub-info-item">📍 Booth A101, BITEC</div>
-      <div class="pub-info-item">🗓️ May 7–9</div>
+    <h1 class="pub-h1 serif"><em>Discovery</em><br>Class</h1>
+    <p class="pub-sub">Hands-on specialty coffee sessions with Bangkok's finest roasters.</p>
+    <div class="pub-pills">
+      <div class="pub-pill">📍 Booth A101, BITEC</div>
+      <div class="pub-pill">🗓️ May 7–9</div>
     </div>
   </div>
-
   <div class="day-tabs" id="day-tabs">
-    <div class="day-tab active" onclick="selectDay(0)"><div class="dt-n">7</div><div class="dt-m">May</div><div class="dt-d">Thu</div></div>
-    <div class="day-tab" onclick="selectDay(1)"><div class="dt-n">8</div><div class="dt-m">May</div><div class="dt-d">Fri</div></div>
-    <div class="day-tab" onclick="selectDay(2)"><div class="dt-n">9</div><div class="dt-m">May</div><div class="dt-d">Sat</div></div>
+    <div class="day-tab active" onclick="selectDay(0)"><div class="dt-n">7</div><div class="dt-m">May</div></div>
+    <div class="day-tab" onclick="selectDay(1)"><div class="dt-n">8</div><div class="dt-m">May</div></div>
+    <div class="day-tab" onclick="selectDay(2)"><div class="dt-n">9</div><div class="dt-m">May</div></div>
   </div>
-
   <div class="session-list" id="session-list"></div>
-
   <div class="pub-bottom">
-    <button class="btn-ghost-sm" onclick="openMyBooking()">View My Bookings</button>
-    <button class="btn-ghost-sm" onclick="openMyCoupon()">View my Coupon</button>
+    <button class="btn-ghost" onclick="openMb()">📋 My Booking</button>
+    <button class="btn-ghost" onclick="openCoupon()">🎟️ My Coupon</button>
+    <button class="btn-ghost" onclick="openWaitlist()">⏳ Waitlist</button>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     PARTNER PAGE (?partner=1)
-════════════════════════════════════ -->
+<!-- ═══ PARTNER PAGE ═══ -->
 <div class="page" id="page-partner">
   <header class="hdr">
     <div class="hdr-logo">xbloom</div>
     <div class="hdr-tag">Partner Portal</div>
   </header>
-  <div class="partner-page" id="partner-page-body"></div>
+  <div class="partner-page" id="partner-body"></div>
 </div>
 
-<!-- ════════════════════════════════════
-     ADMIN PAGE (?admin=1)
-════════════════════════════════════ -->
+<!-- ═══ ADMIN PAGE ═══ -->
 <div class="page" id="page-admin">
   <header class="hdr">
     <div class="hdr-logo">xbloom</div>
     <div class="hdr-tag">Admin</div>
   </header>
-  <div class="admin-page" id="admin-page-body"></div>
+  <div class="admin-page" id="admin-body"></div>
 </div>
 
-<!-- ════════════════════════════════════
-     BOOKING SHEET
-════════════════════════════════════ -->
+<!-- BOOKING SHEET -->
 <div class="overlay" id="bk-overlay">
-  <div class="sheet" id="bk-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title" id="bk-title">Class Details</div>
-      <button class="sh-close" onclick="closeBk()">✕</button>
-    </div>
+  <div class="sheet"><div class="sh-handle"></div>
+    <div class="sh-hd"><div class="sh-title" id="bk-title">Details</div><button class="sh-close" onclick="closeBk()">✕</button></div>
     <div class="sh-body" id="bk-body"></div>
   </div>
 </div>
 
 <!-- MY BOOKING SHEET -->
 <div class="overlay" id="mb-overlay">
-  <div class="sheet" id="mb-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title">My Bookings</div>
-      <button class="sh-close" onclick="closeMb()">✕</button>
-    </div>
+  <div class="sheet"><div class="sh-handle"></div>
+    <div class="sh-hd"><div class="sh-title">My Bookings</div><button class="sh-close" onclick="closeMb()">✕</button></div>
     <div class="sh-body" id="mb-body"></div>
   </div>
 </div>
 
 <!-- MY COUPON SHEET -->
 <div class="overlay" id="cp-overlay">
-  <div class="sheet" id="cp-sheet">
-    <div class="sh-handle"></div>
-    <div class="sh-hd">
-      <div class="sh-title">My Coupons</div>
-      <button class="sh-close" onclick="closeCp()">✕</button>
-    </div>
-    <div class="sh-body" id="cp-body">
-      <div style="text-align:center;padding:40px 0 20px;">
-        <div style="font-size:48px;margin-bottom:16px;">🎟️</div>
-        <div style="font-size:18px;font-weight:600;color:var(--white);margin-bottom:8px;">No coupons yet</div>
-        <div style="font-size:15px;color:var(--g5);line-height:1.5;">Book a discovery class<br>to unlock your exclusive perks.</div>
-      </div>
-    </div>
+  <div class="sheet"><div class="sh-handle"></div>
+    <div class="sh-hd"><div class="sh-title">My Coupons</div><button class="sh-close" onclick="closeCp()">✕</button></div>
+    <div class="sh-body" id="cp-body"></div>
   </div>
 </div>
 
-<!-- ════════════════════════════════════
-     CONFIRM OVERLAY
-════════════════════════════════════ -->
+<!-- WAITLIST SHEET -->
+<div class="overlay" id="wl-overlay">
+  <div class="sheet"><div class="sh-handle"></div>
+    <div class="sh-hd"><div class="sh-title">Waitlist Status</div><button class="sh-close" onclick="closeWl()">✕</button></div>
+    <div class="sh-body" id="wl-body"></div>
+  </div>
+</div>
+
+<!-- CONFIRM -->
 <div class="confirm-ov" id="confirm-ov">
   <div class="co-icon">✅</div>
-  <div class="co-h">Booking Successful!</div>
-  <div class="co-sub">Show your reference at the booth to claim your spot.</div>
+  <div class="co-h">Booking Confirmed!</div>
+  <div class="co-sub">Show this reference at the booth to claim your spot.</div>
   <div class="co-card">
     <div class="co-rl">Booking Reference</div>
-    <div class="co-ref" id="co-ref">XB-0507-XXXX</div>
+    <div class="co-ref" id="co-ref">XB-XXXX</div>
     <div class="co-sep"></div>
     <div class="co-class" id="co-class">—</div>
     <div class="co-dt" id="co-dt">—</div>
-    <div class="co-name-val" id="co-name">—</div>
-    <div class="co-note-sm">World of Coffee Bangkok 2026 · Booth A101, BITEC</div>
+    <div class="co-name" id="co-name">—</div>
+    <div class="co-note">Booth A101, BITEC · WOC Bangkok 2026</div>
   </div>
-  <div class="promos-label">Exclusive Perks Await</div>
-  <div class="promos">
-    <div class="promo-row"><span class="pr-ico">☕</span><div class="pr-info"><div class="pr-title">Discount on xBloom Machine</div><div class="pr-desc">Full payment via transfer/card at the booth</div></div><div class="pr-val">฿3,900</div></div>
-    <div class="promo-row"><span class="pr-ico">🫘</span><div class="pr-info"><div class="pr-title">Coffee Bean Coupon</div><div class="pr-desc">Sent via Email post-event</div></div><div class="pr-val">−10%</div></div>
-    <div class="promo-row"><span class="pr-ico">🔧</span><div class="pr-info"><div class="pr-title">Gear Coupon</div><div class="pr-desc">At booth or xbloom.co.th (30 days)</div></div><div class="pr-val">−15%</div></div>
+  <div class="perks-lbl">Exclusive Perks</div>
+  <div class="perks">
+    <div class="perk-row"><span class="perk-ico">☕</span><div><div class="perk-title">xBloom Machine Discount</div><div class="perk-desc">Full payment at the booth</div></div><div class="perk-val">฿3,900</div></div>
+    <div class="perk-row"><span class="perk-ico">🫘</span><div><div class="perk-title">Coffee Bean Coupon</div><div class="perk-desc">Sent via Email post-event</div></div><div class="perk-val">−10%</div></div>
+    <div class="perk-row"><span class="perk-ico">🔧</span><div><div class="perk-title">Gear Coupon</div><div class="perk-desc">At booth or xbloom.co.th (30 days)</div></div><div class="perk-val">−15%</div></div>
   </div>
-  <div class="co-note-email">📧 Details and coupons will be sent to your registered Email.</div>
   <button class="btn-done" onclick="closeConfirm()">Done</button>
 </div>
 
-<!-- ════════════════════════════════════
-     PARTNER EDITOR OVERLAY
-════════════════════════════════════ -->
-<div class="ped-overlay" id="ped-overlay">
+<!-- PARTNER EDITOR -->
+<div class="ped-ov" id="ped-ov">
   <div class="ped-topbar">
-    <button class="ped-back" onclick="closePed()"><span class="ped-back-icon">‹</span> Back</button>
+    <button class="ped-back" onclick="closePed()">‹ Back</button>
     <div class="ped-slot-tag" id="ped-slot-tag">—</div>
-    <button class="ped-pub-btn" id="ped-top-pub" onclick="pedSave()">Publish</button>
+    <button class="ped-pub-btn" id="ped-top-btn" onclick="pedSave()">Publish</button>
   </div>
   <div id="ped-body"></div>
 </div>
 
+<!-- HIDDEN FORM for GAS writes -->
+<div id="gas-form-container" style="display:none"></div>
+
 <div class="toast" id="toast"></div>
 
 <script>
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════
    CONFIG
-═══════════════════════════════════════ */
-const GAS_URL = 'https://script.google.com/macros/s/AKfycbyZi-PK1qffpWk8aRmPsjbInWaIETrfZqJSBKh9Jz5uvQOI9dWEuCFOaQgmXlGA7-M2Og/exec';
-const MOCK    = GAS_URL === '';
+═══════════════════════════════════════════════ */
+const GAS_URL = 'https://script.google.com/macros/s/AKfycbzaTqVutjMnqHiyU8QX-ArdiXndC34ILZwAySgON-ZvJgpqnErmEGM3vJJoXrr6lCoTCA/exec';
 const CLOUDINARY_CLOUD  = 'deivvwfq2';
 const CLOUDINARY_PRESET = 'vrgr8ux6';
-const ADMIN_PASS_MOCK = 'xbloom2026';
+const MAX_SEATS         = 15;
 
-/* ═══════════════════════════════════════
-   DATA MODEL
-   Sessions = 3 days × 5 slots = 15 sessions
-   Partner fills in: className, desc, instructor
-   Admin can see all bookings
-═══════════════════════════════════════ */
-const DAYS_META = [
-  { label:'7 May', full:'7 May 2026 · Thursday', date:'2026-05-07' },
-  { label:'8 May', full:'8 May 2026 · Friday',   date:'2026-05-08' },
-  { label:'9 May', full:'9 May 2026 · Saturday',  date:'2026-05-09' },
-];
-const SLOTS_META = [
-  { id:0, t:'10:00', e:'11:30' },
-  { id:1, t:'11:30', e:'13:00' },
-  { id:2, t:'13:00', e:'14:30' },
-  { id:3, t:'14:30', e:'16:00' },
-  { id:4, t:'16:00', e:'17:30' },
-];
+const DAYS  = [{label:'7 May',full:'7 May 2026 · Thursday',date:'2026-05-07'},{label:'8 May',full:'8 May 2026 · Friday',date:'2026-05-08'},{label:'9 May',full:'9 May 2026 · Saturday',date:'2026-05-09'}];
+const SLOTS = [{t:'10:00',e:'11:30'},{t:'11:30',e:'13:00'},{t:'13:00',e:'14:30'},{t:'14:30',e:'16:00'},{t:'16:00',e:'17:30'}];
 
-// ── SESSIONS — Partners self-select slots. partner='' means Vacant.
-let SESSIONS = [
-  // Day 0 – 7 May
-  { 
-    sid:'S07-0', day:0, slotId:0, partner:'Roots Coffee Roaster', className:'The Art of Pour Over', 
-    desc:'Learn slow bar hand brew techniques and taste the results of your own craft.', 
-    instructor:'Mr. Somchai Chankafae', booked:8, published:true, 
-    img:'https://images.unsplash.com/photo-1497935586351-b67a49e012bf?auto=format&fit=crop&w=800&q=80',
-    target:'Perfect for coffee beginners and home brewers eager to elevate their morning routine.',
-    agenda:['15m: Introduction to extraction theory', '45m: Hands-on brewing with the xBloom system', '30m: Tasting, comparison, and Q&A'],
-    takeaways:'An exclusive recipe guide, a 50g sample of Roots coffee beans, and digital discount coupons.'
-  },
-  { 
-    sid:'S07-1', day:0, slotId:1, partner:'Ristr8to Lab', className:'Espresso Decoded', 
-    desc:'Decode espresso — pressure, temperature, and ratio for the perfect shot.', 
-    instructor:'Ms. Wipa Leenaka', booked:12, published:true, 
-    img:'https://images.unsplash.com/photo-1587734195503-904fca47e0e9?auto=format&fit=crop&w=800&q=80',
-    target:'Anyone curious about the science behind a perfectly balanced espresso shot.',
-    agenda:['20m: The science of pressure and temperature', '40m: Dialing in the perfect ratio', '30m: Pulling shots and tasting differences'],
-    takeaways:'A detailed espresso dial-in cheat sheet and partner coffee discounts.'
-  },
-  { sid:'S07-2', day:0, slotId:2, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S07-3', day:0, slotId:3, partner:'Brave Roasters', className:'Natural vs Washed', 
-    desc:'Compare processing methods and their impact on flavor profiles via side-by-side cupping.', 
-    instructor:'Ms. Dao Sukjai', booked:5, published:true, 
-    img:'https://images.unsplash.com/photo-1559525839-b184a4d698c7?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S07-4', day:0, slotId:4, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  // Day 1 – 8 May
-  { sid:'S08-0', day:1, slotId:0, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S08-1', day:1, slotId:1, partner:'Pacamara', className:'Single Origin Journey', 
-    desc:'Journey through 4 single origins from 4 continents in 90 mins — Ethiopia, Colombia, Yemen, Thailand.', 
-    instructor:'Mr. Mark Leedee', booked:10, published:true, 
-    img:'https://images.unsplash.com/photo-1495474472207-464ba5231c2b?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S08-2', day:1, slotId:2, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S08-3', day:1, slotId:3, partner:'Ristr8to Lab', className:'Milk & Microfoam', 
-    desc:'Milk steaming techniques for perfect microfoam, plus basic free pour practice.', 
-    instructor:'Ms. Wipa Leenaka', booked:7, published:true, 
-    img:'https://images.unsplash.com/photo-1534040385115-33dcb3acba5b?auto=format&fit=crop&w=800&q=80' 
-  },
-  { 
-    sid:'S08-4', day:1, slotId:4, partner:'Roots Coffee Roaster', className:'Cold Brew Science', 
-    desc:'The science behind cold brew — extraction time, ratio, and home-brewing techniques.', 
-    instructor:'Mr. Somchai Chankafae', booked:3, published:true, 
-    img:'https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=800&q=80' 
-  },
-  // Day 2 – 9 May
-  { 
-    sid:'S09-0', day:2, slotId:0, partner:'Ristr8to Lab', className:'Latte Art: First Steps', 
-    desc:'Learn basic free pouring — rosetta, heart, and tulip for beginners.', 
-    instructor:'Ms. Wipa Leenaka', booked:15, published:true, 
-    img:'https://images.unsplash.com/photo-1600093463592-8e36ae95ef56?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S09-1', day:2, slotId:1, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S09-2', day:2, slotId:2, partner:'Brave Roasters', className:'Roasting 101', 
-    desc:'Discover roast profiles, development time, and first crack — the basic theory of roasting.', 
-    instructor:'Ms. Dao Sukjai', booked:7, published:true, 
-    img:'https://images.unsplash.com/photo-1611162458324-aae1eb4129a4?auto=format&fit=crop&w=800&q=80' 
-  },
-  { sid:'S09-3', day:2, slotId:3, partner:'', className:'', desc:'', instructor:'', booked:0, published:false },
-  { 
-    sid:'S09-4', day:2, slotId:4, partner:'Pacamara', className:'Cupping Like a Pro', 
-    desc:'Learn the SCA cupping protocol — practice tasting, scoring, and writing score sheets like a pro.', 
-    instructor:'Mr. Mark Leedee', booked:9, published:true, 
-    img:'https://images.unsplash.com/photo-1582213782179-e0d53f98f2ca?auto=format&fit=crop&w=800&q=80' 
-  },
-];
-
-let ALL_BOOKINGS = [];
-
-// Partners just need refCode+pin — they claim slots themselves
-const MOCK_PARTNERS = [
-  { refCode:'ROOTSC', company:'Roots Coffee Roaster', contact:'Somchai', email:'roots@demo.com',  pin:'1111' },
-  { refCode:'RISTR8', company:'Ristr8to Lab',         contact:'Wipa',    email:'ristr8@demo.com', pin:'2222' },
-  { refCode:'BRAVE0', company:'Brave Roasters',       contact:'Dao',     email:'brave@demo.com',  pin:'3333' },
-  { refCode:'PACAM0', company:'Pacamara',             contact:'Mark',    email:'pacam@demo.com',  pin:'4444' },
-  { refCode:'DEMO01', company:'Demo Roaster',         contact:'Test',    email:'demo@demo.com',   pin:'0000' },
-];
-
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════
    STATE
-═══════════════════════════════════════ */
-const ST = {
-  day: 0,
-  bk: null,
-  partner: null,
-  pDay: 0,
-  admin: false,
-  adminData: [],
-  adminSessions: [],
-  adminCoupons: [],
-};
+═══════════════════════════════════════════════ */
+let SESSIONS = [];
+let curDay   = 0;
+let PED_SID  = null;
+const myClaims = new Set(JSON.parse(sessionStorage.getItem('xbClaims')||'[]'));
+function saveClaims(){ sessionStorage.setItem('xbClaims', JSON.stringify([...myClaims])); }
 
-/* ═══════════════════════════════════════
-   PUBLIC SCHEDULE
-═══════════════════════════════════════ */
-let curDay = 0;
+/* ═══════════════════════════════════════════════
+   GAS COMMUNICATION
+   READ  → JSONP (follows GAS redirects perfectly)
+   WRITE → hidden <form> POST (no CORS issues)
+═══════════════════════════════════════════════ */
 
-function selectDay(d) {
-  curDay = d;
-  document.querySelectorAll('.day-tab').forEach((el,i) => el.classList.toggle('active', i === d));
-  renderSessionList();
-}
-
-function renderSessionList() {
-  const el = document.getElementById('session-list');
-  el.innerHTML = '';
-  const daySessions = SESSIONS.filter(s => s.day === curDay);
-
-  daySessions.forEach(ses => {
-    const slot  = SLOTS_META[ses.slotId];
-    const rem   = 15 - ses.booked;
-    const full  = rem <= 0;
-    const empty = !ses.published;
-
-    const card = document.createElement('div');
-    card.className = 'session-card';
-
-    let capHtml = '';
-    let capCls  = '';
-    if (!empty) {
-      if (full)       { capHtml = 'Full';        capCls = 'full'; }
-      else if (rem<=4){ capHtml = `Only ${rem} left`;  capCls = 'warn'; }
-      else            { capHtml = `${rem} Available`;    capCls = 'ok'; }
-    }
-    
-    let imgHtml = '';
-    if (ses.img) {
-      imgHtml = `<div class="sc-img" style="background-image:url('${ses.img}')"></div>`;
-    }
-
-    let bodyHtml = '';
-    if (empty) {
-      bodyHtml = `<div class="sc-empty"><div class="sc-empty-label">Coming Soon — Stay Tuned</div></div>`;
-    } else {
-      bodyHtml = `
-        <div class="sc-body">
-          <div class="sc-partner">In partnership with ${ses.partner}</div>
-          <div class="sc-class">${ses.className}</div>
-          <div class="sc-desc">${ses.desc}</div>
-          <div class="sc-footer">
-            <div class="sc-instructor-wrap">
-              <div class="sc-instructor-label">Instructor</div>
-              <div class="sc-instructor">${ses.instructor}</div>
-            </div>
-            <button class="btn-book${full?' full':''}" onclick="${full?'':'openBk(\''+ses.sid+'\')'}">${full ? 'Fully Booked' : 'Details & Book'}</button>
-          </div>
-        </div>`;
-    }
-
-    card.innerHTML = `
-      ${imgHtml}
-      <div class="sc-time-bar">
-        <div class="sc-time">${slot.t} – ${slot.e}</div>
-        ${capHtml ? `<div class="sc-cap ${capCls}">${capHtml}</div>` : ''}
-      </div>
-      ${bodyHtml}`;
-    
-    el.appendChild(card);
+// JSONP for reads — reliable with GAS redirects
+function gasRead(params, timeout=15000){
+  return new Promise((resolve,reject)=>{
+    const cb = 'gr_'+Date.now()+'_'+Math.random().toString(36).slice(2,6);
+    const qs = Object.entries({...params,callback:cb})
+      .map(([k,v])=>encodeURIComponent(k)+'='+encodeURIComponent(String(v))).join('&');
+    const timer = setTimeout(()=>{ cleanup(); reject(new Error('Timeout')); }, timeout);
+    window[cb] = d=>{ cleanup(); resolve(d); };
+    const s = document.createElement('script');
+    s.src = GAS_URL+'?'+qs;
+    s.onerror = ()=>{ cleanup(); reject(new Error('Load failed')); };
+    document.head.appendChild(s);
+    function cleanup(){ clearTimeout(timer); delete window[cb]; s.parentNode&&s.parentNode.removeChild(s); }
   });
 }
 
-/* ═══════════════════════════════════════
-   BOOKING
-═══════════════════════════════════════ */
-function openBk(sid) {
-  ST.bk = SESSIONS.find(s => s.sid === sid);
-  if (!ST.bk) return;
-  document.getElementById('bk-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderBkForm();
+// Hidden form POST for writes — bypasses CORS entirely
+function gasWrite(params){
+  return new Promise(resolve=>{
+    const fid = 'gf_'+Date.now();
+    const iid = 'gi_'+Date.now();
+
+    const iframe = document.createElement('iframe');
+    iframe.name = iid; iframe.id = iid;
+    iframe.style.cssText = 'display:none;width:0;height:0;border:none;position:absolute';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.method='POST'; form.action=GAS_URL; form.target=iid; form.id=fid;
+    form.style.display='none';
+
+    Object.entries(params).forEach(([k,v])=>{
+      const inp=document.createElement('input');
+      inp.type='hidden'; inp.name=k; inp.value=String(v);
+      form.appendChild(inp);
+    });
+    document.body.appendChild(form);
+
+    const cleanup=()=>{
+      document.getElementById(fid)?.remove();
+      document.getElementById(iid)?.remove();
+    };
+
+    iframe.onload = ()=>{ setTimeout(()=>{ cleanup(); resolve({ok:true}); }, 200); };
+    setTimeout(()=>{ cleanup(); resolve({ok:true}); }, 8000);
+    form.submit();
+  });
 }
-function closeBk() {
-  document.getElementById('bk-overlay').classList.remove('open');
-  document.body.style.overflow = '';
+
+/* ═══════════════════════════════════════════════
+   SESSIONS — load from GAS
+═══════════════════════════════════════════════ */
+async function loadSessions(){
+  try{
+    const res = await gasRead({action:'getSessions'});
+    if(res.ok && res.sessions && res.sessions.length){
+      SESSIONS = res.sessions;
+    }
+  }catch(e){ console.warn('Could not load sessions:', e.message); }
 }
 
-function renderBkForm() {
-  const s    = ST.bk;
-  const slot = SLOTS_META[s.slotId];
-  const day  = DAYS_META[s.day];
-  const rem  = 15 - (s.booked || 0);
-  const full = rem <= 0;
+/* ═══════════════════════════════════════════════
+   PUBLIC SCHEDULE
+═══════════════════════════════════════════════ */
+function selectDay(d){
+  curDay=d;
+  document.querySelectorAll('.day-tab').forEach((el,i)=>el.classList.toggle('active',i===d));
+  renderSessions();
+}
 
-  // Fallback texts if the partner hasn't filled them out yet
-  const targetText = s.target || 'Coffee beginners, home brewers, and anyone curious about exploring specialty coffee in a hands-on environment.';
-  const agendaItems = s.agenda || ['15m: Introduction & Brewing Theory', '45m: Hands-on Experience with the xBloom system', '30m: Guided Tasting & Open Q&A'];
-  const takeawaysText = s.takeaways || 'An exclusive recipe card, a sample bag of partner coffee beans, and digital discount coupons for xBloom.';
+function renderSessions(){
+  const el = document.getElementById('session-list');
+  const daySessions = SESSIONS.filter(s=>s.day===curDay);
+  if(!daySessions.length){
+    el.innerHTML='<div style="padding:40px 20px;text-align:center;color:var(--faint);font-size:14px">No sessions yet</div>';
+    return;
+  }
+  el.innerHTML = daySessions.map(s=>{
+    const slot = SLOTS[s.slotId]||{};
+    const booked = s.booked||0;
+    const avail  = MAX_SEATS - booked;
+    const badgeCls = avail<=0?'full':avail<=3?'warn':'ok';
+    const badgeTxt = avail<=0?'Full':`${avail} left`;
+    const imgHtml  = s.img?`<div class="scard-img" style="background-image:url('${s.img}')"></div>`:'';
+    if(!s.published) return `
+      <div class="scard">
+        <div class="scard-timebar">
+          <div class="scard-time">${slot.t} – ${slot.e}</div>
+        </div>
+        <div class="scard-empty"><div class="scard-empty-lbl">Coming Soon — Stay Tuned</div></div>
+      </div>`;
+    return `
+      <div class="scard">
+        ${imgHtml}
+        <div class="scard-timebar">
+          <div class="scard-time">${slot.t} – ${slot.e}</div>
+          <div class="scard-badge badge-${badgeCls}">${badgeTxt}</div>
+        </div>
+        <div class="scard-body">
+          <div class="scard-partner">In partnership with ${s.partner}</div>
+          <div class="scard-class">${s.className}</div>
+          <div class="scard-desc">${s.desc}</div>
+          <div class="scard-footer">
+            <div><div class="scard-inst-lbl">Instructor</div><div class="scard-inst">${s.instructor||'—'}</div></div>
+            <button class="btn-book${avail<=0?' full':''}" onclick="openBk('${s.sid}')">${avail<=0?'Full':'Details & Book'}</button>
+          </div>
+        </div>
+      </div>`;
+  }).join('');
+}
 
-  const detailsHtml = `
-    <div class="sh-detail-group">
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">About the Class</div>
-        <div class="sh-detail-p">${s.desc}</div>
-      </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">Who is this for?</div>
-        <div class="sh-detail-p">${targetText}</div>
-      </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">90-Minute Agenda</div>
-        <ul class="sh-agenda-list">
-          ${agendaItems.map(item => `<li><span class="ag-dot"></span>${item}</li>`).join('')}
-        </ul>
-      </div>
-      <div class="sh-detail-sec">
-        <div class="sh-detail-h">What You'll Get</div>
-        <div class="sh-detail-p">🎁 ${takeawaysText}</div>
-      </div>
-    </div>
-  `;
+/* ═══════════════════════════════════════════════
+   BOOKING DETAIL + FORM
+═══════════════════════════════════════════════ */
+function openBk(sid){
+  const s = SESSIONS.find(x=>x.sid===sid);
+  if(!s||!s.published) return;
+  const slot   = SLOTS[s.slotId]||{};
+  const day    = DAYS[s.day]||{};
+  const booked = s.booked||0;
+  const avail  = MAX_SEATS - booked;
+  const agItems = (s.agenda||[]).filter(a=>a).map(a=>`<li><span class="ag-dot"></span>${a}</li>`).join('');
 
+  document.getElementById('bk-title').textContent = s.className||'Details';
   document.getElementById('bk-body').innerHTML = `
-    <div style="font-size:24px;font-family:'Playfair Display',serif;font-weight:600;color:var(--white);line-height:1.15;margin-bottom:8px;">${s.className}</div>
-    <div style="font-size:13px;color:var(--g3);font-weight:500;margin-bottom:24px;">By ${s.partner} · Led by ${s.instructor}</div>
-    
-    <div class="sh-session" style="border:none;background:var(--s1);padding:16px;margin-bottom:32px;">
-      <div class="sh-ses-time" style="margin:0;">🗓️ ${day.label} · ${slot.t} – ${slot.e}</div>
-    </div>
-    
-    ${detailsHtml}
-    
+    ${s.img?`<div class="bk-img" style="background-image:url('${s.img}')"></div>`:''}
+    <div class="bk-partner">In partnership with ${s.partner}</div>
+    <div class="bk-class">${s.className}</div>
+    <div class="bk-time">${day.full} · ${slot.t}–${slot.e}</div>
+    ${s.desc?`<div class="detail-sec"><div class="detail-h">About</div><div class="detail-p">${s.desc}</div></div>`:''}
+    ${s.target?`<div class="detail-sec"><div class="detail-h">Who is this for?</div><div class="detail-p">${s.target}</div></div>`:''}
+    ${agItems?`<div class="detail-sec"><div class="detail-h">90-Min Agenda</div><ul class="agenda-list">${agItems}</ul></div>`:''}
+    ${s.takeaways?`<div class="detail-sec"><div class="detail-h">What you'll take home</div><div class="detail-p">${s.takeaways}</div></div>`:''}
     <div class="sh-divider"></div>
+    ${avail<=0
+      ? `<div style="text-align:center;padding:8px 0 16px">
+           <div style="font-size:15px;font-weight:600;margin-bottom:6px">Session is Full</div>
+           <div style="font-size:13px;color:var(--muted);margin-bottom:16px">Join the waitlist to be notified if a spot opens.</div>
+           <div class="field-stack">${bkFields(sid)}</div>
+           <button class="btn-primary" onclick="submitWaitlist('${sid}')">Join Waitlist</button>
+         </div>`
+      : `<div class="field-stack">${bkFields(sid)}</div>
+         <button class="btn-primary" id="bk-btn" onclick="submitBooking('${sid}')">Reserve My Spot</button>`}`;
+  document.getElementById('bk-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeBk(){ document.getElementById('bk-overlay').classList.remove('open'); document.body.style.overflow=''; }
 
-    ${full ? `
-      <div style="text-align:center;padding:20px;background:rgba(255,149,0,.08);border:1px solid rgba(255,149,0,.2);border-radius:var(--rs);margin-bottom:24px">
-        <div style="font-size:28px;margin-bottom:8px">⏳</div>
-        <div style="font-weight:600;color:var(--white);margin-bottom:4px">Session เต็มแล้ว</div>
-        <div style="font-size:13px;color:var(--g5);margin-bottom:0">ลงชื่อสำรองไว้ — ถ้ามีคนยกเลิกจะได้ที่นั่งทันที</div>
-      </div>
-      <div class="sh-detail-h" style="margin-bottom:16px">เข้าคิวสำรอง</div>
-      <div class="field-stack">
-        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
-        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
-        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
-      </div>
-      <button class="btn-primary" style="background:var(--amber)" onclick="submitWaitlist()">เข้าคิวสำรอง</button>
-    ` : `
-      <div class="sh-detail-h" style="margin-bottom:16px">จองที่นั่ง</div>
-      <div class="field-stack">
-        <div class="field" id="fw-name"><label>ชื่อ-นามสกุล *</label><input id="f-name" type="text" placeholder="กรอกชื่อ-นามสกุล" onfocus="ff('fw-name')" onblur="fb('fw-name')"></div>
-        <div class="field" id="fw-phone"><label>โทรศัพท์ *</label><input id="f-phone" type="tel" inputmode="tel" placeholder="08X-XXX-XXXX" onfocus="ff('fw-phone')" onblur="fb('fw-phone')"></div>
-        <div class="field" id="fw-email"><label>อีเมล *</label><input id="f-email" type="email" inputmode="email" placeholder="your@email.com" onfocus="ff('fw-email')" onblur="fb('fw-email')"></div>
-      </div>
-      <button class="btn-primary" onclick="submitBk()">ยืนยันการจอง</button>
-    `}
-  `;
+function bkFields(sid){
+  const ref = sessionStorage.getItem('partnerRef')||'';
+  return `
+    <div class="fld" id="f-name"><label>Full Name *</label><input id="i-name" type="text" placeholder="Your name" onfocus="ff('f-name')" onblur="fb('f-name')"></div>
+    <div class="fld" id="f-phone"><label>Phone *</label><input id="i-phone" type="tel" placeholder="08X-XXX-XXXX" onfocus="ff('f-phone')" onblur="fb('f-phone')"></div>
+    <div class="fld" id="f-email"><label>Email</label><input id="i-email" type="email" placeholder="your@email.com" onfocus="ff('f-email')" onblur="fb('f-email')"></div>
+    <div class="fld" id="f-note"><label>Note (optional)</label><input id="i-note" type="text" placeholder="Any allergies or requests?" onfocus="ff('f-note')" onblur="fb('f-note')"></div>
+    ${ref?`<input type="hidden" id="i-ref" value="${ref}">`:'<div class="fld" id="f-ref"><label>Referral Partner (optional)</label><input id="i-ref" type="text" placeholder="Partner ref code" onfocus="ff(\'f-ref\')" onblur="fb(\'f-ref\')"></div>'}`;
 }
 
-function ff(id){document.getElementById(id)?.classList.add('focused')}
-function fb(id){document.getElementById(id)?.classList.remove('focused')}
+async function submitBooking(sid){
+  const name  = document.getElementById('i-name')?.value.trim();
+  const phone = document.getElementById('i-phone')?.value.trim();
+  const email = document.getElementById('i-email')?.value.trim();
+  const note  = document.getElementById('i-note')?.value.trim();
+  const ref   = document.getElementById('i-ref')?.value.trim();
+  if(!name){ showToast('กรุณาใส่ชื่อ'); return; }
+  if(!phone){ showToast('กรุณาใส่เบอร์โทร'); return; }
+  const btn = document.getElementById('bk-btn');
+  if(btn){ btn.disabled=true; btn.textContent='กำลังจอง...'; }
+  const s = SESSIONS.find(x=>x.sid===sid);
+  if(!s){ showToast('Session not found'); return; }
 
-async function submitWaitlist() {
-  const name  = document.getElementById('f-name')?.value.trim();
-  const phone = document.getElementById('f-phone')?.value.trim();
-  const email = document.getElementById('f-email')?.value.trim();
-  if (!name || !phone || !email) { showToast('กรุณากรอกข้อมูลให้ครบ'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('รูปแบบอีเมลไม่ถูกต้อง'); return; }
+  // Optimistic local ref
+  const day = DAYS[s.day]||{};
+  const slot = SLOTS[s.slotId]||{};
+  const bkRef = 'XB-'+day.date.replace(/-/g,'').slice(4,8)+'-'+Math.random().toString(36).slice(2,6).toUpperCase();
 
-  const s = ST.bk;
-  let position = 1;
+  // Send to GAS via form POST (no CORS issue)
+  gasWrite({ action:'book', sid, name, phone, email:email||'', note:note||'', referral:ref||'', ref:bkRef });
 
-  if (!MOCK) {
-    try {
-      const res = await gasCall({ action:'joinWaitlist', sid:s.sid, name, phone, email });
-      if (!res.ok) { showToast(res.error || 'เกิดข้อผิดพลาด'); return; }
-      position = res.position;
-    } catch { showToast('เกิดข้อผิดพลาด กรุณาลองใหม่'); return; }
-  }
+  // Update local count
+  s.booked = (s.booked||0)+1;
 
+  // Show confirm
   closeBk();
-  // Show waitlist confirmation
-  showWaitlistConfirm(s, position, name);
-}
-
-function showWaitlistConfirm(ses, position, name) {
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
-
-  // Inject a full-screen confirm similar to booking confirm
-  const el = document.getElementById('confirm-ov');
-  el.innerHTML = `
-    <div style="font-size:52px;margin-bottom:18px;animation:popIn .6s cubic-bezier(.34,1.56,.64,1) both">🎟️</div>
-    <div style="font-size:28px;font-weight:600;text-align:center;margin-bottom:6px;letter-spacing:-.02em">อยู่ในคิวสำรองแล้ว!</div>
-    <div style="font-size:14px;color:var(--g3);text-align:center;margin-bottom:32px">เราจะแจ้งทันทีถ้ามีที่นั่งว่าง</div>
-
-    <div style="width:100%;background:var(--bg);border-radius:var(--r);padding:28px;text-align:center;margin-bottom:28px;box-shadow:0 10px 30px rgba(0,0,0,.06);border:1px solid rgba(0,0,0,.04)">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:8px">คิวของคุณ</div>
-      <div style="font-family:'Playfair Display',serif;font-size:72px;font-weight:700;color:var(--amber);line-height:1">${position}</div>
-      <div style="height:1px;background:var(--liner);margin:20px 0"></div>
-      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:4px">${ses.className}</div>
-      <div style="font-size:13px;color:var(--g3)">${day.label} · ${slot.t}–${slot.e} · ${ses.partner}</div>
-      <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:14px">${name}</div>
-    </div>
-
-    <div style="width:100%;background:var(--bg);border-radius:var(--rs);padding:16px 20px;margin-bottom:28px;display:flex;align-items:flex-start;gap:12px;border:1px solid rgba(0,0,0,.04)">
-      <div style="font-size:20px;flex-shrink:0">ℹ️</div>
-      <div style="font-size:13px;color:var(--g5);line-height:1.6">
-        ถ้ามีคนยกเลิก ระบบจะโปรโมตคุณอัตโนมัติ และส่งรายละเอียดทาง <strong style="color:var(--white)">Email</strong> 
-        ที่ลงทะเบียนไว้ กลับมาเช็คสถานะได้ที่ "ดูการจองของฉัน"
-      </div>
-    </div>
-
-    <button style="width:100%;background:var(--white);border:none;border-radius:var(--rs);padding:18px;font-size:16px;font-weight:600;color:#FFF;font-family:inherit;cursor:pointer;min-height:56px;display:flex;align-items:center;justify-content:center"
-      onclick="closeConfirm()">เข้าใจแล้ว</button>
-  `;
-  el.classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-async function submitBk() {
-  const name  = document.getElementById('f-name')?.value.trim();
-  const phone = document.getElementById('f-phone')?.value.trim();
-  const email = document.getElementById('f-email')?.value.trim();
-  if (!name || !phone || !email) { showToast('Please fill in all fields'); return; }
-  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showToast('Invalid email format'); return; }
-
-  const s    = ST.bk;
-  const slot = SLOTS_META[s.slotId];
-  const day  = DAYS_META[s.day];
-  const ref  = `XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`;
-
-  if (!MOCK) {
-    try { await gasCall({ action:'book', sid:s.sid, name, phone, email, ref }); }
-    catch { showToast('An error occurred, please try again'); return; }
-  }
-
-  // Update local state
-  s.booked = (s.booked || 0) + 1;
-  ALL_BOOKINGS.push({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, name, phone, email, className:s.className, partner:s.partner });
-  sessionStorage.setItem('lastBooking', JSON.stringify({ ref, sid:s.sid, day:day.label, time:`${slot.t}–${slot.e}`, className:s.className, partner:s.partner, name }));
-
-  closeBk();
-  document.getElementById('co-ref').textContent   = ref;
+  document.getElementById('co-ref').textContent   = bkRef;
   document.getElementById('co-class').textContent = s.className;
-  document.getElementById('co-dt').textContent    = `${day.label} · ${slot.t}–${slot.e} · ${s.partner}`;
+  document.getElementById('co-dt').textContent    = day.full+' · '+slot.t+'–'+slot.e;
   document.getElementById('co-name').textContent  = name;
   document.getElementById('confirm-ov').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderSessionList();
+  renderSessions();
 }
 
-function closeConfirm() {
-  document.getElementById('confirm-ov').classList.remove('open');
-  document.body.style.overflow = '';
+async function submitWaitlist(sid){
+  const name  = document.getElementById('i-name')?.value.trim();
+  const phone = document.getElementById('i-phone')?.value.trim();
+  const email = document.getElementById('i-email')?.value.trim();
+  if(!name||!phone){ showToast('กรุณาใส่ชื่อและเบอร์โทร'); return; }
+  gasWrite({ action:'joinWaitlist', sid, name, phone, email:email||'' });
+  closeBk();
+  showToast('✅ เพิ่มใน Waitlist แล้ว — เราจะแจ้งถ้ามีที่ว่าง');
 }
 
-/* ═══════════════════════════════════════
+function closeConfirm(){ document.getElementById('confirm-ov').classList.remove('open'); }
+
+/* ═══════════════════════════════════════════════
    MY BOOKING
-═══════════════════════════════════════ */
-function openMyBooking() {
-  document.getElementById('mb-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  renderMyBooking();
-}
-function closeMb() {
-  document.getElementById('mb-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function openMyCoupon() {
-  document.getElementById('cp-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-function closeCp() {
-  document.getElementById('cp-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function renderMyBooking(bookings, waitlist = []) {
-  const body = document.getElementById('mb-body');
-
-  let cardsHtml = '';
-
-  // Booking cards
-  if (Array.isArray(bookings) && bookings.length) {
-    cardsHtml += bookings.map(b => renderBookingCard(b)).join('');
-  }
-
-  // Waitlist cards
-  if (Array.isArray(waitlist) && waitlist.length) {
-    cardsHtml += waitlist.map(w => renderWaitlistCard(w)).join('');
-  }
-
-  if (!cardsHtml && bookings === 'not_found') {
-    cardsHtml = `<div style="text-align:center;padding:28px 0 8px">
-      <div style="font-size:40px;margin-bottom:12px">🔍</div>
-      <div style="font-size:15px;font-weight:600;color:var(--white);margin-bottom:6px">ไม่พบการจอง</div>
-      <div style="font-size:13px;color:var(--g5)">ลองตรวจสอบเบอร์โทรหรืออีเมลอีกครั้ง</div>
-    </div>`;
-  }
-
-  const hasResults = (Array.isArray(bookings) && bookings.length) || (Array.isArray(waitlist) && waitlist.length);
-
-  body.innerHTML = `
-    <div style="padding:8px 0 20px">
-      ${cardsHtml}
-      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">
-        ${hasResults ? 'ค้นหาด้วยข้อมูลอื่น' : 'ค้นหาการจองของคุณ'}
-      </div>
-      <div class="field focused" id="mb-contact-w" style="margin-bottom:12px">
-        <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
-        <input id="mb-contact-i" type="text" inputmode="tel"
-          placeholder="08X-XXX-XXXX หรือ your@email.com"
-          onfocus="ff('mb-contact-w')" onblur="fb('mb-contact-w')"
-          onkeyup="if(event.key==='Enter')lookupBooking()">
-      </div>
-      <button class="btn-primary" id="mb-search-btn" onclick="lookupBooking()">ค้นหาการจอง</button>
-      <div style="text-align:center;margin-top:14px">
-        <button onclick="renderMyBookingByRef()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
-          มี Booking Ref อยู่แล้ว →
-        </button>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('mb-contact-i')?.focus();
-}
-
-function renderWaitlistCard(w) {
-  const ahead = w.aheadOf ?? (w.position - 1);
-  return `<div style="background:rgba(255,149,0,.06);border:1px solid rgba(255,149,0,.25);border-radius:var(--r);padding:20px;margin-bottom:20px">
-    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;
-                  background:rgba(255,149,0,.2);color:var(--amber);padding:4px 10px;border-radius:100px">
-        🎟️ คิวสำรอง
-      </div>
-    </div>
-    <div style="font-size:13px;color:var(--g3);margin-bottom:4px">${w.day} · ${w.time}</div>
-    <div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:600;color:var(--white);margin-bottom:4px">${w.className}</div>
-    <div style="font-size:13px;color:var(--g5);margin-bottom:16px">${w.partner}</div>
-    <div style="display:flex;align-items:center;gap:16px;padding:14px;background:var(--bg);border-radius:var(--rs)">
-      <div style="text-align:center;flex:1;border-right:1px solid var(--liner)">
-        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--amber);line-height:1">${w.position}</div>
-        <div style="font-size:11px;color:var(--g5);margin-top:2px">คิวของคุณ</div>
-      </div>
-      <div style="text-align:center;flex:1">
-        <div style="font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--white);line-height:1">${ahead}</div>
-        <div style="font-size:11px;color:var(--g5);margin-top:2px">คนอยู่ข้างหน้า</div>
-      </div>
-    </div>
-    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:12px">${w.name}</div>
-  </div>`;
-}
-
-function renderMyBookingByRef() {
+═══════════════════════════════════════════════ */
+function openMb(){
   document.getElementById('mb-body').innerHTML = `
-    <div style="padding:8px 0 20px">
-      <div style="font-size:13px;font-weight:600;color:var(--g3);margin-bottom:14px">ค้นหาด้วย Booking Reference</div>
-      <div class="field focused" id="mb-ref-w" style="margin-bottom:12px">
-        <label>Booking Reference</label>
-        <input id="mb-ref-i" type="text" placeholder="เช่น XB-0507-AB12"
-          style="text-transform:uppercase"
-          onfocus="ff('mb-ref-w')" onblur="fb('mb-ref-w')"
-          onkeyup="if(event.key==='Enter')lookupByRef()">
-      </div>
-      <button class="btn-primary" onclick="lookupByRef()">ค้นหา</button>
-      <div style="text-align:center;margin-top:14px">
-        <button onclick="renderMyBooking()" style="background:none;border:none;font-size:13px;color:var(--g5);text-decoration:underline;cursor:pointer;font-family:inherit">
-          ← กลับ
-        </button>
+    <div class="field-stack">
+      <div class="fld" id="f-mb"><label>เบอร์โทร หรือ อีเมล</label>
+        <input id="i-mb" type="text" placeholder="ค้นหาด้วยเบอร์หรืออีเมล" onfocus="ff('f-mb')" onblur="fb('f-mb')">
       </div>
     </div>
-  `;
-  document.getElementById('mb-ref-i')?.focus();
+    <button class="btn-primary" onclick="lookupBooking()">ค้นหา Booking</button>
+    <div id="mb-results" style="margin-top:16px"></div>`;
+  document.getElementById('mb-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
 }
+function closeMb(){ document.getElementById('mb-overlay').classList.remove('open'); document.body.style.overflow=''; }
 
-function renderBookingCard(b) {
-  const couponsHtml = b.coupons && b.coupons.length
-    ? `<div style="margin-top:16px;padding-top:16px;border-top:1px solid var(--liner)">
-        <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">สิทธิ์พิเศษของคุณ</div>
-        ${b.coupons.map(c => `
-          <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--liner)">
-            <div style="font-size:18px">${{machine:'☕',beans:'🫘',gear:'🔧'}[c.type]||'🎁'}</div>
-            <div style="flex:1;font-size:12px;color:var(--g3)">${c.desc}</div>
-            <div style="font-size:15px;font-weight:700;color:var(--white)">${c.value}</div>
-          </div>`).join('')}
-      </div>` : '';
-
-  const isCancelled = b.status === 'cancelled';
-
-  return `<div class="my-booking-found" style="margin-bottom:20px;${isCancelled ? 'opacity:.5' : ''}">
-    ${isCancelled ? `<div style="background:rgba(255,59,48,.1);color:var(--red);font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:6px 12px;border-radius:100px;display:inline-block;margin-bottom:12px">ยกเลิกแล้ว</div>` : ''}
-    <div class="mbf-time">${b.day || ''} ${b.time ? '· ' + b.time : ''}</div>
-    <div class="mbf-class">${b.className}</div>
-    <div class="mbf-partner">${b.partner}</div>
-    <div class="mbf-sep"></div>
-    <div style="font-size:10px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">Booking Reference</div>
-    <div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:600;color:var(--white);letter-spacing:.02em">${b.ref}</div>
-    <div style="font-size:14px;font-weight:600;color:var(--white);margin-top:10px">${b.name}</div>
-    ${couponsHtml}
-    ${!isCancelled ? `
-    <button onclick="showCancelConfirm('${b.ref}')"
-      style="margin-top:16px;width:100%;background:none;border:1px solid rgba(255,59,48,.3);
-             border-radius:var(--rs);padding:12px;font-size:13px;font-weight:600;
-             color:var(--red);font-family:inherit;cursor:pointer;transition:background .2s"
-      onmouseover="this.style.background='rgba(255,59,48,.06)'"
-      onmouseout="this.style.background='none'">
-      ยกเลิกการจอง
-    </button>` : ''}
-  </div>`;
-}
-
-/* ── CANCEL FLOW ── */
-function showCancelConfirm(ref) {
-  // Inject a confirm panel below the booking card
-  const body = document.getElementById('mb-body');
-
-  // Find last lookup contact (stored when searching)
-  const lastContact = sessionStorage.getItem('mbLastContact') || '';
-
-  // Insert confirmation box
-  const existing = document.getElementById('cancel-confirm-box');
-  if (existing) existing.remove();
-
-  const box = document.createElement('div');
-  box.id = 'cancel-confirm-box';
-  box.style.cssText = `
-    background:var(--bg);border:1px solid rgba(255,59,48,.3);border-radius:var(--r);
-    padding:20px;margin-bottom:16px;
-  `;
-  box.innerHTML = `
-    <div style="font-size:16px;font-weight:600;color:var(--white);margin-bottom:8px">ยืนยันการยกเลิก?</div>
-    <div style="font-size:13px;color:var(--g3);margin-bottom:16px;line-height:1.6">
-      การยกเลิกจะ<strong style="color:var(--white)">ไม่สามารถย้อนกลับได้</strong>
-      และคูปองทั้งหมดจะถูกยกเลิกด้วย
-    </div>
-    <div style="font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:6px">
-      ยืนยันด้วยเบอร์โทรหรืออีเมล
-    </div>
-    <div class="field focused" id="cc-contact-w" style="margin-bottom:12px">
-      <label>เบอร์โทรศัพท์ หรือ อีเมล</label>
-      <input id="cc-contact-i" type="text" value="${lastContact}"
-        placeholder="ใส่ข้อมูลที่ลงทะเบียนไว้"
-        onfocus="ff('cc-contact-w')" onblur="fb('cc-contact-w')">
-    </div>
-    <div style="display:flex;gap:10px">
-      <button onclick="document.getElementById('cancel-confirm-box').remove()"
-        style="flex:1;background:var(--s2);border:none;border-radius:var(--rs);padding:14px;
-               font-size:14px;font-weight:600;color:var(--white);font-family:inherit;cursor:pointer">
-        ไม่ยกเลิก
-      </button>
-      <button onclick="confirmCancel('${ref}')"
-        id="cc-confirm-btn"
-        style="flex:1;background:var(--red);border:none;border-radius:var(--rs);padding:14px;
-               font-size:14px;font-weight:600;color:#fff;font-family:inherit;cursor:pointer">
-        ยืนยันยกเลิก
-      </button>
-    </div>
-  `;
-
-  // Insert at top of mb-body
-  body.insertBefore(box, body.firstChild);
-  body.scrollTop = 0;
-  document.getElementById('cc-contact-i')?.focus();
-}
-
-async function confirmCancel(ref) {
-  const contact = document.getElementById('cc-contact-i')?.value.trim();
-  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
-
-  const btn = document.getElementById('cc-confirm-btn');
-  if (btn) { btn.textContent = 'กำลังยกเลิก...'; btn.disabled = true; }
-
-  if (MOCK) {
-    // Mock: mark cancelled locally
-    const bk = ALL_BOOKINGS.find(b => b.ref === ref);
-    if (bk) bk.status = 'cancelled';
-    showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
-    document.getElementById('cancel-confirm-box')?.remove();
-    // Re-render with updated status
-    const contact2 = sessionStorage.getItem('mbLastContact') || '';
-    if (contact2) await lookupBooking();
-    return;
-  }
-
-  try {
-    const res = await gasCall({ action: 'cancelBooking', ref, contact });
-    if (res.ok) {
-      showToast('✅ ยกเลิกการจองเรียบร้อยแล้ว');
-      document.getElementById('cancel-confirm-box')?.remove();
-      // Reload bookings to show updated status
-      setTimeout(() => lookupBooking(), 600);
-    } else {
-      showToast(res.error || 'ไม่สามารถยกเลิกได้');
-      if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
-    }
-  } catch {
-    showToast('เกิดข้อผิดพลาด กรุณาลองใหม่');
-    if (btn) { btn.textContent = 'ยืนยันยกเลิก'; btn.disabled = false; }
-  }
-}
-
-async function lookupBooking() {
-  const contact = document.getElementById('mb-contact-i')?.value.trim();
-  if (!contact) { showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
-
-  const btn = document.getElementById('mb-search-btn');
-  if (btn) { btn.textContent = 'กำลังค้นหา...'; btn.disabled = true; }
-
-  sessionStorage.setItem('mbLastContact', contact);
-
-  if (MOCK) {
-    const q = contact.toLowerCase();
-    const isEmail = q.includes('@');
-    const found = ALL_BOOKINGS.filter(b =>
-      isEmail ? (b.email||'').toLowerCase() === q
-               : (b.phone||'').replace(/\D/g,'') === q.replace(/\D/g,'')
-    );
-    renderMyBooking(found.length ? found : 'not_found', []);
-    return;
-  }
-
-  try {
+async function lookupBooking(){
+  const contact = document.getElementById('i-mb')?.value.trim();
+  if(!contact){ showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
+  const res_el = document.getElementById('mb-results');
+  res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">กำลังค้นหา...</div>';
+  try{
     const [bkRes, wlRes] = await Promise.all([
-      gasCall({ action:'getBookingByContact', contact }),
-      gasCall({ action:'getWaitlistPosition', contact }),
+      gasRead({action:'getBookingByContact', contact}),
+      gasRead({action:'getWaitlistPosition', contact}),
     ]);
-    const bookings = (bkRes.ok && bkRes.bookings) ? bkRes.bookings : [];
-    const waitlist = (wlRes.ok && wlRes.waitlist)  ? wlRes.waitlist  : [];
-    if (!bookings.length && !waitlist.length) renderMyBooking('not_found', []);
-    else renderMyBooking(bookings, waitlist);
-  } catch {
-    renderMyBooking('not_found', []);
-  }
-}
-
-async function lookupByRef() {
-  const ref = document.getElementById('mb-ref-i')?.value.trim().toUpperCase();
-  if (!ref) { showToast('กรุณาใส่ Booking Reference'); return; }
-
-  if (MOCK) {
-    const found = ALL_BOOKINGS.filter(b => b.ref === ref);
-    renderMyBooking(found.length ? found : 'not_found');
-    return;
-  }
-
-  try {
-    const res = await gasCall({ action:'getBooking', ref });
-    if (res.ok && res.bookings) renderMyBooking(res.bookings);
-    else renderMyBooking('not_found');
-  } catch { renderMyBooking('not_found'); }
-}
-
-/* ═══════════════════════════════════════
-   PARTNER PORTAL — no login
-   Anyone opens ?partner=1, sees slot grid,
-   taps Vacant → fills details → slot locks.
-   Claims tracked in sessionStorage.
-═══════════════════════════════════════ */
-
-const myClaimedSids = new Set(
-  JSON.parse(sessionStorage.getItem('xbMySlots') || '[]')
-);
-function saveMyClaims() {
-  sessionStorage.setItem('xbMySlots', JSON.stringify([...myClaimedSids]));
-}
-
-function renderPartnerPage() {
-  ST.pDay = ST.pDay ?? 0;
-  renderPartnerDash();
-}
-
-function renderPartnerDash() {
-  const day      = ST.pDay ?? 0;
-  const daySlots = SESSIONS.filter(s => s.day === day);
-  const totalMine = [...myClaimedSids].filter(sid => SESSIONS.find(s => s.sid === sid)).length;
-
-  const slotRows = daySlots.map(ses => {
-    const slot    = SLOTS_META[ses.slotId];
-    const isMine  = myClaimedSids.has(ses.sid);
-    const isTaken = ses.partnerRef && !isMine;
-    const isVacant= !ses.partnerRef;
-    let cls, badge, body, onclick;
-
-    if (isMine) {
-      cls    = 'mine';
-      badge  = `<span class="slot-badge mine">${ses.published ? '● My Session' : '● Draft'}</span>`;
-      body   = ses.published
-        ? `<div class="slot-class">${ses.className}</div>
-           <div class="slot-partner-name">${ses.partner}${ses.instructor ? ' · '+ses.instructor : ''}</div>
-           <div class="slot-mine-cta">Edit details →</div>`
-        : `<div class="slot-vacant-hint" style="color:var(--amber)">Claimed — add workshop details →</div>`;
-      onclick = `openPed('${ses.sid}')`;
-    } else if (isTaken) {
-      cls    = 'taken';
-      badge  = `<span class="slot-badge taken">Taken</span>`;
-      body   = ses.published
-        ? `<div class="slot-class">${ses.className}</div><div class="slot-partner-name">by ${ses.partner}</div>`
-        : `<div class="slot-vacant-hint">Reserved by ${ses.partner}</div>`;
-      onclick = '';
-    } else {
-      cls    = 'vacant';
-      badge  = `<span class="slot-badge vacant">Vacant</span>`;
-      body   = `<div class="slot-vacant-hint">Tap to claim this slot</div>`;
-      onclick = `openPed('${ses.sid}')`;
+    const bks = (bkRes.ok&&bkRes.bookings)||[];
+    const wls = (wlRes.ok&&wlRes.waitlist)||[];
+    if(!bks.length&&!wls.length){
+      res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:14px">ไม่พบข้อมูล</div>';
+      return;
     }
+    res_el.innerHTML =
+      bks.map(b=>`
+        <div class="mb-found">
+          <div class="mb-status-badge ${b.status==='cancelled'?'cancelled':'active'}">${b.status==='cancelled'?'ยกเลิกแล้ว':'Active'}</div>
+          <div class="mb-time">${b.day||''}</div>
+          <div class="mb-class">${b.className||'—'}</div>
+          <div class="mb-partner">${b.partner||''}</div>
+          <div class="mb-sep"></div>
+          <div class="mb-ref">Booking Ref <strong>${b.ref}</strong></div>
+          <div class="mb-name">${b.name}</div>
+          ${b.status!=='cancelled'?`<button class="btn-cancel" onclick="askCancel('${b.ref}')">ยกเลิกการจอง</button>`:''}
+        </div>`).join('')+
+      wls.map(w=>`
+        <div class="wl-item">
+          <div class="wl-pos">⏳ Waitlist #${w.position} · ${w.aheadOf} คนอยู่ข้างหน้า</div>
+          <div class="wl-class">${w.className}</div>
+          <div class="wl-detail">${w.day} · ${w.time}</div>
+        </div>`).join('');
+  }catch(e){
+    res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">เกิดข้อผิดพลาด กรุณาลองใหม่</div>';
+  }
+}
 
-    return `<div class="slot-item ${cls}" ${onclick ? `onclick="${onclick}"` : ''}>
-      <div class="slot-hd">
-        <div class="slot-time-txt">${slot.t} – ${slot.e}</div>
-        ${badge}
+function askCancel(ref){
+  if(!confirm('ยืนยันยกเลิก booking '+ref+'?')) return;
+  gasWrite({action:'cancelBooking', ref, contact: document.getElementById('i-mb')?.value.trim()||''});
+  showToast('✅ ยกเลิกการจองแล้ว');
+  setTimeout(()=>lookupBooking(), 500);
+}
+
+/* ═══════════════════════════════════════════════
+   MY COUPON
+═══════════════════════════════════════════════ */
+function openCoupon(){
+  const cp = document.getElementById('cp-body');
+  cp.innerHTML = `
+    <div class="field-stack">
+      <div class="fld" id="f-cp"><label>เบอร์โทร หรือ อีเมล</label>
+        <input id="i-cp" type="text" placeholder="ค้นหาด้วยเบอร์หรืออีเมล" onfocus="ff('f-cp')" onblur="fb('f-cp')">
       </div>
-      <div class="slot-divider"></div>
+    </div>
+    <button class="btn-primary" onclick="lookupCoupons()">ดูคูปองของฉัน</button>
+    <div id="cp-results" style="margin-top:16px"></div>`;
+  document.getElementById('cp-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeCp(){ document.getElementById('cp-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+async function lookupCoupons(){
+  const contact = document.getElementById('i-cp')?.value.trim();
+  if(!contact){ showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
+  const res_el = document.getElementById('cp-results');
+  res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">กำลังค้นหา...</div>';
+  try{
+    const res = await gasRead({action:'getCoupons', contact});
+    const coupons = (res.ok&&res.coupons)||[];
+    if(!coupons.length){
+      res_el.innerHTML=`
+        <div style="text-align:center;padding:32px 0">
+          <div style="font-size:40px;margin-bottom:12px">🎟️</div>
+          <div style="font-size:15px;font-weight:600;margin-bottom:6px">ยังไม่มีคูปอง</div>
+          <div style="font-size:13px;color:var(--muted)">คูปองจะได้รับหลังจาก booking สำเร็จ</div>
+        </div>`;
+      return;
+    }
+    res_el.innerHTML = coupons.map(c=>`
+      <div class="coupon-card ${c.status==='used'?'coupon-used':''}">
+        <div class="coupon-type">${c.type||'Discount'}</div>
+        <div class="coupon-val">${c.value||''}</div>
+        <div class="coupon-desc">${c.desc||''}</div>
+        <div class="coupon-code-row">
+          <div class="coupon-code">${c.code}</div>
+          <div class="coupon-exp">${c.status==='used'?'Used':'Active'}</div>
+        </div>
+      </div>`).join('');
+  }catch(e){
+    res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">เกิดข้อผิดพลาด</div>';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   WAITLIST
+═══════════════════════════════════════════════ */
+function openWaitlist(){
+  document.getElementById('wl-body').innerHTML = `
+    <div class="field-stack">
+      <div class="fld" id="f-wl"><label>เบอร์โทร หรือ อีเมล</label>
+        <input id="i-wl" type="text" placeholder="ค้นหาสถานะ waitlist" onfocus="ff('f-wl')" onblur="fb('f-wl')">
+      </div>
+    </div>
+    <button class="btn-primary" onclick="lookupWaitlist()">ดูสถานะ</button>
+    <div id="wl-results" style="margin-top:16px"></div>`;
+  document.getElementById('wl-overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeWl(){ document.getElementById('wl-overlay').classList.remove('open'); document.body.style.overflow=''; }
+
+async function lookupWaitlist(){
+  const contact = document.getElementById('i-wl')?.value.trim();
+  if(!contact){ showToast('กรุณาใส่เบอร์โทรหรืออีเมล'); return; }
+  const res_el = document.getElementById('wl-results');
+  res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted)">กำลังค้นหา...</div>';
+  try{
+    const res = await gasRead({action:'getWaitlistPosition', contact});
+    const wls = (res.ok&&res.waitlist)||[];
+    if(!wls.length){
+      res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--muted);font-size:14px">ไม่พบข้อมูล Waitlist</div>';
+      return;
+    }
+    res_el.innerHTML = wls.map(w=>`
+      <div class="wl-item">
+        <div class="wl-pos">⏳ Waitlist #${w.position} · ${w.aheadOf} คนอยู่ข้างหน้า</div>
+        <div class="wl-class">${w.className}</div>
+        <div class="wl-detail">${w.day} · ${w.time} · ${w.partner}</div>
+      </div>`).join('');
+  }catch(e){
+    res_el.innerHTML='<div style="text-align:center;padding:20px;color:var(--red);font-size:13px">เกิดข้อผิดพลาด</div>';
+  }
+}
+
+/* ═══════════════════════════════════════════════
+   PARTNER PORTAL
+═══════════════════════════════════════════════ */
+let pDay = 0;
+
+function renderPartner(){
+  const daySessions = SESSIONS.filter(s=>s.day===pDay);
+  const myCount = [...myClaims].filter(sid=>SESSIONS.find(s=>s.sid===sid)).length;
+  const slotRows = daySessions.map(s=>{
+    const slot   = SLOTS[s.slotId]||{};
+    const isMine = myClaims.has(s.sid);
+    const isTaken= !!s.partnerRef && !isMine;
+    const isVacant= !s.partnerRef;
+    let cls,badge,body;
+    if(isMine){
+      cls='mine';
+      badge=`<span class="slot-badge mine">${s.published?'● Live':'● Draft'}</span>`;
+      body=s.published
+        ?`<div class="slot-class">${s.className}</div><div class="slot-who">${s.partner}${s.instructor?' · '+s.instructor:''}</div><div class="slot-cta">Edit details →</div>`
+        :`<div class="slot-hint" style="color:var(--amber)">Claimed — add details →</div>`;
+    } else if(isTaken){
+      cls='taken';
+      badge=`<span class="slot-badge taken">Taken</span>`;
+      body=s.published
+        ?`<div class="slot-class">${s.className}</div><div class="slot-who">by ${s.partner}</div>`
+        :`<div class="slot-hint">Reserved by ${s.partner}</div>`;
+    } else {
+      cls='vacant';
+      badge=`<span class="slot-badge vacant">Vacant</span>`;
+      body=`<div class="slot-hint">Tap to claim this slot</div>`;
+    }
+    return `<div class="slot-item ${cls}" ${(isMine||isVacant)?`onclick="openPed('${s.sid}')"`:''}">
+      <div class="slot-hd"><div class="slot-time">${slot.t} – ${slot.e}</div>${badge}</div>
+      <div class="slot-div"></div>
       <div class="slot-body">${body}</div>
     </div>`;
   }).join('');
 
-  document.getElementById('partner-page-body').innerHTML = `
-    <div class="p-greet">Partner Slot Booking</div>
-    <div class="p-greet-sub">${totalMine > 0
-      ? `You've claimed ${totalMine} slot${totalMine > 1 ? 's' : ''} this session`
-      : 'Tap any <span style="color:var(--green)">Vacant</span> slot to claim it'}</div>
-    <div class="slot-picker-section">
-      <div class="slot-picker-day-tabs">
-        ${DAYS_META.map((d, i) => `
-          <div class="spdt${i === day ? ' active' : ''}" onclick="pSelectDay(${i})">
-            <div class="spdt-n">${d.label.split(' ')[0]}</div>
-            <div class="spdt-m">${d.label.split(' ')[1]}</div>
-          </div>`).join('')}
-      </div>
-      <div class="slot-grid">${slotRows}</div>
+  document.getElementById('partner-body').innerHTML=`
+    <div class="p-title">Partner Portal</div>
+    <div class="p-sub">${myCount?`You've claimed ${myCount} slot${myCount>1?'s':''}`:''}</div>
+    <div class="sp-tabs">
+      ${DAYS.map((d,i)=>`<div class="sp-tab${i===pDay?' active':''}" onclick="pSelDay(${i})">
+        <div class="spn">${d.label.split(' ')[0]}</div>
+        <div class="spm">${d.label.split(' ')[1]}</div>
+      </div>`).join('')}
     </div>
-  `;
+    <div class="slot-grid">${slotRows||'<div style="padding:20px;text-align:center;color:var(--muted)">No sessions</div>'}</div>`;
 }
+function pSelDay(d){ pDay=d; renderPartner(); }
 
-function pSelectDay(d) { ST.pDay = d; renderPartnerDash(); }
-
-/* ── EDITOR ── */
-let PED_SID = null;
-
-function openPed(sid) {
-  const ses = SESSIONS.find(s => s.sid === sid);
-  if (!ses) return;
-  // Block if taken by someone else
-  if (ses.partnerRef && !myClaimedSids.has(sid)) return;
-
+/* ═══════════════════════════════════════════════
+   PARTNER EDITOR
+═══════════════════════════════════════════════ */
+function openPed(sid){
+  const s = SESSIONS.find(x=>x.sid===sid);
+  if(!s) return;
+  if(s.partnerRef && !myClaims.has(sid)) return;
   PED_SID = sid;
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
-  const isNew = !ses.partnerRef;
-
-  document.getElementById('ped-slot-tag').textContent = `${day.label} · ${slot.t}–${slot.e}`;
-  document.getElementById('ped-top-pub').textContent  = ses.published ? 'Save' : 'Publish';
-  renderPedBody(isNew);
-  document.getElementById('ped-overlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
+  const slot = SLOTS[s.slotId]||{};
+  const day  = DAYS[s.day]||{};
+  document.getElementById('ped-slot-tag').textContent = day.label+' · '+slot.t+'–'+slot.e;
+  document.getElementById('ped-top-btn').textContent  = s.published?'Save':'Publish';
+  renderPedBody(!s.partnerRef);
+  document.getElementById('ped-ov').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closePed(){
+  document.getElementById('ped-ov').classList.remove('open');
+  document.body.style.overflow='';
+  PED_SID=null;
+  renderPartner();
 }
 
-function closePed() {
-  document.getElementById('ped-overlay').classList.remove('open');
-  document.body.style.overflow = '';
-  PED_SID = null;
-  renderPartnerDash();
-}
+function renderPedBody(isNew=false){
+  const s   = SESSIONS.find(x=>x.sid===PED_SID);
+  const slot = SLOTS[s.slotId]||{};
+  const ag  = Array.isArray(s.agenda)&&s.agenda.length===3?s.agenda:['','',''];
 
-function renderPedBody(isNewClaim = false) {
-  const ses  = SESSIONS.find(s => s.sid === PED_SID);
-  const slot = SLOTS_META[ses.slotId];
-  const ag   = (ses.agenda && ses.agenda.length === 3) ? ses.agenda : ['', '', ''];
-
-  document.getElementById('ped-body').innerHTML = `
-    <div class="ped-preview-wrap">
-      <div class="ped-preview-lbl"><span class="ped-live-dot"></span> Live Preview</div>
-      <div class="ped-card-no-touch">
-        <div class="session-card" style="margin:0;box-shadow:0 8px 28px rgba(0,0,0,.08)">
-          <div id="ppv-img-wrap" style="display:${ses.img?'block':'none'}">
-            <div class="sc-img" id="ppv-img-el" style="background-image:url('${ses.img||''}')"></div>
+  document.getElementById('ped-body').innerHTML=`
+    <div class="ped-preview">
+      <div class="ped-preview-lbl"><span class="live-dot"></span>Live Preview</div>
+      <div class="ped-card-wrap">
+        <div class="scard" style="margin:0;box-shadow:0 6px 20px rgba(0,0,0,.08)">
+          <div id="ppv-img-wrap" style="display:${s.img?'block':'none'}">
+            <div class="scard-img" id="ppv-img" style="background-image:url('${s.img||''}')"></div>
           </div>
-          <div class="sc-time-bar">
-            <div class="sc-time">${slot.t} – ${slot.e}</div>
-            <div class="sc-cap ok">15 Available</div>
+          <div class="scard-timebar">
+            <div class="scard-time">${slot.t} – ${slot.e}</div>
+            <div class="scard-badge badge-ok">15 Available</div>
           </div>
-          <div class="sc-body">
-            <div class="sc-partner" id="ppv-partner">In partnership with ${ses.partner||'—'}</div>
-            <div class="sc-class" id="ppv-class">${ses.className||'<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>'}</div>
-            <div class="sc-desc"  id="ppv-desc">${ses.desc||'<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>'}</div>
-            <div class="sc-footer">
-              <div class="sc-instructor-wrap">
-                <div class="sc-instructor-label">Instructor</div>
-                <div class="sc-instructor" id="ppv-inst">${ses.instructor||'—'}</div>
-              </div>
-              <button class="btn-book" style="pointer-events:none">Details & Book</button>
+          <div class="scard-body">
+            <div class="scard-partner" id="ppv-partner">In partnership with ${s.partner||'—'}</div>
+            <div class="scard-class" id="ppv-class">${s.className||'<span style="color:var(--faint);font-style:italic;font-size:14px;font-family:sans-serif">Workshop Name</span>'}</div>
+            <div class="scard-desc" id="ppv-desc">${s.desc||'<span style="color:var(--faint);font-size:13px;font-style:italic">Short description</span>'}</div>
+            <div class="scard-footer">
+              <div><div class="scard-inst-lbl">Instructor</div><div class="scard-inst" id="ppv-inst">${s.instructor||'—'}</div></div>
+              <button class="btn-book" style="pointer-events:none">Book</button>
             </div>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="ped-form-wrap">
-      ${ses.published
-        ? `<div class="ped-status-bar live">✅ Published — visitors can see and book</div>`
-        : `<div class="ped-status-bar draft">${isNewClaim ? 'Fill in your details and publish to go live' : '⚠️ Draft — not visible yet'}</div>`}
-
-      <div class="ped-form-lbl">${isNewClaim ? 'Claim This Slot' : 'Workshop Details'}</div>
+    <div class="ped-form">
+      <div class="ped-status ${s.published?'live':'draft'}">${s.published?'✅ Published — visible to visitors':'⚠️ Draft — not visible yet'}</div>
+      <div class="ped-form-lbl">${isNew?'Claim This Slot':'Workshop Details'}</div>
       <div class="ped-fields">
-
-        ${isNewClaim ? `
-          <div class="pef focused" id="pef-co">
-            <label>Your Company / Roastery Name *</label>
-            <input id="pef-co-i" type="text" value=""
-              placeholder="e.g., Roots Coffee Roaster"
-              oninput="pedLive()" onfocus="peff('pef-co')" onblur="pefb('pef-co')">
-          </div>` : `
-          <div style="background:var(--s1);border-radius:var(--rs);padding:12px 16px">
-            <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:4px">Company</div>
-            <div style="font-size:15px;font-weight:600;color:var(--white)">${ses.partner}</div>
-          </div>`}
-
-        <div class="pef" id="pef-cn">
-          <label>Workshop Name *</label>
-          <input id="pef-cn-i" type="text" value="${ses.className}"
-            placeholder="e.g., The Art of Pour Over"
-            oninput="pedLive()" onfocus="peff('pef-cn')" onblur="pefb('pef-cn')">
+        ${isNew?`<div class="pef focused" id="pef-co">
+          <label>Company / Roastery Name *</label>
+          <input id="pef-co-i" type="text" placeholder="e.g., Roots Coffee Roaster" oninput="pedLive()" onfocus="pff('pef-co')" onblur="pfb('pef-co')">
+        </div>`:`<div style="background:var(--s1);border-radius:var(--rs);padding:10px 14px">
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:3px">Company</div>
+          <div style="font-size:14px;font-weight:600">${s.partner}</div>
+        </div>`}
+        <div class="pef" id="pef-cn"><label>Workshop Name *</label>
+          <input id="pef-cn-i" type="text" value="${s.className||''}" placeholder="e.g., The Art of Pour Over" oninput="pedLive()" onfocus="pff('pef-cn')" onblur="pfb('pef-cn')">
         </div>
-
-        <div class="pef" id="pef-ds">
-          <label>Short Description</label>
-          <textarea id="pef-ds-i" rows="3"
-            placeholder="1–2 sentences about what this session covers."
-            oninput="pedLive()" onfocus="peff('pef-ds')" onblur="pefb('pef-ds')">${ses.desc}</textarea>
+        <div class="pef" id="pef-ds"><label>Short Description</label>
+          <textarea id="pef-ds-i" rows="3" placeholder="1–2 sentences about this session." oninput="pedLive()" onfocus="pff('pef-ds')" onblur="pfb('pef-ds')">${s.desc||''}</textarea>
         </div>
-
-        <div class="pef" id="pef-in">
-          <label>Instructor Name</label>
-          <input id="pef-in-i" type="text" value="${ses.instructor}"
-            placeholder="e.g., Ms. Wipa Leenaka"
-            oninput="pedLive()" onfocus="peff('pef-in')" onblur="pefb('pef-in')">
+        <div class="pef" id="pef-in"><label>Instructor Name</label>
+          <input id="pef-in-i" type="text" value="${s.instructor||''}" placeholder="e.g., Ms. Wipa Leenaka" oninput="pedLive()" onfocus="pff('pef-in')" onblur="pfb('pef-in')">
         </div>
-
         <div class="ped-divider"></div>
-
-        <div class="pef" id="pef-tg">
-          <label>Who is this for?</label>
-          <textarea id="pef-tg-i" rows="2"
-            placeholder="e.g., Home brewers and beginners."
-            onfocus="peff('pef-tg')" onblur="pefb('pef-tg')">${ses.target||''}</textarea>
+        <div class="pef" id="pef-tg"><label>Who is this for?</label>
+          <textarea id="pef-tg-i" rows="2" placeholder="e.g., Home brewers and beginners." onfocus="pff('pef-tg')" onblur="pfb('pef-tg')">${s.target||''}</textarea>
         </div>
-
         <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">90-Min Agenda</div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:10px;letter-spacing:.05em">90-Min Agenda</div>
           <div style="display:flex;flex-direction:column;gap:8px">
-            ${[0,1,2].map(i=>`
-              <div class="ped-agenda-row">
-                <div class="ped-ag-num">${i+1}</div>
-                <div class="pef" id="pef-ag${i}" style="flex:1">
-                  <label>${['Opening','Main Activity','Closing'][i]}</label>
-                  <input id="pef-ag${i}-i" type="text" value="${ag[i]||''}"
-                    placeholder="${['15m: Introduction & theory','45m: Hands-on brewing','30m: Tasting & Q&A'][i]}"
-                    onfocus="peff('pef-ag${i}')" onblur="pefb('pef-ag${i}')">
-                </div>
-              </div>`).join('')}
+            ${[0,1,2].map(i=>`<div class="agenda-row">
+              <div class="ag-num">${i+1}</div>
+              <div class="pef" id="pef-ag${i}">
+                <label>${['Opening','Main Activity','Closing'][i]}</label>
+                <input id="pef-ag${i}-i" type="text" value="${ag[i]||''}"
+                  placeholder="${['15m: Introduction & theory','45m: Hands-on practice','30m: Tasting & Q&A'][i]}"
+                  onfocus="pff('pef-ag${i}')" onblur="pfb('pef-ag${i}')">
+              </div>
+            </div>`).join('')}
           </div>
         </div>
-
-        <div class="pef" id="pef-tk">
-          <label>What participants will take home</label>
-          <textarea id="pef-tk-i" rows="2"
-            placeholder="e.g., Recipe card, 50g coffee sample, coupons."
-            onfocus="peff('pef-tk')" onblur="pefb('pef-tk')">${ses.takeaways||''}</textarea>
+        <div class="pef" id="pef-tk"><label>What participants take home</label>
+          <textarea id="pef-tk-i" rows="2" placeholder="e.g., Recipe card, 50g coffee sample." onfocus="pff('pef-tk')" onblur="pfb('pef-tk')">${s.takeaways||''}</textarea>
         </div>
-
         <div>
-          <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:10px">Cover Image</div>
-
-          <!-- Preview area — tap to pick image -->
-          <div id="ped-img-area" onclick="document.getElementById('ped-file-input').click()"
-            style="width:100%;aspect-ratio:2.2/1;border-radius:var(--rs);overflow:hidden;
-                   background:var(--s2);border:1.5px dashed var(--s4);cursor:pointer;
-                   display:flex;align-items:center;justify-content:center;position:relative;
-                   transition:border-color .2s">
-            ${ses.img
-              ? `<img id="ped-img-preview" src="${ses.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0">`
-              : `<div id="ped-img-placeholder" style="text-align:center;pointer-events:none">
-                   <div style="font-size:28px;margin-bottom:6px">📷</div>
-                   <div style="font-size:13px;font-weight:600;color:var(--g3)">เลือกรูปภาพ</div>
-                   <div style="font-size:11px;color:var(--g5);margin-top:2px">อัตราส่วน 2.2:1 แนะนำ</div>
-                 </div>`
-            }
-            <!-- Upload overlay / progress -->
-            <div id="ped-upload-overlay" style="display:none;position:absolute;inset:0;
-                 background:rgba(0,0,0,.7);align-items:center;justify-content:center;flex-direction:column;gap:8px">
-              <div style="font-size:22px">⏳</div>
-              <div style="font-size:13px;font-weight:600;color:#fff">กำลังอัปโหลด...</div>
-            </div>
+          <div style="font-size:10px;font-weight:700;text-transform:uppercase;color:var(--muted);margin-bottom:10px;letter-spacing:.05em">Cover Image</div>
+          <div class="img-area" onclick="document.getElementById('ped-file').click()">
+            ${s.img?`<img src="${s.img}" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0" id="img-preview">`
+                   :`<div class="img-placeholder" id="img-placeholder"><div class="img-ph-icon">📷</div><div class="img-ph-txt">เลือกรูปภาพ</div></div>`}
+            <div class="img-upload-overlay" id="img-overlay"><div>⏳</div><div style="color:#fff;font-size:12px;font-weight:600">กำลังอัปโหลด...</div></div>
           </div>
-
-          <!-- Hidden file input -->
-          <input type="file" id="ped-file-input" accept="image/*" style="display:none"
-            onchange="handleImagePick(this)">
-
-          <!-- Status row -->
-          <div id="ped-img-status" style="font-size:12px;color:var(--g5);margin-top:6px;min-height:18px">
-            ${ses.img ? '✅ มีรูปแล้ว — กดที่รูปเพื่อเปลี่ยน' : 'รองรับ JPG / PNG · ระบบจะ compress ให้อัตโนมัติ'}
-          </div>
-
-          <!-- Hidden store for current img URL -->
-          <input type="hidden" id="ped-img-url" value="${ses.img||''}">
+          <input type="file" id="ped-file" accept="image/*" style="display:none" onchange="handleImg(this)">
+          <div class="img-status" id="img-status">${s.img?'✅ มีรูปแล้ว — กดที่รูปเพื่อเปลี่ยน':'รองรับ JPG / PNG'}</div>
+          <input type="hidden" id="ped-img-url" value="${s.img||''}">
         </div>
-
       </div>
-
-      <button class="ped-pub-big" onclick="pedSave()">
-        ${ses.published ? 'Save Changes' : isNewClaim ? 'Claim & Publish' : 'Publish Workshop'}
-      </button>
-      ${myClaimedSids.has(PED_SID)
-        ? `<button class="ped-release-btn" onclick="pedRelease()">Release this slot</button>`
-        : ''}
-    </div>
-  `;
-  setTimeout(() => {
-    (document.getElementById('pef-co-i') || document.getElementById('pef-cn-i'))?.focus();
-  }, 350);
+      <button class="btn-pub-big" id="ped-big-btn" onclick="pedSave()">${s.published?'Save Changes':isNew?'Claim & Publish':'Publish Workshop'}</button>
+      ${myClaims.has(PED_SID)?`<button class="btn-release" onclick="pedRelease()">Release this slot</button>`:''}
+    </div>`;
+  setTimeout(()=>{ (document.getElementById('pef-co-i')||document.getElementById('pef-cn-i'))?.focus(); }, 300);
 }
 
-function peff(id){ document.getElementById(id)?.classList.add('focused'); }
-function pefb(id){ document.getElementById(id)?.classList.remove('focused'); }
+function pff(id){ document.getElementById(id)?.classList.add('focused'); }
+function pfb(id){ document.getElementById(id)?.classList.remove('focused'); }
 
-function pedLive() {
-  const co  = document.getElementById('pef-co-i')?.value || '';
-  const cn  = document.getElementById('pef-cn-i')?.value || '';
-  const ds  = document.getElementById('pef-ds-i')?.value || '';
-  const ins = document.getElementById('pef-in-i')?.value || '';
-  const ses = SESSIONS.find(s => s.sid === PED_SID);
-  const partner = co || ses?.partner || '';
-  const pe = document.getElementById('ppv-partner');
-  const ce = document.getElementById('ppv-class');
-  const de = document.getElementById('ppv-desc');
-  const ie = document.getElementById('ppv-inst');
-  if (pe) pe.textContent = `In partnership with ${partner||'—'}`;
-  if (ce) ce.innerHTML  = cn  || '<span style="color:var(--g5);font-family:-apple-system,sans-serif;font-size:15px;font-style:italic">Workshop Name</span>';
-  if (de) de.innerHTML  = ds  || '<span style="color:var(--g7);font-size:13px;font-style:italic">Short description</span>';
-  if (ie) ie.textContent = ins || '—';
+function pedLive(){
+  const co  = document.getElementById('pef-co-i')?.value||'';
+  const cn  = document.getElementById('pef-cn-i')?.value||'';
+  const ds  = document.getElementById('pef-ds-i')?.value||'';
+  const ins = document.getElementById('pef-in-i')?.value||'';
+  const s   = SESSIONS.find(x=>x.sid===PED_SID);
+  const partner = co||(s?.partner||'');
+  const pe=document.getElementById('ppv-partner'), ce=document.getElementById('ppv-class');
+  const de=document.getElementById('ppv-desc'),    ie=document.getElementById('ppv-inst');
+  if(pe) pe.textContent='In partnership with '+(partner||'—');
+  if(ce) ce.innerHTML=cn||'<span style="color:var(--faint);font-style:italic;font-size:14px;font-family:sans-serif">Workshop Name</span>';
+  if(de) de.innerHTML=ds||'<span style="color:var(--faint);font-size:13px;font-style:italic">Short description</span>';
+  if(ie) ie.textContent=ins||'—';
 }
 
-function pedLiveImg(url) {
-  // url comes from upload callback or from hidden input
-  const imgUrl = url || document.getElementById('ped-img-url')?.value || '';
-  const wrap   = document.getElementById('ppv-img-wrap');
-  const imgEl  = document.getElementById('ppv-img-el');
-  if (!wrap || !imgEl) return;
-  if (imgUrl) { imgEl.style.backgroundImage = `url('${imgUrl}')`; wrap.style.display = 'block'; }
-  else        { wrap.style.display = 'none'; }
-}
-
-/* ── IMAGE UPLOAD ── */
-function handleImagePick(input) {
-  const file = input.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    // Show local preview immediately
-    const area = document.getElementById('ped-img-area');
-    let preview = document.getElementById('ped-img-preview');
-    const ph = document.getElementById('ped-img-placeholder');
-    if (ph) ph.style.display = 'none';
-    if (!preview) {
-      preview = document.createElement('img');
-      preview.id = 'ped-img-preview';
-      preview.style.cssText = 'width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
-      area.appendChild(preview);
+/* IMAGE UPLOAD via Cloudinary */
+function handleImg(input){
+  const file=input.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const area=document.getElementById('img-preview');
+    const ph=document.getElementById('img-placeholder');
+    if(ph) ph.style.display='none';
+    let preview=document.getElementById('img-preview');
+    if(!preview){
+      preview=document.createElement('img');
+      preview.id='img-preview';
+      preview.style.cssText='width:100%;height:100%;object-fit:cover;position:absolute;inset:0';
+      document.querySelector('.img-area').appendChild(preview);
     }
-    preview.src = ev.target.result;
-    // Compress and upload
-    const img = new Image();
-    img.onload = () => uploadImageToDrive(img, file.name);
-    img.src = ev.target.result;
+    preview.src=ev.target.result;
+    const img=new Image();
+    img.onload=()=>uploadToCloudinary(img);
+    img.src=ev.target.result;
   };
   reader.readAsDataURL(file);
 }
 
-async function uploadImageToDrive(imgEl, originalName) {
-  const overlay  = document.getElementById('ped-upload-overlay');
-  const statusEl = document.getElementById('ped-img-status');
-  if (overlay)  overlay.style.display = 'flex';
-  if (statusEl) statusEl.textContent  = 'กำลัง compress รูป...';
-
-  try {
-    if (!imgEl.naturalWidth || !imgEl.naturalHeight)
-      throw new Error('ไม่สามารถอ่านขนาดรูปได้ — ลองรูปอื่น');
-
-    // Compress to 800x364 (2.2:1) at 75% JPEG
-    const maxW = 800, maxH = 364;
-    const ratio = Math.min(maxW / imgEl.naturalWidth, maxH / imgEl.naturalHeight, 1);
-    const canvas = document.createElement('canvas');
-    canvas.width  = Math.round(imgEl.naturalWidth  * ratio);
-    canvas.height = Math.round(imgEl.naturalHeight * ratio);
-    canvas.getContext('2d').drawImage(imgEl, 0, 0, canvas.width, canvas.height);
-    const base64 = canvas.toDataURL('image/jpeg', 0.75).split(',')[1];
-    if (!base64) throw new Error('Compress รูปไม่สำเร็จ');
-
-    if (statusEl) statusEl.textContent = 'กำลังอัปโหลด...';
-
-    // Upload to Cloudinary (unsigned preset — full CORS, no server needed)
-    const form = new FormData();
-    form.append('file',           'data:image/jpeg;base64,' + base64);
-    form.append('upload_preset',  CLOUDINARY_PRESET);
-
-    const resp = await fetch('https://api.cloudinary.com/v1_1/' + CLOUDINARY_CLOUD + '/image/upload', {
-      method: 'POST',
-      body  : form,
-    });
-
-    const json = await resp.json();
-    if (json.error) throw new Error(json.error.message || 'Cloudinary error');
-
-    const url = json.secure_url;
-    setImageUrl(url, statusEl);
-
-  } catch(err) {
-    if (statusEl) statusEl.textContent = '❌ ' + err.message;
-    showToast('อัปโหลดไม่สำเร็จ: ' + err.message);
+async function uploadToCloudinary(imgEl){
+  const overlay=document.getElementById('img-overlay');
+  const status=document.getElementById('img-status');
+  if(overlay) overlay.style.display='flex';
+  if(status)  status.textContent='กำลัง compress...';
+  try{
+    if(!imgEl.naturalWidth||!imgEl.naturalHeight) throw new Error('ไม่สามารถอ่านรูปได้');
+    const maxW=800,maxH=364;
+    const ratio=Math.min(maxW/imgEl.naturalWidth,maxH/imgEl.naturalHeight,1);
+    const canvas=document.createElement('canvas');
+    canvas.width=Math.round(imgEl.naturalWidth*ratio);
+    canvas.height=Math.round(imgEl.naturalHeight*ratio);
+    canvas.getContext('2d').drawImage(imgEl,0,0,canvas.width,canvas.height);
+    const base64=canvas.toDataURL('image/jpeg',.75).split(',')[1];
+    if(!base64) throw new Error('Compress ไม่สำเร็จ');
+    if(status) status.textContent='กำลังอัปโหลด...';
+    const form=new FormData();
+    form.append('file','data:image/jpeg;base64,'+base64);
+    form.append('upload_preset',CLOUDINARY_PRESET);
+    const resp=await fetch('https://api.cloudinary.com/v1_1/'+CLOUDINARY_CLOUD+'/image/upload',{method:'POST',body:form});
+    const json=await resp.json();
+    if(json.error) throw new Error(json.error.message||'Cloudinary error');
+    const url=json.secure_url;
+    document.getElementById('ped-img-url').value=url;
+    if(status) status.textContent='✅ อัปโหลดสำเร็จ';
+    // Update preview card
+    const wrap=document.getElementById('ppv-img-wrap');
+    const imgEl2=document.getElementById('ppv-img');
+    if(wrap) wrap.style.display='block';
+    if(imgEl2) imgEl2.style.backgroundImage=`url('${url}')`;
+  }catch(e){
+    if(status) status.textContent='❌ '+e.message;
+    showToast('อัปโหลดไม่สำเร็จ: '+e.message);
   } finally {
-    if (overlay) overlay.style.display = 'none';
+    if(overlay) overlay.style.display='none';
   }
 }
 
-function setImageUrl(url, statusEl) {
-  const inp = document.getElementById('ped-img-url');
-  if (inp) inp.value = url;
-  if (statusEl) statusEl.textContent = '✅ อัปโหลดสำเร็จ — กดที่รูปเพื่อเปลี่ยน';
-  pedLiveImg(url);
-}
-
-async function pedSave() {
-  const ses    = SESSIONS.find(s => s.sid === PED_SID);
-  const isNew  = !ses.partnerRef;
+/* SAVE */
+async function pedSave(){
+  const s      = SESSIONS.find(x=>x.sid===PED_SID);
+  const isNew  = !s.partnerRef;
   const coEl   = document.getElementById('pef-co-i');
-  const company= coEl ? coEl.value.trim() : ses.partner;
-  const cn  = document.getElementById('pef-cn-i')?.value.trim();
-  const ds  = document.getElementById('pef-ds-i')?.value.trim();
-  const ins = document.getElementById('pef-in-i')?.value.trim();
-  const tg  = document.getElementById('pef-tg-i')?.value.trim();
-  const tk  = document.getElementById('pef-tk-i')?.value.trim();
-  const img = document.getElementById('ped-img-url')?.value.trim();
-  const ag  = [0,1,2].map(i => document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
+  const company= coEl?coEl.value.trim():s.partner;
+  const cn     = document.getElementById('pef-cn-i')?.value.trim();
+  const ds     = document.getElementById('pef-ds-i')?.value.trim();
+  const ins    = document.getElementById('pef-in-i')?.value.trim();
+  const tg     = document.getElementById('pef-tg-i')?.value.trim();
+  const tk     = document.getElementById('pef-tk-i')?.value.trim();
+  const img    = document.getElementById('ped-img-url')?.value.trim();
+  const ag     = [0,1,2].map(i=>document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
 
-  if (isNew && !company) { showToast('Please enter your company name'); return; }
-  if (!cn) { showToast('Please enter a Workshop Name'); return; }
+  if(isNew&&!company){ showToast('กรุณาใส่ชื่อบริษัท'); return; }
+  if(!cn){ showToast('กรุณาใส่ชื่อ Workshop'); return; }
 
-  // Disable both publish buttons and show loading state
-  const btns = [document.getElementById('ped-top-pub'), document.querySelector('.ped-pub-big')];
-  btns.forEach(b => { if(b){ b.disabled=true; b.textContent='กำลังบันทึก...'; }});
+  const btns=[document.getElementById('ped-top-btn'),document.getElementById('ped-big-btn')];
+  btns.forEach(b=>{if(b){b.disabled=true;b.textContent='กำลังบันทึก...';}});
 
-  if (!MOCK) {
-    if (isNew) {
-      ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase()
-                     + Math.random().toString(36).slice(2,4).toUpperCase();
-    }
-    // Submit to GAS via hidden form (bypasses CORS) — optimistic UI
-    gasWrite({
-      action     : isNew ? 'claimSession' : 'updateSession',
-      sid        : PED_SID,
-      company    : company.slice(0, 60),
-      className  : cn.slice(0, 80),
-      desc       : ds.slice(0, 200),
-      instructor : ins.slice(0, 60),
-      target     : tg.slice(0, 200),
-      takeaways  : tk.slice(0, 200),
-      img        : img.slice(0, 300),
-      agenda     : JSON.stringify(ag),
-      partnerRef : ses.partnerRef,
-    });
-  }
+  // Generate partnerRef locally for optimistic UI
+  if(isNew) s.partnerRef=company.replace(/\s+/g,'').slice(0,8).toUpperCase()+Math.random().toString(36).slice(2,4).toUpperCase();
 
-  ses.partner    = company;
-  if (!ses.partnerRef) ses.partnerRef = company.replace(/\s+/g,'').slice(0,8).toUpperCase();
-  ses.className  = cn; ses.desc=ds; ses.instructor=ins;
-  ses.target=tg; ses.takeaways=tk; ses.img=img; ses.agenda=ag; ses.published=true;
+  // Write to GAS via hidden form POST
+  await gasWrite({
+    action    : isNew?'claimSession':'updateSession',
+    sid       : PED_SID,
+    company   : company.slice(0,60),
+    className : cn.slice(0,80),
+    desc      : ds.slice(0,200),
+    instructor: ins.slice(0,60),
+    target    : tg.slice(0,200),
+    takeaways : tk.slice(0,200),
+    img       : img.slice(0,400),
+    agenda    : JSON.stringify(ag),
+    partnerRef: s.partnerRef,
+  });
 
-  myClaimedSids.add(PED_SID);
-  const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
-  storedMap[PED_SID] = ses.partnerRef;
-  sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
-  saveMyClaims();
+  // Update local state
+  s.partner=company; s.className=cn; s.desc=ds; s.instructor=ins;
+  s.target=tg; s.takeaways=tk; s.img=img; s.agenda=ag; s.published=true;
+  myClaims.add(PED_SID); saveClaims();
 
-  showToast('✅ Published — your workshop is now live');
+  showToast('✅ Published — workshop is now live!');
   closePed();
 }
 
-function pedRelease() {
-  const ses = SESSIONS.find(s => s.sid === PED_SID);
-  if (!ses) return;
-  const slot = SLOTS_META[ses.slotId];
-  const day  = DAYS_META[ses.day];
-  if (!confirm(`Release ${day.label} ${slot.t}–${slot.e}? This slot will become Vacant again.`)) return;
-  ses.partner=''; ses.partnerRef=''; ses.className=''; ses.desc='';
-  ses.instructor=''; ses.target=''; ses.takeaways='';
-  ses.img=''; ses.agenda=['','','']; ses.published=false; ses.booked=0;
-  myClaimedSids.delete(PED_SID);
-  saveMyClaims();
+function pedRelease(){
+  const s=SESSIONS.find(x=>x.sid===PED_SID);
+  if(!s) return;
+  const slot=SLOTS[s.slotId]||{};
+  const day=DAYS[s.day]||{};
+  if(!confirm(`Release ${day.label} ${slot.t}–${slot.e}?\nThe slot will become Vacant again.`)) return;
+  gasWrite({action:'releaseSession',sid:PED_SID,partnerRef:s.partnerRef});
+  s.partner='';s.partnerRef='';s.className='';s.desc='';
+  s.instructor='';s.target='';s.takeaways='';s.img='';s.agenda=['','',''];s.published=false;
+  myClaims.delete(PED_SID); saveClaims();
   showToast('Slot released — now Vacant');
   closePed();
 }
 
-
-/* ═══════════════════════════════════════
+/* ═══════════════════════════════════════════════
    ADMIN
-═══════════════════════════════════════ */
-function renderAdminPage() {
-  if (ST.admin) renderAdminDash();
-  else renderAdminAuth();
-}
+═══════════════════════════════════════════════ */
+function renderAdmin(body){ document.getElementById('admin-body').innerHTML=body; }
 
-function renderAdminAuth() {
-  document.getElementById('admin-page-body').innerHTML = `
-    <div class="auth-center">
-      <div class="auth-icon">🔐</div>
-      <div class="auth-h">Admin Dashboard</div>
-      <div class="auth-sub">Enter password to view bookings and session status</div>
-      <div class="auth-form">
-        <div class="field" id="af-pw"><label>Password</label><input id="a-pw" type="password" onfocus="ff('af-pw')" onblur="fb('af-pw')" onkeyup="if(event.key==='Enter')adminLogin()"></div>
-        <button class="auth-submit" onclick="adminLogin()">Log In</button>
+function renderAdminAuth(){
+  renderAdmin(`<div class="auth-wrap">
+    <div class="auth-icon">🔐</div>
+    <div class="auth-h">Admin Dashboard</div>
+    <div class="auth-sub">Enter password to access bookings and session stats</div>
+    <div class="auth-form">
+      <div class="fld" id="f-apw"><label>Password</label>
+        <input id="i-apw" type="password" onfocus="ff('f-apw')" onblur="fb('f-apw')" onkeyup="if(event.key==='Enter')adminLogin()">
       </div>
+      <button class="btn-primary" onclick="adminLogin()">Log In</button>
     </div>
-  `;
+  </div>`);
 }
 
-async function adminLogin() {
-  const pass = document.getElementById('a-pw')?.value;
-  if (MOCK) {
-    if (pass === ADMIN_PASS_MOCK) {
-      ST.admin = true; ST.adminData = generateMockBookings();
-      renderAdminDash();
-    } else showToast('Invalid password');
-    return;
-  }
-  try {
-    const res = await gasCall({ action:'adminData', pass });
-    if (res.ok) {
-      ST.admin = true;
-      ST.adminData  = res.bookings  || [];
-      ST.adminSessions = res.sessions || [];
-      ST.adminCoupons  = res.coupons  || [];
-      renderAdminDash();
+async function adminLogin(){
+  const pass=document.getElementById('i-apw')?.value;
+  try{
+    const res=await gasRead({action:'adminData',pass});
+    if(res.ok){
+      renderAdminDash(res.bookings||[], res.sessions||SESSIONS, res.coupons||[]);
     } else {
-      showToast(res.error || 'รหัสผ่านไม่ถูกต้อง');
+      showToast(res.error||'รหัสผ่านไม่ถูกต้อง');
     }
-  } catch (e) {
-    showToast('เกิดข้อผิดพลาด: ' + e.message);
-  }
+  }catch(e){ showToast('เกิดข้อผิดพลาด: '+e.message); }
 }
 
-function generateMockBookings() {
-  const names = ['Somchai Meesuk','Wipa Deejai','John Smith','Dao Suksom','Mark Lee','Kafae Rakchong'];
-  return SESSIONS.filter(s=>s.published).flatMap(ses => {
-    const day=DAYS_META[ses.day]; const slot=SLOTS_META[ses.slotId];
-    return Array.from({length:ses.booked},(_,i)=>({
-      ref:`XB-${day.date.slice(5,7)}${day.date.slice(8,10)}-${Math.random().toString(36).slice(2,6).toUpperCase()}`,
-      name:names[Math.floor(Math.random()*names.length)],
-      email:'demo@email.com', phone:'081-234-5678',
-      className:ses.className, partner:ses.partner,
-      day:day.label, time:`${slot.t}–${slot.e}`
-    }));
-  });
-}
+function renderAdminDash(bookings, sessions, coupons){
+  const total     = bookings.filter(b=>b.status!=='cancelled').length;
+  const cancelled = bookings.filter(b=>b.status==='cancelled').length;
+  const byDay     = DAYS.map(d=>bookings.filter(b=>b.status!=='cancelled'&&String(b.day||'').includes(d.label)).length);
+  const live      = sessions.filter(s=>s.published);
+  const tba       = sessions.filter(s=>!s.published);
 
-function renderAdminDash() {
-  // Use live GAS data (ST.adminData) merged with any local session bookings
-  const data     = ST.adminData || [];
-  const sessions = ST.adminSessions || SESSIONS;
-  const total    = data.filter(b => b.status !== 'cancelled').length;
-  const cancelled= data.filter(b => b.status === 'cancelled').length;
-
-  // Bookings per day — match on day label OR date string
-  const byday = DAYS_META.map(d =>
-    data.filter(b => b.status !== 'cancelled' &&
-      (b.day === d.label || String(b.day||'').includes(d.label))).length
-  );
-
-  // Sessions live / TBA
-  const liveSessions = sessions.filter(s => s.published);
-  const tbaSessions  = sessions.filter(s => !s.published);
-
-  const fillRateHtml = liveSessions.map(ses => {
-    const day = DAYS_META[ses.day] || {};
-    const slot = SLOTS_META[ses.slotId] || {};
-    const booked = data.filter(b => b.sid === ses.sid && b.status !== 'cancelled').length;
-    const pct    = Math.round((booked / 15) * 100);
-    return `<div class="fill-bar-row">
-      <div class="fbr-top">
-        <div class="fbr-label">${day.label||''} ${slot.t||''} · ${ses.className||'TBA'}</div>
-        <div class="fbr-count">${booked}/15</div>
-      </div>
+  const fillHtml = live.map(s=>{
+    const day=DAYS[s.day]||{};const slot=SLOTS[s.slotId]||{};
+    const booked=bookings.filter(b=>b.sid===s.sid&&b.status!=='cancelled').length;
+    const pct=Math.round((booked/MAX_SEATS)*100);
+    return `<div class="fill-row">
+      <div class="fill-row-top"><div class="fill-lbl">${day.label} ${slot.t} · ${s.className||'TBA'}</div><div class="fill-cnt">${booked}/${MAX_SEATS}</div></div>
       <div class="fill-bar"><div class="fill-bar-inner" style="width:${pct}%"></div></div>
     </div>`;
   }).join('');
 
-  const tableRows = data.map(b => {
-    const statusBadge = b.status === 'cancelled'
-      ? `<span style="font-size:10px;color:var(--red);font-weight:700;text-transform:uppercase">ยกเลิก</span>`
-      : '';
-    return `<tr>
-      <td class="td-ref">${b.ref} ${statusBadge}</td>
-      <td>${b.name}</td>
-      <td style="font-size:12px">${b.className||'—'}</td>
-      <td style="font-size:12px">${b.day||'—'}</td>
-      <td style="font-size:12px">${b.time||'—'}</td>
-      <td style="font-size:12px;color:var(--g5)">${b.phone||'—'}</td>
-    </tr>`;
-  }).join('');
+  const rows=bookings.map(b=>`<tr>
+    <td class="td-ref">${b.ref}${b.status==='cancelled'?'<br><span style="font-size:9px;color:var(--red);font-weight:700">CANCELLED</span>':''}</td>
+    <td>${b.name}</td><td>${b.className||'—'}</td><td>${b.day||'—'}</td><td>${b.phone||'—'}</td>
+  </tr>`).join('');
 
-  document.getElementById('admin-page-body').innerHTML = `
+  renderAdmin(`
     <div class="adm-h">Dashboard</div>
     <div class="adm-sub">xBloom × WOC Bangkok 2026</div>
-
     <div class="stat-grid">
       <div class="stat-box"><div class="stat-n">${total}</div><div class="stat-l">Active Bookings</div></div>
       <div class="stat-box"><div class="stat-n" style="color:var(--red)">${cancelled}</div><div class="stat-l">Cancelled</div></div>
-      ${byday.map((n,i)=>`<div class="stat-box"><div class="stat-n">${n}</div><div class="stat-l">${DAYS_META[i].label}</div></div>`).join('')}
-      <div class="stat-box"><div class="stat-n">${liveSessions.length}</div><div class="stat-l">Sessions Live</div></div>
-      <div class="stat-box"><div class="stat-n" style="color:var(--amber)">${tbaSessions.length}</div><div class="stat-l">Sessions TBA</div></div>
+      ${byDay.map((n,i)=>`<div class="stat-box"><div class="stat-n">${n}</div><div class="stat-l">${DAYS[i].label}</div></div>`).join('')}
+      <div class="stat-box"><div class="stat-n">${live.length}</div><div class="stat-l">Sessions Live</div></div>
+      <div class="stat-box"><div class="stat-n" style="color:var(--amber)">${tba.length}</div><div class="stat-l">TBA</div></div>
     </div>
-
-    ${fillRateHtml ? `<div class="adm-section-label">Fill Rate</div><div class="fill-rate-grid">${fillRateHtml}</div>` : ''}
-
-    <button class="btn-csv" onclick="exportCSV()">⬇ Export CSV</button>
-    <div class="tbl-wrap">
-      <table>
-        <thead><tr><th>Ref</th><th>ชื่อ</th><th>Workshop</th><th>วัน</th><th>เวลา</th><th>โทร</th></tr></thead>
-        <tbody>${tableRows || '<tr><td colspan="6" style="color:var(--g5);text-align:center;padding:24px">ยังไม่มี booking</td></tr>'}</tbody>
-      </table>
-    </div>
-    <button class="p-signout" onclick="ST.admin=false;ST.adminData=[];renderAdminPage()">Log Out</button>
-  `;
+    ${fillHtml?`<div class="adm-sec-lbl">Fill Rate</div>${fillHtml}`:''}
+    <div class="adm-sec-lbl">All Bookings</div>
+    <button class="btn-csv" onclick="exportCSV(${JSON.stringify(bookings).replace(/</g,'&lt;')})">⬇ Export CSV</button>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>Ref</th><th>Name</th><th>Workshop</th><th>Date</th><th>Phone</th></tr></thead>
+      <tbody>${rows||'<tr><td colspan="5" style="text-align:center;color:var(--muted);padding:20px">No bookings yet</td></tr>'}</tbody>
+    </table></div>
+    <button class="btn-signout" onclick="renderAdminAuth()">Log Out</button>`);
 }
 
-function exportCSV() {
-  const data = [...ST.adminData, ...ALL_BOOKINGS];
-  const rows = [['Ref','Name','Email','Phone','Workshop','Partner','Date','Time']];
-  data.forEach(b=>rows.push([b.ref, b.name, b.email||'', b.phone||'', b.className, b.partner, b.day, b.time]));
-  const a = document.createElement('a');
-  a.href = URL.createObjectURL(new Blob([rows.map(r=>r.map(v=>`"${v}"`).join(',')).join('\n')],{type:'text/csv'}));
-  a.download = `xbloom-woc-${new Date().toISOString().slice(0,10)}.csv`;
+function exportCSV(data){
+  const rows=[['Ref','Name','Email','Phone','Workshop','Partner','Date','Status']];
+  data.forEach(b=>rows.push([b.ref,b.name,b.email||'',b.phone||'',b.className,b.partner,b.day,b.status]));
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([rows.map(r=>r.map(v=>`"${String(v||'').replace(/"/g,'""')}"`).join(',')).join('\n')],{type:'text/csv'}));
+  a.download=`xbloom-woc-${new Date().toISOString().slice(0,10)}.csv`;
   a.click();
 }
 
-/* ═══════════════════════════════════════
-   GAS — fetch (GET for reads, POST for writes)
-═══════════════════════════════════════ */
-/* ═══════════════════════════════════════
-   GAS CALLS
-   - Reads  : JSONP (getSessions etc) — no write needed
-   - Writes : fire-and-forget fetch no-cors, optimistic UI update
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   FIELD HELPERS
+═══════════════════════════════════════════════ */
+function ff(id){ document.getElementById(id)?.classList.add('focused'); }
+function fb(id){ document.getElementById(id)?.classList.remove('focused'); }
 
-// JSONP for read-only actions
-function gasCall(params, timeoutMs = 15000) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'gc_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7);
-    const qs = Object.entries({ ...params, callback: cbName })
-      .map(([k, v]) => encodeURIComponent(k) + '=' + encodeURIComponent(String(v)))
-      .join('&');
-
-    const timer = setTimeout(() => { cleanup(); reject(new Error('Timeout')); }, timeoutMs);
-    window[cbName] = function(data) { cleanup(); resolve(data); };
-
-    const script = document.createElement('script');
-    script.src = GAS_URL + '?' + qs;
-    script.onerror = function() { cleanup(); reject(new Error('Script load failed')); };
-    document.head.appendChild(script);
-
-    function cleanup() {
-      clearTimeout(timer);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    }
-  });
-}
-
-// Write to GAS via hidden iframe form POST
-// Form submits bypass CORS entirely — GAS receives the data
-function gasWrite(params) {
-  return new Promise((resolve) => {
-    // Create hidden iframe to receive the response
-    const iframeId = 'gw_iframe_' + Date.now();
-    const iframe = document.createElement('iframe');
-    iframe.name = iframeId;
-    iframe.style.display = 'none';
-    document.body.appendChild(iframe);
-
-    // Create hidden form targeting the iframe
-    const form = document.createElement('form');
-    form.method = 'POST';
-    form.action = GAS_URL;
-    form.target = iframeId;
-    form.style.display = 'none';
-
-    // Add all params as hidden inputs
-    Object.entries(params).forEach(([k, v]) => {
-      const input = document.createElement('input');
-      input.type = 'hidden';
-      input.name = k;
-      input.value = String(v);
-      form.appendChild(input);
-    });
-
-    document.body.appendChild(form);
-
-    // Submit and cleanup after 10s
-    const cleanup = () => {
-      if (form.parentNode) form.parentNode.removeChild(form);
-      if (iframe.parentNode) iframe.parentNode.removeChild(iframe);
-    };
-
-    setTimeout(() => { cleanup(); resolve({ ok: true }); }, 10000);
-    form.submit();
-    // Optimistic — assume success after submit
-    setTimeout(() => { cleanup(); resolve({ ok: true }); }, 500);
-  });
-}
-
-
-// Load live sessions from GAS and merge into SESSIONS array
-async function loadLiveSessions() {
-  if (MOCK) return;
-  try {
-    const res = await gasCall({ action: 'getSessions' });
-    if (res.ok && res.sessions) {
-      // Replace SESSIONS with live data
-      SESSIONS.length = 0;
-      res.sessions.forEach(s => SESSIONS.push(s));
-    }
-  } catch (e) {
-    console.warn('Could not load sessions from GAS:', e.message);
-  }
-}
-
-/* ═══════════════════════════════════════
-   UTILS
-═══════════════════════════════════════ */
+/* ═══════════════════════════════════════════════
+   TOAST
+═══════════════════════════════════════════════ */
 let toastT;
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 3500);
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('show');
+  clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),3500);
 }
 
-/* ═══════════════════════════════════════
-   INIT — URL routing
-═══════════════════════════════════════ */
-async function init() {
-  const params = new URLSearchParams(location.search);
+/* ═══════════════════════════════════════════════
+   OVERLAY CLOSE ON BACKDROP
+═══════════════════════════════════════════════ */
+['bk','mb','cp','wl'].forEach(id=>{
+  document.getElementById(id+'-overlay').addEventListener('click',e=>{
+    if(e.target===document.getElementById(id+'-overlay')){
+      document.getElementById(id+'-overlay').classList.remove('open');
+      document.body.style.overflow='';
+    }
+  });
+});
 
-  // Load live data first (if GAS is configured)
-  await loadLiveSessions();
+/* ═══════════════════════════════════════════════
+   INIT
+═══════════════════════════════════════════════ */
+async function init(){
+  const params=new URLSearchParams(location.search);
 
-  if (params.get('partner') === '1') {
+  if(params.get('partner')==='1'){
     document.getElementById('page-pub').classList.remove('active');
     document.getElementById('page-partner').classList.add('active');
-    renderPartnerPage();
+    await loadSessions();
+    renderPartner();
     return;
   }
-  if (params.get('admin') === '1') {
+  if(params.get('admin')==='1'){
     document.getElementById('page-pub').classList.remove('active');
     document.getElementById('page-admin').classList.add('active');
-    renderAdminPage();
+    renderAdminAuth();
     return;
   }
 
-  // Default: public schedule
-  const ref = params.get('ref');
-  if (ref) { sessionStorage.setItem('partnerRef', ref); showToast(`🤝 From Partner: ${ref}`); }
-  renderSessionList();
+  // Public page
+  const ref=params.get('ref');
+  if(ref){ sessionStorage.setItem('partnerRef',ref); showToast('🤝 Referred by: '+ref); }
+  await loadSessions();
+  renderSessions();
 }
-
-document.getElementById('bk-overlay').addEventListener('click', e => { if (e.target === document.getElementById('bk-overlay')) closeBk(); });
-document.getElementById('mb-overlay').addEventListener('click', e => { if (e.target === document.getElementById('mb-overlay')) closeMb(); });
-document.getElementById('cp-overlay').addEventListener('click', e => { if (e.target === document.getElementById('cp-overlay')) closeCp(); });
 
 init();
 </script>
