@@ -520,6 +520,32 @@ td{padding:14px 16px;border-bottom:1px solid var(--liner);color:var(--g1);font-s
   </div>
 </div>
 
+<!-- PARTNER RECOVERY SHEET (Bug #8) -->
+<div class="overlay" id="rc-overlay">
+  <div class="sheet" id="rc-sheet">
+    <div class="sh-handle"></div>
+    <div class="sh-hd">
+      <div class="sh-title">Recover Partner Slots</div>
+      <button class="sh-close" onclick="closeRecoveryModal()">✕</button>
+    </div>
+    <div class="sh-body" id="rc-body">
+      <div style="padding:8px 0 20px">
+        <div style="font-size:14px;color:var(--g3);line-height:1.55;margin-bottom:20px">
+          ใส่ email หรือเบอร์โทรที่คุณใช้ตอน claim slot เพื่อกู้คืนสิทธิ์แก้ไข workshop
+        </div>
+        <div class="pef focused" style="margin-bottom:14px">
+          <label>Email or Phone *</label>
+          <input id="rc-contact-i" type="text" placeholder="you@company.com หรือ 08x-xxx-xxxx"
+                 style="width:100%" autocomplete="off">
+        </div>
+        <div id="rc-result" style="font-size:13px;color:var(--g3);min-height:20px;margin:8px 0 16px"></div>
+        <button class="ped-pub-big" id="rc-submit-btn" onclick="submitRecovery()"
+                style="width:100%">Recover My Slots</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ════════════════════════════════════
      CONFIRM OVERLAY
 ════════════════════════════════════ -->
@@ -1307,6 +1333,12 @@ function renderPartnerDash() {
     <div class="p-greet-sub">${totalMine > 0
       ? `You've claimed ${totalMine} slot${totalMine > 1 ? 's' : ''} this session`
       : 'Tap any <span style="color:var(--green)">Vacant</span> slot to claim it'}</div>
+    <div style="text-align:center;margin:-4px 0 16px">
+      <a href="javascript:void(0)" onclick="openRecoveryModal()"
+         style="font-size:13px;color:var(--g3);text-decoration:underline;text-underline-offset:3px">
+        🔑 Recover my slots (lost browser / new device)
+      </a>
+    </div>
     <div class="slot-picker-section">
       <div class="slot-picker-day-tabs">
         ${DAYS_META.map((d, i) => `
@@ -1321,6 +1353,105 @@ function renderPartnerDash() {
 }
 
 function pSelectDay(d) { ST.pDay = d; renderPartnerDash(); }
+
+/* ── RECOVERY (Bug #8) ── */
+function openRecoveryModal() {
+  const ov = document.getElementById('rc-overlay');
+  if (!ov) return;
+  document.getElementById('rc-contact-i').value = '';
+  document.getElementById('rc-result').innerHTML = '';
+  const btn = document.getElementById('rc-submit-btn');
+  if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+  ov.classList.add('open');
+  setTimeout(() => document.getElementById('rc-contact-i')?.focus(), 100);
+}
+
+function closeRecoveryModal() {
+  document.getElementById('rc-overlay')?.classList.remove('open');
+}
+
+async function submitRecovery() {
+  const contact = document.getElementById('rc-contact-i')?.value.trim() || '';
+  const resultEl = document.getElementById('rc-result');
+  const btn = document.getElementById('rc-submit-btn');
+
+  if (!contact) {
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">กรุณากรอก email หรือเบอร์โทร</span>';
+    return;
+  }
+
+  // Basic validation: either valid email OR ≥6 digits
+  const isEmail = contact.includes('@');
+  const phoneDigits = contact.replace(/\D/g,'');
+  if (isEmail && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(contact)) {
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">รูปแบบ email ไม่ถูกต้อง</span>';
+    return;
+  }
+  if (!isEmail && phoneDigits.length < 6) {
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">เบอร์โทรสั้นเกินไป</span>';
+    return;
+  }
+
+  if (btn) { btn.disabled = true; btn.textContent = 'กำลังค้นหา...'; }
+  if (resultEl) resultEl.innerHTML = '<span style="color:var(--g5)">กำลังค้นหา slots ของคุณ...</span>';
+
+  if (MOCK) {
+    // In MOCK mode, just show a helpful message
+    if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">Recovery ใช้ได้เฉพาะใน live mode (ต้องเชื่อม Google Apps Script)</span>';
+    if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+    return;
+  }
+
+  try {
+    const res = await gasCall({ action: 'recoverPartnerSlots', contact }, 15000);
+    if (!res.ok) {
+      if (resultEl) resultEl.innerHTML = `<span style="color:var(--amber)">❌ ${res.error || 'Recovery failed'}</span>`;
+      if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+      return;
+    }
+    const slots = res.slots || [];
+    if (slots.length === 0) {
+      if (resultEl) resultEl.innerHTML = '<span style="color:var(--amber)">ไม่พบ slot ที่ลงทะเบียนด้วย contact นี้</span>';
+      if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+      return;
+    }
+
+    // Restore into sessionStorage + memory state
+    const storedMap = JSON.parse(sessionStorage.getItem('xbSlotRefs') || '{}');
+    slots.forEach(s => {
+      myClaimedSids.add(s.sid);
+      storedMap[s.sid] = s.partnerRef;
+      // Also sync the in-memory SESSIONS array so UI reflects correctly
+      const ses = SESSIONS.find(x => x.sid === s.sid);
+      if (ses) {
+        ses.partnerRef = s.partnerRef;
+        ses.partner    = s.partner || ses.partner;
+        ses.className  = s.className || ses.className;
+        ses.published  = !!s.published;
+      }
+    });
+    sessionStorage.setItem('xbSlotRefs', JSON.stringify(storedMap));
+    saveMyClaims();
+
+    if (resultEl) {
+      const list = slots.map(s =>
+        `<div style="padding:6px 0;color:var(--white)">✓ ${s.day} · ${s.time} — ${s.className || '(draft)'}</div>`
+      ).join('');
+      resultEl.innerHTML =
+        `<div style="color:var(--green);font-weight:600;margin-bottom:8px">✅ พบ ${slots.length} slot</div>${list}`;
+    }
+    setTimeout(() => {
+      closeRecoveryModal();
+      renderPartnerDash();
+      showToast(`✅ Recovered ${slots.length} slot${slots.length>1?'s':''}`);
+    }, 1400);
+
+  } catch(e) {
+    console.error('Recovery error:', e);
+    if (resultEl) resultEl.innerHTML = `<span style="color:var(--amber)">❌ ${e.message}</span>`;
+    if (btn) { btn.disabled = false; btn.textContent = 'Recover My Slots'; }
+  }
+}
 
 /* ── EDITOR ── */
 let PED_SID = null;
@@ -1397,6 +1528,18 @@ function renderPedBody(isNewClaim = false) {
             <input id="pef-co-i" type="text" value=""
               placeholder="e.g., Roots Coffee Roaster"
               oninput="pedLive()" onfocus="peff('pef-co')" onblur="pefb('pef-co')">
+          </div>
+          <div class="pef" id="pef-em">
+            <label>Contact Email *</label>
+            <input id="pef-em-i" type="email" value=""
+              placeholder="you@company.com — ใช้กู้คืน slot ได้"
+              onfocus="peff('pef-em')" onblur="pefb('pef-em')">
+          </div>
+          <div class="pef" id="pef-ph">
+            <label>Contact Phone</label>
+            <input id="pef-ph-i" type="tel" value=""
+              placeholder="08x-xxx-xxxx (ทางเลือก)"
+              onfocus="peff('pef-ph')" onblur="pefb('pef-ph')">
           </div>` : `
           <div style="background:var(--s1);border-radius:var(--rs);padding:12px 16px">
             <div style="font-size:10px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--g5);margin-bottom:4px">Company</div>
@@ -1630,9 +1773,16 @@ async function pedSave() {
   const tk  = document.getElementById('pef-tk-i')?.value.trim();
   const img = document.getElementById('ped-img-url')?.value.trim();
   const ag  = [0,1,2].map(i => document.getElementById(`pef-ag${i}-i`)?.value.trim()||'');
+  // Bug #8: contact info for recovery — required on new claim, optional on edit
+  const em  = document.getElementById('pef-em-i')?.value.trim() || '';
+  const ph  = document.getElementById('pef-ph-i')?.value.trim() || '';
 
   if (isNew && !company) { showToast('Please enter your company name'); return; }
   if (!cn) { showToast('Please enter a Workshop Name'); return; }
+  if (isNew && !em) { showToast('Please enter a contact email (for slot recovery)'); return; }
+  if (isNew && em && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(em)) {
+    showToast('Please enter a valid email address'); return;
+  }
 
   // Disable both publish buttons and show loading state
   const btns = [document.getElementById('ped-top-pub'), document.querySelector('.ped-pub-big')];
@@ -1645,16 +1795,18 @@ async function pedSave() {
       if (isNew) {
         console.log('Calling claimSession for sid:', PED_SID);
         const res = await gasCall({
-          action     : 'claimSession',
-          sid        : PED_SID,
-          company    : company.slice(0, 60),
-          className  : cn.slice(0, 80),
-          desc       : ds.slice(0, 200),
-          instructor : ins.slice(0, 60),
-          target     : tg.slice(0, 200),
-          takeaways  : tk.slice(0, 200),
-          img        : img.slice(0, 300),
-          agenda     : JSON.stringify(ag),
+          action       : 'claimSession',
+          sid          : PED_SID,
+          company      : company.slice(0, 60),
+          className    : cn.slice(0, 80),
+          desc         : ds.slice(0, 200),
+          instructor   : ins.slice(0, 60),
+          target       : tg.slice(0, 200),
+          takeaways    : tk.slice(0, 200),
+          img          : img.slice(0, 300),
+          agenda       : JSON.stringify(ag),
+          partnerEmail : em.slice(0, 120),
+          partnerPhone : ph.slice(0, 20),
         }, 30000);
         console.log('claimSession response:', JSON.stringify(res));
         if (!res.ok) {
@@ -2009,6 +2161,19 @@ async function init() {
     document.getElementById('page-pub').classList.remove('active');
     document.getElementById('page-partner').classList.add('active');
     renderPartnerPage();
+
+    // Auto-recovery: ?partner=1&recover=<email-or-phone>
+    const recoverContact = params.get('recover');
+    if (recoverContact) {
+      setTimeout(() => {
+        openRecoveryModal();
+        const inp = document.getElementById('rc-contact-i');
+        if (inp) {
+          inp.value = recoverContact;
+          submitRecovery();
+        }
+      }, 300);
+    }
     return;
   }
   if (params.get('admin') === '1') {
@@ -2027,6 +2192,7 @@ async function init() {
 document.getElementById('bk-overlay').addEventListener('click', e => { if (e.target === document.getElementById('bk-overlay')) closeBk(); });
 document.getElementById('mb-overlay').addEventListener('click', e => { if (e.target === document.getElementById('mb-overlay')) closeMb(); });
 document.getElementById('cp-overlay').addEventListener('click', e => { if (e.target === document.getElementById('cp-overlay')) closeCp(); });
+document.getElementById('rc-overlay')?.addEventListener('click', e => { if (e.target === document.getElementById('rc-overlay')) closeRecoveryModal(); });
 
 init();
 </script>
