@@ -1179,8 +1179,9 @@ function renderClassCard(c) {
     `;
   }
 
-  const img = c.image_url
-    ? `<div class="class-image" style="background-image:url('${escapeAttr(c.image_url)}')"></div>`
+  const normalizedImg = normalizeImageUrl(c.image_url);
+  const img = normalizedImg
+    ? `<div class="class-image" style="background-image:url('${escapeAttr(normalizedImg)}')"></div>`
     : '';
 
   return `
@@ -1538,6 +1539,10 @@ function editClass(classId) {
 
       <div class="form-section-label">Media & Capacity</div>
       <div class="field"><label>Image URL (optional)</label><input id="eImage" value="${escapeAttr(c.image_url || '')}" placeholder="https://..." /></div>
+      <div style="font-size:11px; color:var(--ink-mute); margin:-4px 0 10px 14px; line-height:1.5;">
+        💡 รองรับ Google Drive / Dropbox / Imgur โดยอัตโนมัติ<br>
+        <strong>Google Drive:</strong> share link ตั้งเป็น "Anyone with the link" ก่อนใช้
+      </div>
       <div class="field"><label>Capacity (จำนวนที่รับ)</label><input id="eCap" type="number" min="1" value="${c.capacity || 10}" /></div>
 
       <button class="btn-cta" id="saveBtn" onclick="saveClass('${c.class_id}')">บันทึก</button>
@@ -1677,6 +1682,35 @@ function escapeHtml(s) {
     .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
 }
 function escapeAttr(s) { return escapeHtml(s); }
+
+// แปลง URL ให้ embed ได้จริง (Google Drive, Dropbox, etc.)
+function normalizeImageUrl(url) {
+  if (!url) return '';
+  url = String(url).trim();
+
+  // Google Drive: https://drive.google.com/file/d/FILE_ID/view → lh3.googleusercontent.com/d/FILE_ID
+  const driveMatch = url.match(/drive\.google\.com\/file\/d\/([^/?#]+)/)
+    || url.match(/drive\.google\.com\/open\?id=([^&]+)/)
+    || url.match(/drive\.google\.com\/uc\?id=([^&]+)/)
+    || url.match(/docs\.google\.com\/.*[?&]id=([^&]+)/);
+  if (driveMatch) {
+    return `https://lh3.googleusercontent.com/d/${driveMatch[1]}=w1200`;
+  }
+
+  // Dropbox: ?dl=0 → ?raw=1
+  if (url.includes('dropbox.com')) {
+    return url.replace(/[?&]dl=\d/, '').replace(/\?$/, '') + (url.includes('?') ? '&' : '?') + 'raw=1';
+  }
+
+  // Imgur page URL: imgur.com/abc → i.imgur.com/abc.jpg (ถ้ายังไม่ใช่ direct)
+  const imgurMatch = url.match(/^https?:\/\/imgur\.com\/([a-zA-Z0-9]+)$/);
+  if (imgurMatch) {
+    return `https://i.imgur.com/${imgurMatch[1]}.jpg`;
+  }
+
+  return url;
+}
+
 function formatDate(dateStr) {
   if (!dateStr) return '';
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
